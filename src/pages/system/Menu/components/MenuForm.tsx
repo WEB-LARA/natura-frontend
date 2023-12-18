@@ -21,7 +21,7 @@ const MenuForm: React.FC<MenuFormProps> = (props: MenuFormProps) => {
   return (
     <ProForm<API.Menu>
       formRef={props.formRef}
-      layout="horizontal"
+      layout="vertical"
       grid={true}
       submitter={false}
       initialValues={{ type: 'page', sequence: 0, statusChecked: true, properties: '{\n\n}' }}

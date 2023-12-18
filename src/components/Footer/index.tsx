@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
 
   const produced = intl.formatMessage({
     id: 'app.copyright.produced',
-    defaultMessage: 'LyricTian',
+    defaultMessage: 'Team Web Natura',
   });
 
   return <DefaultFooter copyright={`${currentYear} ${produced}`} />;

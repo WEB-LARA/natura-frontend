@@ -79,6 +79,7 @@ const Logger: React.FC = () => {
         request={fetchLogger}
         rowKey="id"
         cardBordered
+        scroll={{ x: 1300 }}
         search={{
           labelWidth: 'auto',
         }}

@@ -50,7 +50,7 @@ const RoleModal: React.FC<RoleModalProps> = (props: RoleModalProps) => {
       title={props.title}
       width={650}
       formRef={formRef}
-      layout="horizontal"
+      layout="vertical"
       grid={true}
       submitTimeout={3000}
       submitter={{

@@ -137,6 +137,7 @@ const User: React.FC = () => {
       title: intl.formatMessage({ id: 'pages.table.column.operation' }),
       valueType: 'option',
       key: 'option',
+      fixed: 'right',
       width: 130,
       render: (_, record) => (
         <Space size={2}>
@@ -172,6 +173,7 @@ const User: React.FC = () => {
         request={fetchUser}
         rowKey="id"
         cardBordered
+        scroll={{ x: 1300 }}
         search={{
           labelWidth: 'auto',
         }}

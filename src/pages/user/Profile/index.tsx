@@ -36,7 +36,7 @@ const Profile: React.FC = () => {
         >
           <ProForm<API.User>
             style={{ width: 500 }}
-            layout="horizontal"
+            layout="vertical"
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 16 }}
             submitter={{
@@ -127,7 +127,7 @@ const Profile: React.FC = () => {
           <ProForm<API.UpdateLoginPassword>
             formRef={securityFormRef}
             style={{ width: 500 }}
-            layout="horizontal"
+            layout="vertical"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             submitter={{

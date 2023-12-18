@@ -50,7 +50,7 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
       title={props.title}
       width={800}
       formRef={formRef}
-      layout="horizontal"
+      layout="vertical"
       grid={true}
       rowProps={{ gutter: 20 }}
       submitTimeout={3000}

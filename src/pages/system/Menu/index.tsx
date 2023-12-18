@@ -141,6 +141,7 @@ const Menu: React.FC = () => {
       title: intl.formatMessage({ id: 'pages.table.column.operation' }),
       valueType: 'option',
       key: 'option',
+      fixed: 'right',
       width: 130,
       render: (_, record) => (
         <Space>
@@ -186,6 +187,7 @@ const Menu: React.FC = () => {
         request={fetchMenu}
         rowKey="id"
         cardBordered
+        scroll={{ x: 1300 }}
         search={{
           labelWidth: 'auto',
         }}
