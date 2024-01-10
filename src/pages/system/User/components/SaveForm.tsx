@@ -72,6 +72,7 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
         delete values.statusChecked;
         values.password = values.password ? Util.md5(values.password) : undefined;
 
+        // if edit data
         if (props.id) {
           if (userData?.roles) {
             const roles = values.roles!;

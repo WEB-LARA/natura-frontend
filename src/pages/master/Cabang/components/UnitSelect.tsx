@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
-import { fetchRole } from '@/services/system/role';
+import { fetchUnit } from '@/services/master/unit';
 
-type RoleSelectProps = {
-  value?: API.UserRole[];
-  onChange?: (value: API.RoleMenu[]) => void;
+type UnitSelectProps = {
+  value?: API.Unit[];
+  onChange?: (value: API.Unit) => void;
 } & SelectProps;
 
-const RoleSelect: React.FC<RoleSelectProps> = (props) => {
+const UnitSelect: React.FC<UnitSelectProps> = (props) => {
   const [options, setOptions] = useState<SelectProps['options']>([]);
-  const [values, setValues] = useState<string[]>([]);
+  const [values, setValues] = useState<string>();
 
   useEffect(() => {
     const request = async (params: API.PaginationParam) => {
-      const res = await fetchRole(params);
+      const res = await fetchUnit(params);
       if (res.data) {
         return res.data.map((item) => {
-          return { label: item.name, value: item.id };
+          return { label: item.code + ' - ' + item.name, value: item.id };
         });
       } else {
         return [];
@@ -30,10 +30,11 @@ const RoleSelect: React.FC<RoleSelectProps> = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log(props.value);
     if (props.value) {
-      setValues(props.value.map((item) => item.role_id!));
+      setValues(props.value.id);
     } else {
-      setValues([]);
+      setValues('');
     }
   }, [props.value]);
 
@@ -41,23 +42,17 @@ const RoleSelect: React.FC<RoleSelectProps> = (props) => {
     <Select
       allowClear={false}
       showSearch
-      mode="tags"
       {...props}
       options={options}
       value={values}
-      onChange={(value: string[]) => {
+      onChange={(value: string) => {
         setValues(value);
         if (props.onChange) {
-          console.log(value);
-          props.onChange(
-            value.map((item) => {
-              return { role_id: item };
-            }),
-          );
+          props.onChange({ id: value });
         }
       }}
     />
   );
 };
 
-export default RoleSelect;
+export default UnitSelect;

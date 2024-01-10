@@ -57,6 +57,30 @@
     ],
   },
   {
+    path: '/master',
+    code: 'master',
+    name: 'master',
+    icon: 'bank',
+    routes: [
+      {
+        path: '/master',
+        redirect: '/master/unit',
+      },
+      {
+        path: '/master/unit',
+        code: 'unit',
+        name: 'unit',
+        component: './master/Unit',
+      },
+      {
+        path: '/master/cabang',
+        code: 'cabang',
+        name: 'cabang',
+        component: './master/Cabang',
+      },
+    ],
+  },
+  {
     path: '/account/profile',
     name: 'account.settings',
     component: './user/Profile',

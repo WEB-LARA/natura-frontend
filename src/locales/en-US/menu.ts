@@ -27,4 +27,7 @@ export default {
   'menu.account': 'Account',
   'menu.account.trigger': 'Trigger Error',
   'menu.account.logout': 'Logout',
+  'menu.master': 'Master',
+  'menu.master.unit': 'Unit',
+  'menu.master.cabang': 'Cabang',
 };
