@@ -78,6 +78,12 @@
         name: 'cabang',
         component: './master/Cabang',
       },
+      {
+        path: '/master/nik',
+        code: 'nik',
+        name: 'NIK',
+        component: './master/Nik',
+      },
     ],
   },
   {

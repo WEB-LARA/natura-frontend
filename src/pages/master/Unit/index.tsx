@@ -1,4 +1,3 @@
-
 import { PageContainer } from '@ant-design/pro-components';
 import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
@@ -27,9 +26,9 @@ interface State {
 
 const Unit: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const addTitle = "Add Unit";
-  const editTitle = "Edit Unit";
-  const delTip = "Delete Unit";
+  const addTitle = 'Add Unit';
+  const editTitle = 'Edit Unit';
+  const delTip = 'Delete Unit';
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -66,6 +65,19 @@ const Unit: React.FC = () => {
       key: 'code', // Query field name
     },
     {
+      title: 'Kode 2',
+      dataIndex: 'code2',
+      width: 130,
+      key: 'code2', // Query field name
+    },
+    {
+      title: 'Prefix',
+      dataIndex: 'prefix',
+      ellipsis: true,
+      width: 160,
+      key: 'prefix', // Query field prefix
+    },
+    {
       title: 'Name',
       dataIndex: 'name',
       ellipsis: true,
@@ -81,15 +93,13 @@ const Unit: React.FC = () => {
         const status = record.status;
         return (
           <Tag color={status === 'enabled' ? 'success' : 'error'}>
-            {status === 'enabled'
-              ? 'enabled'
-              : 'disabled'}
+            {status === 'enabled' ? 'enabled' : 'disabled'}
           </Tag>
         );
       },
     },
     {
-      title: "Action",
+      title: 'Action',
       valueType: 'option',
       key: 'option',
       width: 130,
@@ -109,7 +119,7 @@ const Unit: React.FC = () => {
             onConfirm={async () => {
               const res = await delUnit(record.id!);
               if (res.success) {
-                message.success("<no value>");
+                message.success('<no value>');
                 actionRef.current?.reload();
               }
             }}

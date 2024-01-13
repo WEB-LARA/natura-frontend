@@ -38,7 +38,7 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
       title={props.title}
       width={800}
       formRef={formRef}
-      layout="horizontal"
+      layout="vertical"
       grid={true}
       submitTimeout={3000}
       submitter={{
@@ -70,8 +70,50 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
       }}
       initialValues={{}}
     >
-      <ProFormText name="code" label="Kode" colProps={{ span: 12 }} />
-      <ProFormText name="name" label="Name" colProps={{ span: 12 }} />
+      <ProFormText
+        name="code"
+        label="Kode"
+        colProps={{ span: 12 }}
+        rules={[
+          {
+            required: true,
+            message: 'Kode required',
+          },
+        ]}
+      />
+      <ProFormText
+        name="code2"
+        label="Kode 2"
+        colProps={{ span: 12 }}
+        rules={[
+          {
+            required: true,
+            message: 'Kode 2 required',
+          },
+        ]}
+      />
+      <ProFormText
+        name="prefix"
+        label="Prefix"
+        colProps={{ span: 12 }}
+        rules={[
+          {
+            required: true,
+            message: 'Prefix required',
+          },
+        ]}
+      />
+      <ProFormText
+        name="name"
+        label="Name"
+        colProps={{ span: 12 }}
+        rules={[
+          {
+            required: true,
+            message: 'Prefix required',
+          },
+        ]}
+      />
 
       <ProFormSwitch
         name="statusChecked"

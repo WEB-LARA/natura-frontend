@@ -3,8 +3,8 @@ import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, Tag, message } from 'antd';
-import { fetchCabang, delCabang } from '@/services/master/cabang';
-import CabangModal from './components/SaveForm';
+import { fetchNik, delNik } from '@/services/master/nik';
+import NikModal from './components/SaveForm';
 import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
 
 enum ActionTypeEnum {
@@ -15,7 +15,7 @@ enum ActionTypeEnum {
 
 interface Action {
   type: ActionTypeEnum;
-  payload?: API.Cabang;
+  payload?: API.Nik;
 }
 
 interface State {
@@ -24,11 +24,11 @@ interface State {
   id?: string;
 }
 
-const Cabang: React.FC = () => {
+const Nik: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const addTitle = 'Add Cabang';
-  const editTitle = 'Edit Cabang';
-  const delTip = 'Delete Cabang';
+  const addTitle = 'Add Nik';
+  const editTitle = 'Edit Nik';
+  const delTip = 'Delete Nik';
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -57,7 +57,7 @@ const Cabang: React.FC = () => {
     { visible: false, title: '' },
   );
 
-  const columns: ProColumns<API.Cabang>[] = [
+  const columns: ProColumns<API.Nik>[] = [
     {
       title: 'Unit',
       dataIndex: 'unit_name',
@@ -66,16 +66,17 @@ const Cabang: React.FC = () => {
       key: 'unit_name', // Query field unit_name
     },
     {
-      title: 'Kode',
-      dataIndex: 'code',
-      width: 130,
-      key: 'code', // Query field name
+      title: 'Cabang',
+      dataIndex: 'cabang_name',
+      ellipsis: true,
+      width: 160,
+      key: 'cabang_name', // Query field cabang_name
     },
     {
-      title: 'Kode 2',
-      dataIndex: 'code2',
+      title: 'NIK',
+      dataIndex: 'nik',
       width: 130,
-      key: 'code2', // Query field name
+      key: 'nik', // Query field nik
     },
     {
       title: 'Name',
@@ -92,8 +93,8 @@ const Cabang: React.FC = () => {
       render: (_, record) => {
         const status = record.status;
         return (
-          <Tag color={status === 'enabled' ? 'success' : 'error'}>
-            {status === 'enabled' ? 'enabled' : 'disabled'}
+          <Tag color={status === 1 ? 'success' : 'error'}>
+            {status === 1 ? 'enabled' : 'disabled'}
           </Tag>
         );
       },
@@ -117,7 +118,7 @@ const Cabang: React.FC = () => {
             code="delete"
             title={delTip}
             onConfirm={async () => {
-              const res = await delCabang(record.id!);
+              const res = await delNik(record.id!);
               if (res.success) {
                 message.success('<no value>');
                 actionRef.current?.reload();
@@ -131,10 +132,10 @@ const Cabang: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<API.Cabang, API.PaginationParam>
+      <ProTable<API.Nik, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        request={fetchCabang}
+        request={fetchNik}
         rowKey="id"
         cardBordered
         search={{
@@ -157,7 +158,7 @@ const Cabang: React.FC = () => {
           />,
         ]}
       />
-      <CabangModal
+      <NikModal
         visible={state.visible}
         title={state.title}
         id={state.id}
@@ -173,4 +174,4 @@ const Cabang: React.FC = () => {
   );
 };
 
-export default Cabang;
+export default Nik;

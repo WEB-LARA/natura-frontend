@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react';
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
-import { fetchUnit } from '@/services/master/unit';
+import { fetchCabang } from '@/services/master/cabang';
 
-type UnitSelectProps = {
-  value?: API.Unit[];
+type CabangSelectProps = {
+  value?: API.Cabang[];
+  unitid: string;
   onChange?: (value: string) => void;
 } & SelectProps;
 
-const UnitSelect: React.FC<UnitSelectProps> = (props) => {
+const CabangSelect: React.FC<CabangSelectProps> = (props) => {
   const [options, setOptions] = useState<SelectProps['options']>([]);
   const [values, setValues] = useState<string>();
 
   useEffect(() => {
     const request = async (params: API.PaginationParam) => {
-      const res = await fetchUnit(params);
+      const res = await fetchCabang(params);
       if (res.data) {
         return res.data.map((item) => {
           return { label: item.code + ' - ' + item.name, value: item.id };
@@ -24,10 +25,10 @@ const UnitSelect: React.FC<UnitSelectProps> = (props) => {
       }
     };
 
-    request({ status: 'enabled', resultType: 'select' }).then((data) => {
+    request({ unit_id: props.unitid, status: 'enabled', resultType: 'select' }).then((data) => {
       setOptions(data);
     });
-  }, []);
+  }, [props.unitid]);
 
   useEffect(() => {
     console.log(props.value);
@@ -53,4 +54,4 @@ const UnitSelect: React.FC<UnitSelectProps> = (props) => {
   );
 };
 
-export default UnitSelect;
+export default CabangSelect;

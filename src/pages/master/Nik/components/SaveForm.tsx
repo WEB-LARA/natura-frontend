@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Col, message } from 'antd';
 import { ModalForm, ProFormText, ProFormSwitch, ProFormItem } from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { addCabang, getCabang, updateCabang } from '@/services/master/cabang';
-import UnitSelect from './UnitSelect';
+import { addNik, getNik, updateNik } from '@/services/master/nik';
+import UnitSelect from '../../Cabang/components/UnitSelect';
+import CabangSelect from './CabangSelect';
 
-type CabangModalProps = {
+type NikModalProps = {
   onSuccess: () => void;
   onCancel: () => void;
   visible: boolean;
@@ -13,8 +14,9 @@ type CabangModalProps = {
   id?: string;
 };
 
-const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
-  const formRef = useRef<ProFormInstance<API.Cabang>>();
+const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
+  const formRef = useRef<ProFormInstance<API.Nik>>();
+  const [unitId, setUnitId] = useState<string>('');
 
   useEffect(() => {
     if (!props.visible) {
@@ -23,10 +25,10 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
 
     formRef.current?.resetFields();
     if (props.id) {
-      getCabang(props.id).then(async (res) => {
+      getNik(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
-          data.statusChecked = data.status === 'enabled';
+          data.statusChecked = data.status === 0;
           formRef.current?.setFieldsValue(data);
         }
       });
@@ -34,14 +36,13 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
   }, [props]);
 
   return (
-    <ModalForm<API.Cabang>
+    <ModalForm<API.Nik>
       visible={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}
       layout="vertical"
       grid={true}
-      rowProps={{ gutter: 20 }}
       submitTimeout={3000}
       submitter={{
         searchConfig: {
@@ -56,16 +57,14 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
           props.onCancel();
         },
       }}
-      onFinish={async (values: API.Cabang) => {
-        values.status = values.statusChecked ? 'enabled' : 'disabled';
-        //values.unit_id = values.unit?.id;
+      onFinish={async (values: API.Nik) => {
+        values.status = values.statusChecked ? 0 : 1;
         delete values.statusChecked;
 
-        console.log(values);
         if (props.id) {
-          await updateCabang(props.id, values);
+          await updateNik(props.id, values);
         } else {
-          await addCabang(values);
+          await addNik(values);
         }
 
         message.success('Save successfully');
@@ -74,28 +73,6 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
       }}
       initialValues={{}}
     >
-      <ProFormText
-        name="code"
-        label="Kode"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Kode required',
-          },
-        ]}
-      />
-      <ProFormText
-        name="code2"
-        label="Kode 2"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Kode 2 required',
-          },
-        ]}
-      />
       <Col span={12}>
         <ProFormItem
           name="unit_id"
@@ -107,9 +84,41 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
             },
           ]}
         >
-          <UnitSelect placeholder="Select Unit" />
+          <UnitSelect
+            onChange={(value: string) => {
+              setUnitId(value);
+            }}
+            placeholder="Select Unit"
+          />
         </ProFormItem>
       </Col>
+
+      <Col span={12}>
+        <ProFormItem
+          name="cabang_id"
+          label="Cabang"
+          rules={[
+            {
+              required: true,
+              message: 'Cabang required',
+            },
+          ]}
+        >
+          <CabangSelect unitid={unitId} placeholder="Select Cabang" />
+        </ProFormItem>
+      </Col>
+
+      <ProFormText
+        name="nik"
+        label="NIK"
+        colProps={{ span: 12 }}
+        rules={[
+          {
+            required: true,
+            message: 'NIK required',
+          },
+        ]}
+      />
       <ProFormText
         name="name"
         label="Name"
@@ -125,8 +134,8 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
         name="statusChecked"
         label="Active"
         fieldProps={{
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          checkedChildren: 'Enabled',
+          unCheckedChildren: 'Disabled',
         }}
         colProps={{ span: 12 }}
       />
@@ -134,4 +143,4 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
   );
 };
 
-export default CabangModal;
+export default NikModal;

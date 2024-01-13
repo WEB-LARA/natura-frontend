@@ -38,4 +38,33 @@ declare namespace API {
     /** Unit */
     unit?: Unit;
   };
+
+  // Master Nik management
+  type Nik = {
+    /** Unique ID */
+    id?: string;
+    /** From Unit.ID */
+    unit_id?: string;
+    /** From Cabang.ID */
+    cabang_id?: string;
+    /** Code of NIK (unique for same parent) */
+    nik?: string;
+    /** Display name of Name */
+    name?: string;
+    /** Total Amount Budget Makan */
+    budget_makan?: number;
+    /** Total Amount Budget Saku */
+    budget_saku?: number;
+    /** Code of NikOld (unique for same parent) */
+    nik_old?: string;
+    /** Status of nik (disabled = 0, enabled = 1) */
+    status?: number;
+    /** Update time */
+    updated_at_sd2?: string;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+    statusChecked?: boolean;
+  };
 }
