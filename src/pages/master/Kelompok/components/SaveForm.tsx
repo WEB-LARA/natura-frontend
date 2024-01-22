@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { Col, message } from 'antd';
-import { ModalForm, ProFormText, ProFormSwitch, ProFormItem } from '@ant-design/pro-components';
+import { message } from 'antd';
+import { ModalForm, ProFormSwitch, ProFormText } from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { addCabang, getCabang, updateCabang } from '@/services/master/cabang';
-import UnitSelect from '../../Unit/components/UnitSelect';
+import { addKelompok, getKelompok, updateKelompok } from '@/services/master/kelompok';
 
-type CabangModalProps = {
+type KelompokModalProps = {
   onSuccess: () => void;
   onCancel: () => void;
   visible: boolean;
@@ -13,8 +12,8 @@ type CabangModalProps = {
   id?: string;
 };
 
-const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
-  const formRef = useRef<ProFormInstance<API.Cabang>>();
+const KelompokModal: React.FC<KelompokModalProps> = (props: KelompokModalProps) => {
+  const formRef = useRef<ProFormInstance<API.Kelompok>>();
 
   useEffect(() => {
     if (!props.visible) {
@@ -23,10 +22,9 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
 
     formRef.current?.resetFields();
     if (props.id) {
-      getCabang(props.id).then(async (res) => {
+      getKelompok(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
-          data.statusChecked = data.status === 'enabled';
           formRef.current?.setFieldsValue(data);
         }
       });
@@ -34,14 +32,13 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
   }, [props]);
 
   return (
-    <ModalForm<API.Cabang>
+    <ModalForm<API.Kelompok>
       visible={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}
       layout="vertical"
       grid={true}
-      rowProps={{ gutter: 20 }}
       submitTimeout={3000}
       submitter={{
         searchConfig: {
@@ -56,16 +53,13 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
           props.onCancel();
         },
       }}
-      onFinish={async (values: API.Cabang) => {
-        values.status = values.statusChecked ? 'enabled' : 'disabled';
-        //values.unit_id = values.unit?.id;
-        delete values.statusChecked;
+      onFinish={async (values: API.Kelompok) => {
+        //values.flag_active = values.flag_active ? 'enabled' : 'disabled';
 
-        console.log(values);
         if (props.id) {
-          await updateCabang(props.id, values);
+          await updateKelompok(props.id, values);
         } else {
-          await addCabang(values);
+          await addKelompok(values);
         }
 
         message.success('Save successfully');
@@ -86,31 +80,6 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
         ]}
       />
       <ProFormText
-        name="code2"
-        label="Kode 2"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Kode 2 required',
-          },
-        ]}
-      />
-      <Col span={12}>
-        <ProFormItem
-          name="unit_id"
-          label="Unit"
-          rules={[
-            {
-              required: true,
-              message: 'Unit required',
-            },
-          ]}
-        >
-          <UnitSelect placeholder="Select Unit" />
-        </ProFormItem>
-      </Col>
-      <ProFormText
         name="name"
         label="Name"
         colProps={{ span: 12 }}
@@ -122,7 +91,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
         ]}
       />
       <ProFormSwitch
-        name="statusChecked"
+        name="flag_active"
         label="Active"
         fieldProps={{
           checkedChildren: 'enabled',
@@ -134,4 +103,4 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
   );
 };
 
-export default CabangModal;
+export default KelompokModal;

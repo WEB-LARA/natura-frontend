@@ -84,6 +84,12 @@
         name: 'NIK',
         component: './master/Nik',
       },
+      {
+        path: '/master/kelompok',
+        code: 'kelompok',
+        name: 'Kelompok',
+        component: './master/Kelompok',
+      },
     ],
   },
   {

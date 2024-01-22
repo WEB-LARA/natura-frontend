@@ -30,4 +30,5 @@ export default {
   'menu.master': 'Master',
   'menu.master.unit': 'Unit',
   'menu.master.cabang': 'Cabang',
+  'menu.master.NIK': 'NIK',
 };

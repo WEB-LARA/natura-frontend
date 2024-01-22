@@ -1,6 +1,5 @@
 export default {
-  'pages.layouts.userLayout.title':
-    'A lightweight, flexible, elegant and full-featured RBAC scaffolding based on GIN + GORM 2.0 + Casbin 2.0 + Wire DI.',
+  'pages.layouts.userLayout.title': 'Web untuk pajak natura',
   'pages.login.accountLogin.tab': 'Account Login',
   'pages.login.failure': 'Login failed, please try again!',
   'pages.login.success': 'Login successful!',

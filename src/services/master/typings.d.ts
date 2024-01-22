@@ -67,4 +67,20 @@ declare namespace API {
     updated_at?: string;
     statusChecked?: boolean;
   };
+
+  // Kelompok Natura
+  type Kelompok = {
+    /** Unique ID */
+    id?: string;
+    /** Kelompok Code */
+    code?: string;
+    /** Kelompok Name */
+    name?: string;
+    /** Flag Active */
+    flag_active?: boolean;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
 }

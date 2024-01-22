@@ -3,8 +3,8 @@ import { Col, message } from 'antd';
 import { ModalForm, ProFormText, ProFormSwitch, ProFormItem } from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { addNik, getNik, updateNik } from '@/services/master/nik';
-import UnitSelect from '../../Cabang/components/UnitSelect';
-import CabangSelect from './CabangSelect';
+import UnitSelect from '../../Unit/components/UnitSelect';
+import CabangSelect from '../../Cabang/components/CabangSelect';
 
 type NikModalProps = {
   onSuccess: () => void;

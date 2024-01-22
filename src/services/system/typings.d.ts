@@ -122,6 +122,8 @@ declare namespace API {
     created_at?: string;
     /** Unique ID */
     id?: string;
+    /** NIK Unique ID */
+    nik_id?: string;
     /** Username for login */
     username?: string;
     /** Name of user */
@@ -134,6 +136,10 @@ declare namespace API {
     remark?: string;
     /** Roles of user */
     roles?: UserRole[];
+    /** Unit Unique ID */
+    unit_id?: string;
+    /** Cabangs of user */
+    cabangs?: UserCabang[];
     /** Status of user (activated, freezed) */
     status?: string;
     password?: string;
@@ -151,6 +157,21 @@ declare namespace API {
     role_id?: string;
     /** From Role.Name */
     role_name?: string;
+    /** Update time */
+    updated_at?: string;
+    /** From User.ID */
+    user_id?: string;
+  };
+
+  type UserCabang = {
+    /** Create time */
+    created_at?: string;
+    /** Unique ID */
+    id?: string;
+    /** From Cabang.ID */
+    cabang_id?: string;
+    /** From Cabang.Name */
+    cabang_name?: string;
     /** Update time */
     updated_at?: string;
     /** From User.ID */

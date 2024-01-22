@@ -12,6 +12,9 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import RoleSelect from './RoleSelect';
 import { addUser, getUser, updateUser } from '@/services/system/user';
 import { Util } from '@/utils';
+import NikSelect from '@/pages/master/Nik/components/NikSelect';
+import UnitSelect from '@/pages/master/Unit/components/UnitSelect';
+import CabangTagSelect from '@/pages/master/Cabang/components/CabangTagSelect';
 
 type UserModalProps = {
   onSuccess: () => void;
@@ -24,7 +27,10 @@ type UserModalProps = {
 const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
   const intl = useIntl();
   const formRef = useRef<ProFormInstance<API.User>>();
+  const [nikID, setNikID] = useState<string>();
+  const [username, setUsername] = useState<string>();
   const [userData, setUserData] = useState<API.User>();
+  const [unitId, setUnitId] = useState<string>('');
 
   useEffect(() => {
     if (!props.visible) {
@@ -32,10 +38,12 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
     }
 
     formRef.current?.resetFields();
+    // if edit
     if (props.id) {
       getUser(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
+          data.nik_id = res.data?.username + ' - ' + res.data?.name;
           setUserData(data);
           data.statusChecked = data.status === 'activated';
           formRef.current?.setFieldsValue(data);
@@ -69,6 +77,8 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
       }}
       onFinish={async (values: API.User) => {
         values.status = values.statusChecked ? 'activated' : 'freezed';
+        values.nik_id = nikID;
+        values.username = username;
         delete values.statusChecked;
         values.password = values.password ? Util.md5(values.password) : undefined;
 
@@ -86,6 +96,18 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
             }
             values.roles = roles;
           }
+          if (userData?.cabangs) {
+            const cabangs = values.cabangs!;
+            for (let i = 0; i < cabangs.length; i++) {
+              for (let j = 0; j < userData?.cabangs?.length; j++) {
+                if (cabangs[i].cabang_id === userData?.cabangs[j].cabang_id) {
+                  cabangs[i].id = userData?.cabangs[j].id;
+                  break;
+                }
+              }
+            }
+            values.cabangs = cabangs;
+          }
           await updateUser(props.id, values);
         } else {
           await addUser(values);
@@ -97,7 +119,31 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
       }}
       initialValues={{ statusChecked: true }}
     >
-      <ProFormText
+      <Col span={12}>
+        <ProFormItem
+          name="nik_id"
+          label="NIK/Username"
+          rules={[
+            {
+              required: true,
+              message: 'NIK required',
+            },
+          ]}
+        >
+          <NikSelect
+            onChange={(value) => {
+              const splitted = value.label.split('-', 2);
+              setNikID(value.key);
+              setUsername(splitted[0].trim());
+              formRef.current?.setFieldsValue({
+                name: splitted[1].trim(),
+              });
+            }}
+            placeholder="Select NIK"
+          />
+        </ProFormItem>
+      </Col>
+      {/* <ProFormText
         name="username"
         label={intl.formatMessage({ id: 'pages.system.user.form.username' })}
         placeholder={intl.formatMessage({ id: 'pages.system.user.form.username.placeholder' })}
@@ -108,7 +154,7 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
           },
         ]}
         colProps={{ span: 12 }}
-      />
+      /> */}
       <ProFormText.Password
         name="password"
         label={intl.formatMessage({ id: 'pages.system.user.form.password' })}
@@ -131,6 +177,7 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
         ]}
         colProps={{ span: 12 }}
       />
+
       <Col span={12}>
         <ProFormItem
           name="roles"
@@ -147,12 +194,46 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
           />
         </ProFormItem>
       </Col>
+      <Col span={12}>
+        <ProFormItem
+          name="unit_id"
+          label="Unit"
+          rules={[
+            {
+              required: true,
+              message: 'Unit required',
+            },
+          ]}
+        >
+          <UnitSelect
+            onChange={(value: string) => {
+              setUnitId(value);
+            }}
+            placeholder="Select Unit"
+          />
+        </ProFormItem>
+      </Col>
+      <Col span={12}>
+        <ProFormItem
+          name="cabangs"
+          label="Cabang"
+          rules={[
+            {
+              required: true,
+              message: 'Cabang required',
+            },
+          ]}
+        >
+          <CabangTagSelect unitid={unitId} placeholder="Select Cabang" />
+        </ProFormItem>
+      </Col>
       <ProFormText
         name="email"
         label={intl.formatMessage({ id: 'pages.system.user.form.email' })}
         placeholder={intl.formatMessage({ id: 'pages.system.user.form.email.placeholder' })}
         colProps={{ span: 12 }}
       />
+
       <ProFormText
         name="phone"
         label={intl.formatMessage({ id: 'pages.system.user.form.phone' })}
