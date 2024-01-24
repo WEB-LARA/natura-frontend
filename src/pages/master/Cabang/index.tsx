@@ -66,13 +66,13 @@ const Cabang: React.FC = () => {
       key: 'unit_name', // Query field unit_name
     },
     {
-      title: 'Kode',
+      title: 'Kode Cabang',
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
     },
     {
-      title: 'Kode 2',
+      title: 'Kode DC',
       dataIndex: 'code2',
       width: 130,
       key: 'code2', // Query field name

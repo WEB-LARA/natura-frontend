@@ -59,23 +59,16 @@ const Unit: React.FC = () => {
 
   const columns: ProColumns<API.Unit>[] = [
     {
-      title: 'Kode',
+      title: 'Kode Unit',
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
     },
     {
-      title: 'Kode 2',
+      title: 'Kode Inisial',
       dataIndex: 'code2',
       width: 130,
       key: 'code2', // Query field name
-    },
-    {
-      title: 'Prefix',
-      dataIndex: 'prefix',
-      ellipsis: true,
-      width: 160,
-      key: 'prefix', // Query field prefix
     },
     {
       title: 'Name',

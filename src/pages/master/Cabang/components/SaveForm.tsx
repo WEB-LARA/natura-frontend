@@ -76,7 +76,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
     >
       <ProFormText
         name="code"
-        label="Kode"
+        label="Kode Cabang"
         colProps={{ span: 12 }}
         rules={[
           {
@@ -87,7 +87,8 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
       />
       <ProFormText
         name="code2"
-        label="Kode 2"
+        label="Kode DC"
+        tooltip="Kode untuk keperluan dengan SD2"
         colProps={{ span: 12 }}
         rules={[
           {

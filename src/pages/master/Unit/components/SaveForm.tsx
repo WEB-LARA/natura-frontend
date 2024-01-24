@@ -72,7 +72,7 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
     >
       <ProFormText
         name="code"
-        label="Kode"
+        label="Kode Unit"
         colProps={{ span: 12 }}
         rules={[
           {
@@ -83,23 +83,13 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
       />
       <ProFormText
         name="code2"
-        label="Kode 2"
+        label="Kode Inisial"
+        tooltip="Kode untuk keperluan dengan SD2"
         colProps={{ span: 12 }}
         rules={[
           {
             required: true,
-            message: 'Kode 2 required',
-          },
-        ]}
-      />
-      <ProFormText
-        name="prefix"
-        label="Prefix"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Prefix required',
+            message: 'Kode Inisial required',
           },
         ]}
       />

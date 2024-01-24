@@ -151,6 +151,9 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
       <ProFormMoney
         label="Limit Amount"
         name="limit_amount"
+        fieldProps={{
+          moneySymbol: false,
+        }}
         locale="id_ID"
         min={0}
         trigger="onBlur"
