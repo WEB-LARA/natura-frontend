@@ -120,7 +120,7 @@ const Nik: React.FC = () => {
             onConfirm={async () => {
               const res = await delNik(record.id!);
               if (res.success) {
-                message.success('<no value>');
+                message.success('Delete successfully');
                 actionRef.current?.reload();
               }
             }}

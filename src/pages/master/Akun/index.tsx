@@ -3,8 +3,8 @@ import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, Tag, message } from 'antd';
-import { fetchKelompok, delKelompok } from '@/services/master/kelompok';
-import KelompokModal from './components/SaveForm';
+import { fetchAkun, delAkun } from '@/services/master/akun';
+import AkunModal from './components/SaveForm';
 import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
 
 enum ActionTypeEnum {
@@ -15,7 +15,7 @@ enum ActionTypeEnum {
 
 interface Action {
   type: ActionTypeEnum;
-  payload?: API.Kelompok;
+  payload?: API.Akun;
 }
 
 interface State {
@@ -24,11 +24,11 @@ interface State {
   id?: string;
 }
 
-const Kelompok: React.FC = () => {
+const Akun: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const addTitle = 'Add Kelompok';
-  const editTitle = 'Edit Kelompok';
-  const delTip = 'Delete Kelompok';
+  const addTitle = 'Add Akun';
+  const editTitle = 'Edit Akun';
+  const delTip = 'Delete Akun';
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -57,12 +57,12 @@ const Kelompok: React.FC = () => {
     { visible: false, title: '' },
   );
 
-  const columns: ProColumns<API.Kelompok>[] = [
+  const columns: ProColumns<API.Akun>[] = [
     {
-      title: 'Kode',
-      dataIndex: 'code',
+      title: 'Account',
+      dataIndex: 'account',
       width: 130,
-      key: 'code', // Query field name
+      key: 'account', // Query field name
     },
     {
       title: 'Name',
@@ -104,7 +104,7 @@ const Kelompok: React.FC = () => {
             code="delete"
             title={delTip}
             onConfirm={async () => {
-              const res = await delKelompok(record.id!);
+              const res = await delAkun(record.id!);
               if (res.success) {
                 message.success('Delete successfully');
                 actionRef.current?.reload();
@@ -118,10 +118,10 @@ const Kelompok: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<API.Kelompok, API.PaginationParam>
+      <ProTable<API.Akun, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        request={fetchKelompok}
+        request={fetchAkun}
         rowKey="id"
         cardBordered
         search={{
@@ -144,7 +144,7 @@ const Kelompok: React.FC = () => {
           />,
         ]}
       />
-      <KelompokModal
+      <AkunModal
         visible={state.visible}
         title={state.title}
         id={state.id}
@@ -160,4 +160,4 @@ const Kelompok: React.FC = () => {
   );
 };
 
-export default Kelompok;
+export default Akun;

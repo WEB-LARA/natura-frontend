@@ -61,10 +61,38 @@ const User: React.FC = () => {
 
   const columns: ProColumns<API.User>[] = [
     {
-      title: intl.formatMessage({ id: 'pages.system.user.form.username' }),
+      title: 'Unit',
+      dataIndex: 'unit',
+      width: 160,
+      search: false,
+      render: (_, record) => {
+        return record.unit ? <Space>{record.unit?.name}</Space> : '-';
+      },
+    },
+    {
+      title: 'NIK',
       dataIndex: 'username',
       width: 160,
       key: 'username', // Query field name
+    },
+    {
+      title: 'Cabangs',
+      dataIndex: 'cabangs',
+      width: 200,
+      search: false,
+      render: (_, record) => {
+        return record.cabangs ? (
+          <Space>
+            {record.cabangs?.map((cabang) => (
+              <Tag color="blue" key={cabang.cabang_id}>
+                {cabang.cabang_name}
+              </Tag>
+            ))}
+          </Space>
+        ) : (
+          '-'
+        );
+      },
     },
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.name' }),

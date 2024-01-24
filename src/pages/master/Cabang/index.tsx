@@ -119,7 +119,7 @@ const Cabang: React.FC = () => {
             onConfirm={async () => {
               const res = await delCabang(record.id!);
               if (res.success) {
-                message.success('<no value>');
+                message.success('Delete successfully');
                 actionRef.current?.reload();
               }
             }}

@@ -83,4 +83,36 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
   };
+
+  // Akun Kelompok Natura
+  type Akun = {
+    /** Unique ID */
+    id?: string;
+    /** From Kelompok.ID */
+    kelompok_id?: string;
+    /** Unit.ID Account Natura */
+    unit_id?: string;
+    /** Account Natura */
+    account?: string;
+    /** Account Name Natura */
+    name?: string;
+    /** Description Akun */
+    description?: string;
+    /** Limit Type (Bulan/Tahun) Natura */
+    limit_type?: string;
+    /** Limit Amount Natura */
+    limit_amount?: number;
+    /** Flag Tax Object */
+    flag_tax_object?: boolean;
+    /** Flag PUM */
+    flag_pum?: boolean;
+    /** Flag Template */
+    flag_template?: boolean;
+    /** Flag Active */
+    flag_active?: boolean;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
 }

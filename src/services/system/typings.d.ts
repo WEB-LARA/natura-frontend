@@ -146,6 +146,8 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+    unit: Unit;
+    nik: Nik;
   };
 
   type UserRole = {
