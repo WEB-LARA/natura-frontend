@@ -59,6 +59,15 @@ const Akun: React.FC = () => {
 
   const columns: ProColumns<API.Akun>[] = [
     {
+      title: 'Kelompok',
+      dataIndex: 'kelompok.name',
+      width: 160,
+      search: false,
+      render: (_, record) => {
+        return record.kelompok ? <Space>{record.kelompok?.name}</Space> : '-';
+      },
+    },
+    {
       title: 'Account',
       dataIndex: 'account',
       width: 130,
@@ -119,6 +128,7 @@ const Akun: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<API.Akun, API.PaginationParam>
+        headerTitle="Master Akun"
         columns={columns}
         actionRef={actionRef}
         request={fetchAkun}

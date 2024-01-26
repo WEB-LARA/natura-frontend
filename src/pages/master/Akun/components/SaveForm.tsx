@@ -41,9 +41,25 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
     }
   }, [props]);
 
+  const onChangePUM = (checked: boolean) => {
+    if (checked) {
+      formRef.current?.setFieldsValue({
+        flag_template: false,
+      });
+    }
+  };
+
+  const onChangeTemplete = (checked: boolean) => {
+    if (checked) {
+      formRef.current?.setFieldsValue({
+        flag_pum: false,
+      });
+    }
+  };
+
   return (
     <ModalForm<API.Akun>
-      visible={props.visible}
+      open={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}
@@ -64,7 +80,10 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
         },
       }}
       onFinish={async (values: API.Akun) => {
-        //values.flag_active = values.flag_active ? 'enabled' : 'disabled';
+        values.flag_tax_object = values.flag_tax_object ? true : false;
+        values.flag_pum = values.flag_pum ? true : false;
+        values.flag_template = values.flag_template ? true : false;
+        values.flag_active = values.flag_active ? true : false;
 
         if (props.id) {
           await updateAkun(props.id, values);
@@ -119,7 +138,7 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
       />
       <ProFormText
         name="name"
-        label="Name"
+        label="Account Name"
         colProps={{ span: 12 }}
         rules={[
           {
@@ -137,33 +156,34 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
 
       <ProFormRadio.Group
         name="limit_type"
+        colProps={{ span: 12 }}
         label="Limit Type"
-        style={{
-          margin: 16,
-        }}
+        rules={[
+          {
+            required: true,
+            message: 'Limit Type required',
+          },
+        ]}
         radioType="button"
-        // fieldProps={{
-        //   value: type,
-        //   onChange: (e) => setType(e.target.value),
-        // }}
-        options={['bulan', 'tahun']}
+        options={['Bulan', 'Tahun']}
       />
       <ProFormMoney
         label="Limit Amount"
+        colProps={{ span: 12 }}
         name="limit_amount"
         fieldProps={{
-          moneySymbol: false,
+          customSymbol: 'Rp ',
         }}
-        locale="id_ID"
         min={0}
-        trigger="onBlur"
+        width="md"
       />
+
       <ProFormSwitch
         name="flag_tax_object"
         label="Flag Tax Object"
         fieldProps={{
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          checkedChildren: 'Enabled',
+          unCheckedChildren: 'Disabled',
         }}
         colProps={{ span: 12 }}
       />
@@ -171,8 +191,9 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
         name="flag_pum"
         label="Flag PUM"
         fieldProps={{
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          onChange: onChangePUM,
+          checkedChildren: 'Enabled',
+          unCheckedChildren: 'Disabled',
         }}
         colProps={{ span: 12 }}
       />
@@ -180,8 +201,9 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
         name="flag_template"
         label="Flag Template"
         fieldProps={{
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          onChange: onChangeTemplete,
+          checkedChildren: 'Enabled',
+          unCheckedChildren: 'Disabled',
         }}
         colProps={{ span: 12 }}
       />
@@ -190,8 +212,8 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
         label="Active"
         fieldProps={{
           defaultChecked: true,
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          checkedChildren: 'Enabled',
+          unCheckedChildren: 'Disabled',
         }}
         colProps={{ span: 12 }}
       />

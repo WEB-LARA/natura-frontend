@@ -54,7 +54,7 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
 
   return (
     <ModalForm<API.User>
-      visible={props.visible}
+      open={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}

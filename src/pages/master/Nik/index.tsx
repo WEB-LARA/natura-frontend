@@ -133,6 +133,7 @@ const Nik: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<API.Nik, API.PaginationParam>
+        headerTitle="Master NIK"
         columns={columns}
         actionRef={actionRef}
         request={fetchNik}

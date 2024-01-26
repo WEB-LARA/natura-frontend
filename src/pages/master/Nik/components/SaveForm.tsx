@@ -37,7 +37,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
 
   return (
     <ModalForm<API.Nik>
-      visible={props.visible}
+      open={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}

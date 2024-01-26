@@ -34,7 +34,7 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
 
   return (
     <ModalForm<API.Unit>
-      visible={props.visible}
+      open={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}
@@ -109,8 +109,8 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
         name="statusChecked"
         label="Active"
         fieldProps={{
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          checkedChildren: 'Enabled',
+          unCheckedChildren: 'Disabled',
         }}
         colProps={{ span: 12 }}
       />

@@ -46,7 +46,7 @@ const RoleModal: React.FC<RoleModalProps> = (props: RoleModalProps) => {
 
   return (
     <ModalForm<API.Role>
-      visible={props.visible}
+      open={props.visible}
       title={props.title}
       width={650}
       formRef={formRef}

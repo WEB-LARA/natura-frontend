@@ -114,5 +114,7 @@ declare namespace API {
     created_at?: string;
     /** Update time */
     updated_at?: string;
+    unit: Unit;
+    kelompok: Kelompok;
   };
 }

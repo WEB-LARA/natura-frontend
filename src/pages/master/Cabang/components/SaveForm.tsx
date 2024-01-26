@@ -35,7 +35,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
 
   return (
     <ModalForm<API.Cabang>
-      visible={props.visible}
+      open={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}

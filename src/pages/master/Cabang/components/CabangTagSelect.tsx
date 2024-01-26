@@ -25,9 +25,11 @@ const CabangTagSelect: React.FC<CabangTagSelectProps> = (props) => {
       }
     };
 
-    request({ unit_id: props.unitid, status: 'enabled', resultType: 'select' }).then((data) => {
-      setOptions(data);
-    });
+    request({ unit_id: props.unitid, status: 'enabled', resultType: 'select', pageSize: 100 }).then(
+      (data) => {
+        setOptions(data);
+      },
+    );
   }, [props.unitid]);
 
   useEffect(() => {
@@ -46,6 +48,11 @@ const CabangTagSelect: React.FC<CabangTagSelectProps> = (props) => {
       {...props}
       options={options}
       value={values}
+      filterOption={(input, option) =>
+        String(option?.label ?? '')
+          .toLowerCase()
+          .includes(input.toLowerCase())
+      }
       onChange={(value: string[]) => {
         setValues(value);
         if (props.onChange) {

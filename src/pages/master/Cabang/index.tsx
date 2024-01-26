@@ -132,6 +132,7 @@ const Cabang: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<API.Cabang, API.PaginationParam>
+        headerTitle="Master Cabang"
         columns={columns}
         actionRef={actionRef}
         request={fetchCabang}

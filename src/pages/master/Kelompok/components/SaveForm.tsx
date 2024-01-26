@@ -33,7 +33,7 @@ const KelompokModal: React.FC<KelompokModalProps> = (props: KelompokModalProps) 
 
   return (
     <ModalForm<API.Kelompok>
-      visible={props.visible}
+      open={props.visible}
       title={props.title}
       width={800}
       formRef={formRef}

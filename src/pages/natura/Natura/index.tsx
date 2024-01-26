@@ -3,8 +3,8 @@ import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, Tag, message } from 'antd';
-import { fetchKelompok, delKelompok } from '@/services/master/kelompok';
-import KelompokModal from './components/SaveForm';
+import { fetchNaturaHeader, delNaturaHeader } from '@/services/natura/naturaheader';
+import NaturaHeaderModal from './components/SaveForm';
 import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
 
 enum ActionTypeEnum {
@@ -15,7 +15,7 @@ enum ActionTypeEnum {
 
 interface Action {
   type: ActionTypeEnum;
-  payload?: API.Kelompok;
+  payload?: API.NaturaHeader;
 }
 
 interface State {
@@ -24,11 +24,11 @@ interface State {
   id?: string;
 }
 
-const Kelompok: React.FC = () => {
+const NaturaHeader: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const addTitle = 'Add Kelompok';
-  const editTitle = 'Edit Kelompok';
-  const delTip = 'Delete Kelompok';
+  const addTitle = 'Add Natura';
+  const editTitle = 'Edit Natura';
+  const delTip = 'Delete Natura';
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -57,31 +57,44 @@ const Kelompok: React.FC = () => {
     { visible: false, title: '' },
   );
 
-  const columns: ProColumns<API.Kelompok>[] = [
+  const columns: ProColumns<API.NaturaHeader>[] = [
     {
-      title: 'Kode',
-      dataIndex: 'code',
-      width: 130,
-      key: 'code', // Query field name
+      title: 'ID Natura',
+      dataIndex: 'id_natura',
+      ellipsis: true,
+      width: 160,
+      key: 'id_natura',
     },
     {
       title: 'Name',
       dataIndex: 'name',
       ellipsis: true,
       width: 160,
-      key: 'name', // Query field name
+      key: 'name',
     },
     {
-      title: 'Active',
-      dataIndex: 'flag_active',
+      title: 'Period',
+      dataIndex: 'period',
+      ellipsis: true,
+      width: 160,
+      key: 'period',
+    },
+    {
+      title: 'Total',
+      dataIndex: 'total',
+      ellipsis: true,
+      width: 160,
+      key: 'total',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
       width: 130,
       search: false,
       render: (_, record) => {
-        const status = record.flag_active;
+        const status = record.status;
         return (
-          <Tag color={status === true ? 'success' : 'error'}>
-            {status === true ? 'enabled' : 'disabled'}
-          </Tag>
+          <Tag color={status === 1 ? 'success' : 'error'}>{status === 1 ? 'success' : 'error'}</Tag>
         );
       },
     },
@@ -104,7 +117,7 @@ const Kelompok: React.FC = () => {
             code="delete"
             title={delTip}
             onConfirm={async () => {
-              const res = await delKelompok(record.id!);
+              const res = await delNaturaHeader(record.id!);
               if (res.success) {
                 message.success('Delete successfully');
                 actionRef.current?.reload();
@@ -118,11 +131,10 @@ const Kelompok: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<API.Kelompok, API.PaginationParam>
-        headerTitle="Master Kelompok"
+      <ProTable<API.NaturaHeader, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        request={fetchKelompok}
+        request={fetchNaturaHeader}
         rowKey="id"
         cardBordered
         search={{
@@ -145,7 +157,7 @@ const Kelompok: React.FC = () => {
           />,
         ]}
       />
-      <KelompokModal
+      <NaturaHeaderModal
         visible={state.visible}
         title={state.title}
         id={state.id}
@@ -161,4 +173,4 @@ const Kelompok: React.FC = () => {
   );
 };
 
-export default Kelompok;
+export default NaturaHeader;

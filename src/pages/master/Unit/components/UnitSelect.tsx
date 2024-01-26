@@ -17,14 +17,14 @@ const UnitSelect: React.FC<UnitSelectProps> = (props) => {
       const res = await fetchUnit(params);
       if (res.data) {
         return res.data.map((item) => {
-          return { label: item.code + ' - ' + item.name, value: item.id };
+          return { label: item.code2 + ' - ' + item.name, value: item.id };
         });
       } else {
         return [];
       }
     };
 
-    request({ status: 'enabled', resultType: 'select' }).then((data) => {
+    request({ status: 'enabled', resultType: 'select', pageSize: 100 }).then((data) => {
       setOptions(data);
     });
   }, []);
@@ -43,6 +43,11 @@ const UnitSelect: React.FC<UnitSelectProps> = (props) => {
       {...props}
       options={options}
       value={values}
+      filterOption={(input, option) =>
+        String(option?.label ?? '')
+          .toLowerCase()
+          .includes(input.toLowerCase())
+      }
       onChange={(value: string) => {
         setValues(value);
         if (props.onChange) {

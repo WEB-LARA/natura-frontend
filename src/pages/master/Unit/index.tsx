@@ -125,6 +125,7 @@ const Unit: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<API.Unit, API.PaginationParam>
+        headerTitle="Master Unit"
         columns={columns}
         actionRef={actionRef}
         request={fetchUnit}
