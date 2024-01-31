@@ -1,7 +1,10 @@
 import React from 'react';
 import { useIntl } from 'umi';
-import { ProFormList, ProFormText, ProFormSelect, ProForm } from '@ant-design/pro-components';
+import { ProFormList, ProForm, ProFormItem, ProFormMoney } from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
+import { Col } from 'antd';
+import AkunSelect from '@/pages/master/Akun/components/AkunSelect';
+import NikSelectKey from '@/pages/master/Nik/components/NikSelectKey';
 
 type NaturaLinesFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaLine> | undefined>;
@@ -12,7 +15,7 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
 
   return (
     <ProForm<API.NaturaLine> formRef={props.formRef} grid={true} submitter={false}>
-      <ProForm.Group title={intl.formatMessage({ id: 'pages.system.menu.resource.form.title' })}>
+      <ProForm.Group title="Details">
         <ProFormList
           name="details"
           copyIconProps={false}
@@ -24,27 +27,43 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
           creatorRecord={{ method: 'GET' }}
         >
           <ProForm.Group key="id">
-            <ProFormSelect
-              name="method"
-              label={intl.formatMessage({ id: 'pages.system.menu.resource.form.method' })}
-              placeholder={intl.formatMessage({
-                id: 'pages.system.menu.resource.form.method.placeholder',
-              })}
-              allowClear={false}
-              options={['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD']}
-              colProps={{
-                span: 6,
+            <Col span={6}>
+              <ProFormItem
+                name="nik_id"
+                label="NIK"
+                rules={[
+                  {
+                    required: true,
+                    message: 'NIK required',
+                  },
+                ]}
+              >
+                <NikSelectKey placeholder="Select NIK" />
+              </ProFormItem>
+            </Col>
+            <Col span={12}>
+              <ProFormItem
+                name="akun_id"
+                label="Akun"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Akun required',
+                  },
+                ]}
+              >
+                <AkunSelect placeholder="Select Akun" />
+              </ProFormItem>
+            </Col>
+            <ProFormMoney
+              label="Amount"
+              colProps={{ span: 6 }}
+              name="amount"
+              fieldProps={{
+                customSymbol: 'Rp ',
               }}
-            />
-            <ProFormText
-              label={intl.formatMessage({ id: 'pages.system.menu.resource.form.path' })}
-              name="path"
-              placeholder={intl.formatMessage({
-                id: 'pages.system.menu.resource.form.path.placeholder',
-              })}
-              colProps={{
-                span: 18,
-              }}
+              min={0}
+              width="md"
             />
           </ProForm.Group>
         </ProFormList>

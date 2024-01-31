@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/natura-lines */
-export async function fetchNaturaLine(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchNaturaLine(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.NaturaLine[]>>('/api/v1/natura-lines', {
     method: 'GET',
     params: {
@@ -34,7 +36,11 @@ export async function getNaturaLine(id: string, options?: { [key: string]: any }
 }
 
 /** Update record by ID PUT /api/v1/natura-lines/${id} */
-export async function updateNaturaLine(id: string, body: API.NaturaLine, options?: { [key: string]: any }) {
+export async function updateNaturaLine(
+  id: string,
+  body: API.NaturaLine,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/natura-lines/${id}`, {
     method: 'PUT',
     data: body,

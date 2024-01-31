@@ -2,10 +2,14 @@ import { PageContainer } from '@ant-design/pro-components';
 import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { Space, Tag, message } from 'antd';
+import { Button, PageHeader, Space, Tag, message } from 'antd';
 import { fetchNaturaHeader, delNaturaHeader } from '@/services/natura/naturaheader';
 import NaturaHeaderModal from './components/SaveForm';
 import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
+import type { StatusCase } from '@/utils/util';
+import { codeToStatusCase } from '@/utils/util';
+import { PlusOutlined } from '@ant-design/icons';
+import { history } from 'umi';
 
 enum ActionTypeEnum {
   ADD,
@@ -66,13 +70,6 @@ const NaturaHeader: React.FC = () => {
       key: 'id_natura',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      ellipsis: true,
-      width: 160,
-      key: 'name',
-    },
-    {
       title: 'Period',
       dataIndex: 'period',
       ellipsis: true,
@@ -85,6 +82,7 @@ const NaturaHeader: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'total',
+      render: (_, record) => `${record.total}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
     },
     {
       title: 'Status',
@@ -93,9 +91,8 @@ const NaturaHeader: React.FC = () => {
       search: false,
       render: (_, record) => {
         const status = record.status;
-        return (
-          <Tag color={status === 1 ? 'success' : 'error'}>{status === 1 ? 'success' : 'error'}</Tag>
-        );
+        const stt: StatusCase = codeToStatusCase(status);
+        return <Tag color={stt.color}>{stt.tulis}</Tag>;
       },
     },
     {
@@ -109,7 +106,8 @@ const NaturaHeader: React.FC = () => {
             key="edit"
             code="edit"
             onClick={() => {
-              dispatch({ type: ActionTypeEnum.EDIT, payload: record });
+              history.push(`/natura/naturaadd/${record.id}`);
+              // dispatch({ type: ActionTypeEnum.EDIT, payload: record });
             }}
           />
           <DelIconButton
@@ -131,6 +129,27 @@ const NaturaHeader: React.FC = () => {
 
   return (
     <PageContainer>
+      <div className="site-page-header-ghost-wrapper">
+        <PageHeader
+          ghost={false}
+          onBack={() => window.history.back()}
+          title="Natura List"
+          subTitle="This is a subtitle"
+          extra={[
+            <Button key="3">List API</Button>,
+            <Button key="2">List Upload</Button>,
+            <Button
+              key="1"
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => history.push(`/natura/naturaadd`)}
+            >
+              Add
+            </Button>,
+          ]}
+        />
+      </div>
+
       <ProTable<API.NaturaHeader, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}

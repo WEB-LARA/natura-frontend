@@ -105,11 +105,37 @@
     ],
   },
   {
+    path: '/natura',
+    code: 'natura',
+    name: 'Natura',
+    icon: 'build',
+    routes: [
+      {
+        path: '/natura',
+        redirect: '/natura/naturaheader',
+      },
+      {
+        path: '/natura/naturaheader',
+        code: 'naturaheader',
+        name: 'Natura List',
+        component: './natura/Natura',
+      },
+      {
+        path: '/natura/naturaadd/:id?',
+        code: 'naturaadd',
+        name: 'natura Add',
+        component: './natura/NaturaAdd',
+        hideInMenu: true,
+      },
+    ],
+  },
+  {
     path: '/account/profile',
     name: 'account.settings',
     component: './user/Profile',
     hideInMenu: true,
   },
+
   {
     path: '/',
     redirect: '/home',

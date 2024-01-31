@@ -3,14 +3,14 @@ import type { SelectProps } from 'antd';
 import { fetchNik } from '@/services/master/nik';
 import DebounceSelect from '@/components/SelectDebounce';
 
-type NikSelectProps = {
+type NikSelectKeyProps = {
   value?: API.Nik[];
   onChange?: (value: any) => void;
 } & SelectProps;
 
-const NikSelect: React.FC<NikSelectProps> = (props) => {
+const NikSelectKey: React.FC<NikSelectKeyProps> = (props) => {
   //const [options, setOptions] = useState<SelectProps['options']>([]);
-  const [values, setValues] = useState<any>();
+  const [values, setValues] = useState<string>();
   //const [value, setValue] = useState<NikValue>();
 
   const requestNik = async (niksearch: string) => {
@@ -40,14 +40,14 @@ const NikSelect: React.FC<NikSelectProps> = (props) => {
       fetchOptions={requestNik}
       value={values}
       onChange={(value) => {
-        console.log(value);
-        setValues(value);
+        console.log(value.key);
+        setValues(value.key);
         if (props.onChange) {
-          props.onChange(value);
+          props.onChange(value.key);
         }
       }}
     />
   );
 };
 
-export default NikSelect;
+export default NikSelectKey;

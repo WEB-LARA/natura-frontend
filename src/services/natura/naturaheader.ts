@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/natura-headers */
-export async function fetchNaturaHeader(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchNaturaHeader(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.NaturaHeader[]>>('/api/v1/natura-headers', {
     method: 'GET',
     params: {
@@ -34,7 +36,11 @@ export async function getNaturaHeader(id: string, options?: { [key: string]: any
 }
 
 /** Update record by ID PUT /api/v1/natura-headers/${id} */
-export async function updateNaturaHeader(id: string, body: API.NaturaHeader, options?: { [key: string]: any }) {
+export async function updateNaturaHeader(
+  id: string,
+  body: API.NaturaHeader,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/natura-headers/${id}`, {
     method: 'PUT',
     data: body,

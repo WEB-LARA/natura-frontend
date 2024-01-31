@@ -65,10 +65,71 @@ export function convertTreeData<T>(
 }
 
 export const layout = {
-	labelCol: { span: 6 },
-	wrapperCol: { span: 18 }
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
 };
 
 export const tailLayout = {
-	wrapperCol: { offset: 6, span: 18 }
+  wrapperCol: { offset: 6, span: 18 },
 };
+
+export interface StatusCase {
+  color: string;
+  tulis: string;
+  loading: boolean;
+}
+
+export function codeToStatusCase(value: number | undefined): StatusCase {
+  let ret: StatusCase = {
+    color: 'yellow',
+    tulis: 'Not Found',
+    loading: false,
+  };
+
+  switch (value) {
+    case -2:
+      ret = {
+        color: 'orange',
+        tulis: 'Reject',
+        loading: false,
+      };
+      return ret;
+    case -1:
+      ret = {
+        color: 'red',
+        tulis: 'Error',
+        loading: false,
+      };
+      return ret;
+    case 0:
+      ret = {
+        color: 'blue',
+        tulis: 'New',
+        loading: false,
+      };
+      return ret;
+    case 1:
+      ret = {
+        color: 'gold',
+        tulis: 'Process',
+        loading: false,
+      };
+      return ret;
+    case 2:
+      ret = {
+        color: 'geekblue',
+        tulis: 'Ready',
+        loading: true,
+      };
+      return ret;
+    case 3:
+      ret = {
+        color: 'green',
+        tulis: 'Finished',
+        loading: true,
+      };
+      return ret;
+    default:
+      return ret;
+  }
+}

@@ -84,7 +84,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
             icon: <UserOutlined />,
             label: intl.formatMessage({
               id: 'component.RightContent.profile',
-              defaultMessage: '个人设置',
+              defaultMessage: 'Personal Settings',
             }),
           },
           {
@@ -97,7 +97,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       icon: <LogoutOutlined />,
       label: intl.formatMessage({
         id: 'component.RightContent.logout',
-        defaultMessage: '退出登录',
+        defaultMessage: 'Sign Out',
       }),
     },
   ];
