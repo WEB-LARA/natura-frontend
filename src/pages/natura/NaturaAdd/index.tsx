@@ -1,7 +1,6 @@
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProForm } from '@ant-design/pro-components';
 import React, { useRef, useState, useEffect } from 'react';
-
 import NaturaForm from '../Natura/components/NaturaForm';
 import NaturaLinesForm from '../Natura/components/NaturaLinesForm';
 import {
@@ -9,8 +8,10 @@ import {
   getNaturaHeader,
   updateNaturaHeader,
 } from '@/services/natura/naturaheader';
-import { PageHeader, message } from 'antd';
+import { PageHeader, Tabs, message } from 'antd';
 import { useParams } from 'umi';
+
+const { TabPane } = Tabs;
 
 const NaturaAdd: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -68,23 +69,48 @@ const NaturaAdd: React.FC = () => {
 
       <PageContainer ghost>
         <ProCard>
-        <Tabs
-        tabPosition="top"
-        defaultActiveKey="naturaTab"
-        style={{ background: '#fff', paddingTop: 25, paddingBottom: 50 }}
-      >
-          <ProForm<API.NaturaHeader>
-            onFinish={async () => {
-              try {
-                await handleFinish();
-              } catch {
-                message.error('Failed to save');
-              }
-            }}
+          <Tabs
+            tabPosition="top"
+            defaultActiveKey="pum"
+            style={{ background: '#fff', paddingBottom: 50 }}
           >
-            <NaturaForm formRef={naturaFormRef} typeDisabled={id ? true : false} />
-            <NaturaLinesForm formRef={detailsFormRef} />
-          </ProForm>
+            <TabPane key="pum" style={{ justifyContent: 'center' }} tab="PUM / Petty Cash">
+              <ProForm<API.NaturaHeader>
+                onFinish={async () => {
+                  try {
+                    await handleFinish();
+                  } catch {
+                    message.error('Failed to save');
+                  }
+                }}
+              >
+                <NaturaForm
+                  formRef={naturaFormRef}
+                  typeDisabled={id ? true : false}
+                  typePUM={true}
+                />
+                <NaturaLinesForm formRef={detailsFormRef} />
+              </ProForm>
+            </TabPane>
+            <TabPane key="other" style={{ justifyContent: 'center' }} tab="Other">
+              <ProForm<API.NaturaHeader>
+                onFinish={async () => {
+                  try {
+                    await handleFinish();
+                  } catch {
+                    message.error('Failed to save');
+                  }
+                }}
+              >
+                <NaturaForm
+                  formRef={naturaFormRef}
+                  typeDisabled={id ? true : false}
+                  typePUM={false}
+                />
+                <NaturaLinesForm formRef={detailsFormRef} />
+              </ProForm>
+            </TabPane>
+          </Tabs>
         </ProCard>
       </PageContainer>
     </>

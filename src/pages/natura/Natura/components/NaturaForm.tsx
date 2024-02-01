@@ -15,6 +15,7 @@ import CabangSelect from '@/pages/master/Cabang/components/CabangSelect';
 type NaturaFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaHeader> | undefined>;
   typeDisabled: boolean;
+  typePUM: boolean;
 };
 
 const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
@@ -83,11 +84,12 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
         </Col>
         <Col span={12}>
           <ProFormItem
+            hidden={!props.typePUM}
             name="wilayah_id"
             label="Wilayah"
             rules={[
               {
-                required: true,
+                required: props.typePUM,
                 message: 'Wilayah required',
               },
             ]}
@@ -96,13 +98,14 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
           </ProFormItem>
         </Col>
         <ProFormDigit
+          hidden={!props.typePUM}
           name="days"
           label="Jumlah Hari"
           width="sm"
           colProps={{ span: 12 }}
           rules={[
             {
-              required: true,
+              required: props.typePUM,
               message: 'Jumlah Hari required',
             },
           ]}
