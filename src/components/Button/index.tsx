@@ -7,6 +7,8 @@ import {
   QuestionCircleOutlined,
   UploadOutlined,
   ImportOutlined,
+  PlayCircleOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
 import { Button, Tooltip, Popconfirm } from 'antd';
 import type { ButtonProps, PopconfirmProps } from 'antd';
@@ -46,7 +48,7 @@ const AddIconButton: React.FC<AddIconButtonProps> = (props) => {
           title={
             props.title
               ? props.title
-              : intl.formatMessage({ id: 'button.add', defaultMessage: '添加' })
+              : intl.formatMessage({ id: 'button.add', defaultMessage: 'Add' })
           }
         >
           <Button
@@ -90,7 +92,7 @@ const DelIconButton: React.FC<DelIconButtonProps> = (props) => {
             title={
               props.buttonProps?.title
                 ? props.buttonProps.title
-                : intl.formatMessage({ id: 'button.delete', defaultMessage: '删除' })
+                : intl.formatMessage({ id: 'button.delete', defaultMessage: 'Delete' })
             }
           >
             <Button
@@ -128,7 +130,7 @@ const EditIconButton: React.FC<EditIconButtonProps> = (props) => {
           title={
             props.title
               ? props.title
-              : intl.formatMessage({ id: 'button.edit', defaultMessage: '编辑' })
+              : intl.formatMessage({ id: 'button.edit', defaultMessage: 'Edit' })
           }
         >
           <Button
@@ -145,6 +147,36 @@ const EditIconButton: React.FC<EditIconButtonProps> = (props) => {
     </>
   );
 };
+
+export type DetailIconButtonProps = {
+  icon?: React.ReactNode;
+} & ButtonProps & { code: string };
+
+const DetailIconButton: React.FC<DetailIconButtonProps> = (props) => {
+  const { initialState } = useModel('@@initialState');
+  const match = useRouteMatch();
+  const code = initialState!.routePathCodeMap![match.path];
+  const show = initialState!.flatMenus!.hasOwnProperty(`${code}.${props.code}`);
+
+  return (
+    <>
+      {show && (
+        <Tooltip title={props.title ? props.title : 'Detail'}>
+          <Button
+            size="middle"
+            shape="circle"
+            type="link"
+            icon={props.icon ? props.icon : <EyeOutlined />}
+            style={{ border: 0 }}
+            {...props}
+            title={undefined}
+          />
+        </Tooltip>
+      )}
+    </>
+  );
+};
+
 export type ExportButtonProps = ButtonProps & { code: string };
 
 const ExportButton: React.FC<ExportButtonProps> = (props) => {
@@ -160,7 +192,7 @@ const ExportButton: React.FC<ExportButtonProps> = (props) => {
         <Button icon={<UploadOutlined />} type="primary" {...props} title={undefined}>
           {props.title
             ? props.title
-            : intl.formatMessage({ id: 'button.export', defaultMessage: '导出' })}
+            : intl.formatMessage({ id: 'button.export', defaultMessage: 'Export' })}
         </Button>
       )}
     </>
@@ -181,11 +213,39 @@ const ImportButton: React.FC<ImportButtonProps> = (props) => {
         <Button icon={<ImportOutlined />} type="primary" {...props} title={undefined}>
           {props.title
             ? props.title
-            : intl.formatMessage({ id: 'button.import', defaultMessage: '导入' })}
+            : intl.formatMessage({ id: 'button.import', defaultMessage: 'Import' })}
         </Button>
       )}
     </>
   );
 };
 
-export { AddButton, AddIconButton, DelIconButton, EditIconButton, ExportButton, ImportButton };
+export type ProcessButtonProps = ButtonProps & { code: string };
+
+const ProcessButton: React.FC<ProcessButtonProps> = (props) => {
+  const { initialState } = useModel('@@initialState');
+  const match = useRouteMatch();
+  const code = initialState!.routePathCodeMap![match.path];
+  const show = initialState!.flatMenus!.hasOwnProperty(`${code}.${props.code}`);
+
+  return (
+    <>
+      {show && (
+        <Button icon={<PlayCircleOutlined />} type="primary" {...props} title={undefined}>
+          {props.title ? props.title : 'Process'}
+        </Button>
+      )}
+    </>
+  );
+};
+
+export {
+  AddButton,
+  AddIconButton,
+  DelIconButton,
+  EditIconButton,
+  DetailIconButton,
+  ExportButton,
+  ImportButton,
+  ProcessButton,
+};

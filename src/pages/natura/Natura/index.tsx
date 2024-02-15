@@ -5,16 +5,18 @@ import { ProTable } from '@ant-design/pro-components';
 import { Button, PageHeader, Space, Tag, message } from 'antd';
 import { fetchNaturaHeader, delNaturaHeader } from '@/services/natura/naturaheader';
 import NaturaHeaderModal from './components/SaveForm';
-import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
+import { EditIconButton, DelIconButton, DetailIconButton } from '@/components/Button';
 import type { StatusCase } from '@/utils/util';
-import { codeToStatusCase } from '@/utils/util';
+import { codeToStatusCase, statusFilter } from '@/utils/util';
 import { PlusOutlined } from '@ant-design/icons';
 import { history } from 'umi';
+import NaturaDetailsDrawer from './components/DetailDrawer';
 
 enum ActionTypeEnum {
   ADD,
   EDIT,
   CANCEL,
+  DETTAIL,
 }
 
 interface Action {
@@ -24,6 +26,7 @@ interface Action {
 
 interface State {
   visible: boolean;
+  visibledetail: boolean;
   title: string;
   id?: string;
 }
@@ -33,6 +36,7 @@ const NaturaHeader: React.FC = () => {
   const addTitle = 'Add Natura';
   const editTitle = 'Edit Natura';
   const delTip = 'Delete Natura';
+  const detailTitle = 'Detail Natura';
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -40,17 +44,27 @@ const NaturaHeader: React.FC = () => {
         case ActionTypeEnum.ADD:
           return {
             visible: true,
+            visibledetail: false,
             title: addTitle,
           };
         case ActionTypeEnum.EDIT:
           return {
             visible: true,
+            visibledetail: false,
             title: editTitle,
+            id: action.payload?.id,
+          };
+        case ActionTypeEnum.DETTAIL:
+          return {
+            visible: false,
+            visibledetail: true,
+            title: detailTitle,
             id: action.payload?.id,
           };
         case ActionTypeEnum.CANCEL:
           return {
             visible: false,
+            visibledetail: false,
             title: '',
             id: undefined,
           };
@@ -58,10 +72,26 @@ const NaturaHeader: React.FC = () => {
           return pre;
       }
     },
-    { visible: false, title: '' },
+    { visible: false, visibledetail: false, title: '' },
   );
 
   const columns: ProColumns<API.NaturaHeader>[] = [
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      width: 130,
+      valueType: 'select',
+      filters: true,
+      onFilter: true,
+      valueEnum: {
+        0: { text: 'New', status: 'Default' },
+        1: { text: 'Process', status: 'Processing' },
+        2: { text: 'Ready', status: 'Warning' },
+        3: { text: 'Finished', status: 'Success' },
+        100: { text: 'Error', status: 'Error' },
+        101: { text: 'Reject', status: 'Error' },
+      },
+    },
     {
       title: 'ID Natura',
       dataIndex: 'id_natura',
@@ -83,17 +113,6 @@ const NaturaHeader: React.FC = () => {
       width: 160,
       key: 'total',
       render: (_, record) => `${record.total}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        const status = record.status;
-        const stt: StatusCase = codeToStatusCase(status);
-        return <Tag color={stt.color}>{stt.tulis}</Tag>;
-      },
     },
     {
       title: 'Actions',
@@ -120,6 +139,13 @@ const NaturaHeader: React.FC = () => {
                 message.success('Delete successfully');
                 actionRef.current?.reload();
               }
+            }}
+          />
+          <DetailIconButton
+            key="Detail"
+            code="detail"
+            onClick={async () => {
+              dispatch({ type: ActionTypeEnum.DETTAIL, payload: record });
             }}
           />
         </Space>
@@ -166,15 +192,6 @@ const NaturaHeader: React.FC = () => {
           reload: true,
         }}
         dateFormatter="string"
-        toolBarRender={() => [
-          <AddButton
-            key="add"
-            code="add"
-            onClick={() => {
-              dispatch({ type: ActionTypeEnum.ADD });
-            }}
-          />,
-        ]}
       />
       <NaturaHeaderModal
         visible={state.visible}
@@ -186,6 +203,15 @@ const NaturaHeader: React.FC = () => {
         onSuccess={() => {
           dispatch({ type: ActionTypeEnum.CANCEL });
           actionRef.current?.reload();
+        }}
+      />
+
+      <NaturaDetailsDrawer
+        visible={state.visibledetail}
+        title={state.title}
+        id={state.id == null ? '' : state.id}
+        onCancel={() => {
+          dispatch({ type: ActionTypeEnum.CANCEL });
         }}
       />
     </PageContainer>

@@ -87,14 +87,14 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
   };
 
   switch (value) {
-    case -2:
+    case 102:
       ret = {
         color: 'orange',
         tulis: 'Reject',
         loading: false,
       };
       return ret;
-    case -1:
+    case 100:
       ret = {
         color: 'red',
         tulis: 'Error',
@@ -133,3 +133,12 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
       return ret;
   }
 }
+
+export const statusFilter = {
+  0: { text: 'New', status: 'Default' },
+  1: { text: 'Process', status: 'Processing' },
+  2: { text: 'Ready', status: 'Processing' },
+  3: { text: 'Finished', status: 'Success' },
+  100: { text: 'Error', status: 'Error' },
+  101: { text: 'Reject', status: 'Error' },
+};
