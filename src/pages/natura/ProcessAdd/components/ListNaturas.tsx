@@ -1,14 +1,14 @@
 import React, { useRef, useReducer } from 'react';
-import { Space, Tag, message } from 'antd';
-import { delNaturaHeader, fetchNaturaHeader } from '@/services/natura/naturaheader';
+import { Space, Tag } from 'antd';
+import { fetchNaturaHeader } from '@/services/natura/naturaheader';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import type { StatusCase } from '@/utils/util';
 import { codeToStatusCase } from '@/utils/util';
-import { DelIconButton, EditIconButton } from '@/components/Button';
-import ReconModal from './EditForm';
+import { DetailIconShowButton } from '@/components/Button';
+import NaturaDetailsDrawer from '../../Natura/components/DetailDrawer';
 
-type ListNaturasErrorProps = {
+type ListNaturasProps = {
   period: string;
 };
 
@@ -28,7 +28,7 @@ interface State {
   id?: string;
 }
 
-const ListNaturasError: React.FC<ListNaturasErrorProps> = (props: ListNaturasErrorProps) => {
+const ListNaturas: React.FC<ListNaturasProps> = (props: ListNaturasProps) => {
   const actionRef = useRef<ActionType>();
 
   const [state, dispatch] = useReducer(
@@ -62,7 +62,7 @@ const ListNaturasError: React.FC<ListNaturasErrorProps> = (props: ListNaturasErr
       key: 'id_natura',
     },
     {
-      title: 'Period',
+      title: 'Periode',
       dataIndex: 'period',
       ellipsis: true,
       width: 160,
@@ -86,23 +86,11 @@ const ListNaturasError: React.FC<ListNaturasErrorProps> = (props: ListNaturasErr
       width: 130,
       render: (_, record) => (
         <Space size={2}>
-          <EditIconButton
-            key="edit"
-            code="edit"
-            onClick={() => {
+          <DetailIconShowButton
+            key="Detail"
+            code="detail"
+            onClick={async () => {
               dispatch({ type: ActionTypeEnum.EDIT, payload: record });
-            }}
-          />
-          <DelIconButton
-            key="delete"
-            code="delete"
-            title="Delete"
-            onConfirm={async () => {
-              const res = await delNaturaHeader(record.id!);
-              if (res.success) {
-                message.success('Delete successfully');
-                actionRef.current?.reload();
-              }
             }}
           />
         </Space>
@@ -115,7 +103,7 @@ const ListNaturasError: React.FC<ListNaturasErrorProps> = (props: ListNaturasErr
       <ProTable<API.NaturaHeader, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        params={{ period: props.period, status: 102 }}
+        params={{ period: props.period, status: 2 }}
         request={fetchNaturaHeader}
         rowKey="id"
         cardBordered
@@ -130,20 +118,16 @@ const ListNaturasError: React.FC<ListNaturasErrorProps> = (props: ListNaturasErr
         }}
         dateFormatter="string"
       />
-      <ReconModal
+      <NaturaDetailsDrawer
         visible={state.visible}
         title={state.title}
-        id={state.id!}
+        id={state.id == null ? '' : state.id}
         onCancel={() => {
           dispatch({ type: ActionTypeEnum.CANCEL });
-        }}
-        onSuccess={() => {
-          dispatch({ type: ActionTypeEnum.CANCEL });
-          actionRef.current?.reload();
         }}
       />
     </>
   );
 };
 
-export default ListNaturasError;
+export default ListNaturas;

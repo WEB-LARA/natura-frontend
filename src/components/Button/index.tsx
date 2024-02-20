@@ -177,6 +177,26 @@ const DetailIconButton: React.FC<DetailIconButtonProps> = (props) => {
   );
 };
 
+const DetailIconShowButton: React.FC<DetailIconButtonProps> = (props) => {
+  return (
+    <>
+      {
+        <Tooltip title={props.title ? props.title : 'Detail'}>
+          <Button
+            size="middle"
+            shape="circle"
+            type="link"
+            icon={props.icon ? props.icon : <EyeOutlined />}
+            style={{ border: 0 }}
+            {...props}
+            title={undefined}
+          />
+        </Tooltip>
+      }
+    </>
+  );
+};
+
 export type ExportButtonProps = ButtonProps & { code: string };
 
 const ExportButton: React.FC<ExportButtonProps> = (props) => {
@@ -245,6 +265,7 @@ export {
   DelIconButton,
   EditIconButton,
   DetailIconButton,
+  DetailIconShowButton,
   ExportButton,
   ImportButton,
   ProcessButton,

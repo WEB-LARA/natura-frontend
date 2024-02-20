@@ -177,4 +177,79 @@ declare namespace API {
     /** File Upload */
     file_upload: File;
   };
+
+  // Table Batch for processed Natura
+  type NaturaProcessBatch = {
+    /** Unique ID */
+    id?: string;
+    /** Batch Number */
+    batch_number?: string;
+    /** Period Natura */
+    period?: string;
+    /** Description Header Natura */
+    description?: string;
+    /** Batch Status */
+    status?: number;
+    /** Send Date Natura */
+    send_date?: string;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+    statusChecked?: boolean;
+  };
+
+  // Table Header for processed Natura
+  type NaturaProcessHeader = {
+    /** Unique ID */
+    id?: string;
+    /** from NaturaProcessBatch.ID */
+    natura_process_batch_id?: string;
+    /** NIK Employee */
+    nik?: string;
+    /** Name Employee */
+    name?: string;
+    /** Total Amount Natura */
+    total_amount?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
+
+  // Table Lines for processed Natura
+  type NaturaProcessLine = {
+    /** Unique ID */
+    id?: string;
+    /** from NaturaProcessHeader.ID */
+    natura_process_header_id?: string;
+    /** ID Natura */
+    id_natura?: string;
+    /** Unit Code (IPT/ICC/IPP etc.) */
+    unit_code?: string;
+    /** Unit Name */
+    unit_name?: string;
+    /** Branch Code (G001/G010 etc.) */
+    branch_code?: string;
+    /** Branch Name (JAKARTA 1/SEMARANG etc.) */
+    branch_name?: string;
+    /** Account Natura */
+    account?: string;
+    /** Account Name Natura */
+    account_name?: string;
+    /** Amount Natura */
+    amount?: number;
+    /** Description Natura Detail */
+    description?: string;
+    /** From NaturaHeader.ID */
+    natura_header_id?: string;
+    /** From NaturaLine.ID */
+    natura_line_id?: string;
+    /** Transaction Date Natura */
+    trx_date?: string;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
 }

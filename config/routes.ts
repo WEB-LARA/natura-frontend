@@ -152,6 +152,19 @@
         name: 'Natura Reconciliation',
         component: './natura/Recon',
       },
+      {
+        path: '/natura/naturaprocessadd',
+        code: 'naturaprocessadd',
+        name: 'Natura Process Add',
+        component: './natura/ProcessAdd',
+        hideInMenu: true,
+      },
+      {
+        path: '/natura/naturaprocess',
+        code: 'naturaprocess',
+        name: 'Natura Process List',
+        component: './natura/ProcessBatch',
+      },
     ],
   },
   {

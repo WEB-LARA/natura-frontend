@@ -87,10 +87,17 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
   };
 
   switch (value) {
-    case 102:
+    case 101:
       ret = {
         color: 'orange',
         tulis: 'Reject',
+        loading: false,
+      };
+      return ret;
+    case 102:
+      ret = {
+        color: 'red',
+        tulis: 'Error Recon',
         loading: false,
       };
       return ret;
@@ -111,18 +118,25 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
     case 1:
       ret = {
         color: 'gold',
-        tulis: 'Process',
+        tulis: 'Recon',
         loading: false,
       };
       return ret;
     case 2:
+      ret = {
+        color: 'gold',
+        tulis: 'Process',
+        loading: false,
+      };
+      return ret;
+    case 3:
       ret = {
         color: 'geekblue',
         tulis: 'Ready',
         loading: true,
       };
       return ret;
-    case 3:
+    case 4:
       ret = {
         color: 'green',
         tulis: 'Finished',
@@ -136,9 +150,11 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
 
 export const statusFilter = {
   0: { text: 'New', status: 'Default' },
-  1: { text: 'Process', status: 'Processing' },
-  2: { text: 'Ready', status: 'Processing' },
-  3: { text: 'Finished', status: 'Success' },
+  1: { text: 'Recon', status: 'Processing' },
+  2: { text: 'Process', status: 'Processing' },
+  3: { text: 'Ready', status: 'Processing' },
+  4: { text: 'Finished', status: 'Success' },
   100: { text: 'Error', status: 'Error' },
   101: { text: 'Reject', status: 'Error' },
+  102: { text: 'Error Recon', status: 'Error' },
 };
