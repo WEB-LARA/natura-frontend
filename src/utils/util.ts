@@ -1,3 +1,4 @@
+import type { PresetStatusColorType } from 'antd/es/_util/colors';
 import MD5 from 'md5';
 
 /**
@@ -77,6 +78,7 @@ export interface StatusCase {
   color: string;
   tulis: string;
   loading: boolean;
+  status: PresetStatusColorType;
 }
 
 export function codeToStatusCase(value: number | undefined): StatusCase {
@@ -84,35 +86,16 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
     color: 'yellow',
     tulis: 'Not Found',
     loading: false,
+    status: 'default',
   };
 
   switch (value) {
-    case 101:
-      ret = {
-        color: 'orange',
-        tulis: 'Reject',
-        loading: false,
-      };
-      return ret;
-    case 102:
-      ret = {
-        color: 'red',
-        tulis: 'Error Recon',
-        loading: false,
-      };
-      return ret;
-    case 100:
-      ret = {
-        color: 'red',
-        tulis: 'Error',
-        loading: false,
-      };
-      return ret;
     case 0:
       ret = {
         color: 'blue',
         tulis: 'New',
         loading: false,
+        status: 'default',
       };
       return ret;
     case 1:
@@ -120,6 +103,7 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         color: 'gold',
         tulis: 'Recon',
         loading: false,
+        status: 'processing',
       };
       return ret;
     case 2:
@@ -127,6 +111,7 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         color: 'gold',
         tulis: 'Process',
         loading: false,
+        status: 'processing',
       };
       return ret;
     case 3:
@@ -134,27 +119,61 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         color: 'geekblue',
         tulis: 'Ready',
         loading: true,
+        status: 'warning',
       };
       return ret;
     case 4:
       ret = {
         color: 'green',
-        tulis: 'Finished',
+        tulis: 'Send',
         loading: true,
+        status: 'success',
       };
+    case 100:
+      ret = {
+        color: 'orange',
+        tulis: 'Error',
+        loading: false,
+        status: 'error',
+      };
+      return ret;
+    case 101:
+      ret = {
+        color: 'red',
+        tulis: 'Error Recon',
+        loading: false,
+        status: 'error',
+      };
+      return ret;
+    case 102:
+      ret = {
+        color: 'red',
+        tulis: 'Error Procs',
+        loading: false,
+        status: 'error',
+      };
+    case 104:
+      ret = {
+        color: 'red',
+        tulis: 'Reject',
+        loading: false,
+        status: 'error',
+      };
+      return ret;
       return ret;
     default:
       return ret;
   }
 }
 
-export const statusFilter = {
+export const StatusFilter = {
   0: { text: 'New', status: 'Default' },
   1: { text: 'Recon', status: 'Processing' },
   2: { text: 'Process', status: 'Processing' },
-  3: { text: 'Ready', status: 'Processing' },
-  4: { text: 'Finished', status: 'Success' },
+  3: { text: 'Ready', status: 'Warning' },
+  4: { text: 'Send', status: 'Success' },
   100: { text: 'Error', status: 'Error' },
-  101: { text: 'Reject', status: 'Error' },
-  102: { text: 'Error Recon', status: 'Error' },
+  101: { text: 'Error Recon', status: 'Error' },
+  102: { text: 'Error Procs', status: 'Error' },
+  104: { text: 'Reject', status: 'Error' },
 };

@@ -1,0 +1,15 @@
+# Ignore version control system files
+.git
+*.gitignore
+
+# Ignore IDE or editor related files
+.idea/
+.history
+*.log
+functions/*
+.temp/**
+.vscode
+.husky
+
+# Ignore folders
+**/node_modules

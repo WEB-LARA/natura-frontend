@@ -37,6 +37,8 @@ declare namespace API {
 
     /** Natura Lines */
     details?: NaturaLine[];
+    unit?: Unit;
+    cabang?: Cabang;
   };
 
   // Natura Line Table
@@ -112,6 +114,58 @@ declare namespace API {
 
     /** Natura Lines */
     details?: NaturaLine[];
+  };
+
+  type ReportReconForm = {
+    /** From Kelompok.ID */
+    kelompok_id?: string;
+    /** From Akun.ID */
+    akun_id?: string;
+    /** From Unit.ID */
+    unit_id?: string;
+    /** From Cabang.ID */
+    cabang_id?: string;
+    /** Period Natura */
+    period?: string;
+    /** ID Natura */
+    id_natura?: string;
+    /** Status of nik (New = 0, Proccess = 1, Error = -1, Finish = 2, Reject = -2) */
+    status?: number;
+    selisihChecked?: boolean;
+  };
+
+  type ReportPenghasilanForm = {
+    /** From Kelompok.ID */
+    kelompok_id?: string;
+    /** From Akun.ID */
+    akun_id?: string;
+    /** From Unit.ID */
+    unit_id?: string;
+    /** From Cabang.ID */
+    cabang_id?: string;
+    /** Period Natura */
+    period?: string;
+    /** ID Natura */
+    id_natura?: string;
+    /** Status of nik (New = 0, Proccess = 1, Error = -1, Finish = 2, Reject = -2) */
+    status?: number;
+    tampilan?: string;
+  };
+
+  type ReportPerincianForm = {
+    /** ID Natura */
+    id_natura?: string;
+  };
+
+  type ReportDPPNForm = {
+    /** From Kelompok.ID */
+    kelompok_id?: string;
+    /** From Akun.ID */
+    akun_id?: string;
+    /** From Unit.ID */
+    unit_id?: string;
+    /** From Cabang.ID */
+    cabang_id?: string;
   };
 
   // Tabel Header Tampungan Data Cars

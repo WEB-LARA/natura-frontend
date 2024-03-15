@@ -168,6 +168,54 @@
     ],
   },
   {
+    path: '/report',
+    code: 'report',
+    name: 'Report',
+    icon: 'printer',
+    routes: [
+      {
+        path: '/report',
+        redirect: '/report/recon',
+      },
+      {
+        path: '/report/perincian',
+        code: 'reportperincian',
+        name: 'Report Perincian',
+        component: './report/Perincian',
+      },
+      {
+        path: '/report/penghasilan',
+        code: 'reportpenghasilan',
+        name: 'Report Penghasilan',
+        component: './report/Penghasilan',
+      },
+      {
+        path: '/report/recon',
+        code: 'reportrecon',
+        name: 'Report Reconciliation',
+        component: './report/Recon',
+      },
+      {
+        path: '/report/dppn',
+        code: 'reportdppn',
+        name: 'Report DPPN',
+        component: './report/DPPN',
+      },
+      {
+        path: '/report/dtppn',
+        code: 'reportdtppn',
+        name: 'Report DTPPN',
+        component: './report/DTPPN',
+      },
+      {
+        path: '/report/dippn',
+        code: 'reportdippn',
+        name: 'Report DIPPN',
+        component: './report/DIPPN',
+      },
+    ],
+  },
+  {
     path: '/account/profile',
     name: 'account.settings',
     component: './user/Profile',

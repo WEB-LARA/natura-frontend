@@ -1,22 +1,52 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { Alert, Card, Typography } from 'antd';
-import React from 'react';
+import { PageContainer, ProCard } from '@ant-design/pro-components';
+import { Alert, Card, Descriptions, Statistic, Timeline, Typography } from 'antd';
+import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'umi';
-import styles from './Welcome.less';
+import RcResizeObserver from 'rc-resize-observer';
+import { SmileOutlined } from '@ant-design/icons';
 
-const CodePreview: React.FC = ({ children }) => (
-  <pre className={styles.pre}>
-    <code>
-      <Typography.Text copyable>{children}</Typography.Text>
-    </code>
-  </pre>
-);
+const { Divider } = ProCard;
+
+const Stat: React.FC = () => {
+  const [responsive, setResponsive] = useState(false);
+  return (
+    <RcResizeObserver
+      key="resize-observer"
+      onResize={(offset) => {
+        setResponsive(offset.width < 596);
+      }}
+    >
+      <ProCard.Group title="Status Natura" direction={responsive ? 'column' : 'row'}>
+        <ProCard>
+          <Statistic title="New" value={79.0} precision={2} />
+        </ProCard>
+        <Divider type={responsive ? 'horizontal' : 'vertical'} />
+        <ProCard>
+          <Statistic title="Recon" value={112893.0} precision={2} />
+        </ProCard>
+        <Divider type={responsive ? 'horizontal' : 'vertical'} />
+        <ProCard>
+          <Statistic title="Process" value={93} />
+        </ProCard>
+        <Divider type={responsive ? 'horizontal' : 'vertical'} />
+        <ProCard>
+          <Statistic title="Ready" value={112893.0} />
+        </ProCard>
+        <Divider type={responsive ? 'horizontal' : 'vertical'} />
+        <ProCard>
+          <Statistic title="Send" value={264638} />
+        </ProCard>
+      </ProCard.Group>
+    </RcResizeObserver>
+  );
+};
 
 const Welcome: React.FC = () => {
   const intl = useIntl();
-  const titleStyle = { fontSize: 16, marginTop: 30 };
   return (
     <PageContainer>
+      <Stat />
+      <br />
       <Card>
         <Alert
           message={intl.formatMessage({
@@ -31,45 +61,42 @@ const Welcome: React.FC = () => {
             marginBottom: 24,
           }}
         />
-        <Typography.Title style={titleStyle}>
-          <a
-            href="https://github.com/LyricTian/gin-admin"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Title>
-        <CodePreview>go install github.com/gin-admin/gin-admin-cli/v10@latest</CodePreview>
-        <Typography.Title style={titleStyle}>
-          <FormattedMessage id="pages.welcome.quickStart" />
-        </Typography.Title>
-        <CodePreview>
-          gin-admin-cli new -d ~/go/src --name testapp --desc &#39;A test API service based on
-          golang.&#39; --pkg &#39;github.com/xxx/testapp&#39;
-        </CodePreview>
-        <CodePreview>cd ~/go/src/testapp</CodePreview>
-        <CodePreview>make start</CodePreview>
-        <Typography.Text strong>
-          Open your browser and visit&nbsp;
-          <a
-            href="http://localhost:8040/swagger/index.html"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            http://localhost:8040/swagger/index.html
-          </a>
-        </Typography.Text>
-        <Typography.Title style={titleStyle}>
-          <FormattedMessage id="pages.welcome.generate" />
-        </Typography.Title>
-        <CodePreview>
-          gin-admin-cli gen -d . -m CMS -s Category --structs-comment &#39;Category management&#39;
-        </CodePreview>
-        <Typography.Title style={titleStyle}>
-          <FormattedMessage id="pages.welcome.remove" />
-        </Typography.Title>
-        <CodePreview>gin-admin-cli rm -d . -m CMS -s Category</CodePreview>
+        <Descriptions title="Welcome, Agus" style={{ marginBottom: 32 }}>
+          <Descriptions.Item label="NIK">201309289</Descriptions.Item>
+          <Descriptions.Item label="Unit">PT. Indomarco Prismatama</Descriptions.Item>
+          <Descriptions.Item label="Cabang">JAKARTA</Descriptions.Item>
+          <Descriptions.Item label="Roles">Admin</Descriptions.Item>
+        </Descriptions>
+      </Card>
+      <br />
+      <Card title="My Activity">
+        <Timeline>
+          <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+          <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+          <Timeline.Item color="red">
+            <p>Solve initial network problems 1</p>
+            <p>Solve initial network problems 2</p>
+            <p>Solve initial network problems 3 2015-09-01</p>
+          </Timeline.Item>
+          <Timeline.Item>
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </Timeline.Item>
+          <Timeline.Item color="gray">
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </Timeline.Item>
+          <Timeline.Item color="gray">
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </Timeline.Item>
+          <Timeline.Item color="#00CCFF" dot={<SmileOutlined />}>
+            <p>Custom color testing</p>
+          </Timeline.Item>
+        </Timeline>
       </Card>
     </PageContainer>
   );

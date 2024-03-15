@@ -9,6 +9,7 @@ import {
   ImportOutlined,
   PlayCircleOutlined,
   EyeOutlined,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Tooltip, Popconfirm } from 'antd';
 import type { ButtonProps, PopconfirmProps } from 'antd';
@@ -197,6 +198,24 @@ const DetailIconShowButton: React.FC<DetailIconButtonProps> = (props) => {
   );
 };
 
+export type SelectIconButtonProps = {
+  icon?: React.ReactNode;
+} & ButtonProps & { code: string };
+
+const SelectIconShowButton: React.FC<SelectIconButtonProps> = (props) => {
+  return (
+    <>
+      {
+        <Tooltip title={props.title ? props.title : 'Select'}>
+          <Button icon={<CheckCircleOutlined />} type="primary" {...props} title={undefined}>
+            {props.title ? props.title : 'Select'}
+          </Button>
+        </Tooltip>
+      }
+    </>
+  );
+};
+
 export type ExportButtonProps = ButtonProps & { code: string };
 
 const ExportButton: React.FC<ExportButtonProps> = (props) => {
@@ -269,4 +288,5 @@ export {
   ExportButton,
   ImportButton,
   ProcessButton,
+  SelectIconShowButton,
 };

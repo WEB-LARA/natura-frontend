@@ -2,12 +2,11 @@ import { PageContainer } from '@ant-design/pro-components';
 import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { Button, PageHeader, Space, Tag, message } from 'antd';
+import { Button, PageHeader, Space, message } from 'antd';
 import { fetchNaturaHeader, delNaturaHeader } from '@/services/natura/naturaheader';
 import NaturaHeaderModal from './components/SaveForm';
 import { EditIconButton, DelIconButton, DetailIconButton } from '@/components/Button';
-import type { StatusCase } from '@/utils/util';
-import { codeToStatusCase, statusFilter } from '@/utils/util';
+import { StatusFilter } from '@/utils/util';
 import { PlusOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import NaturaDetailsDrawer from './components/DetailDrawer';
@@ -83,14 +82,7 @@ const NaturaHeader: React.FC = () => {
       valueType: 'select',
       filters: true,
       onFilter: true,
-      valueEnum: {
-        0: { text: 'New', status: 'Default' },
-        1: { text: 'Process', status: 'Processing' },
-        2: { text: 'Ready', status: 'Warning' },
-        3: { text: 'Finished', status: 'Success' },
-        100: { text: 'Error', status: 'Error' },
-        101: { text: 'Reject', status: 'Error' },
-      },
+      valueEnum: StatusFilter,
     },
     {
       title: 'ID Natura',

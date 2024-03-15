@@ -18,4 +18,11 @@ export default {
       changeOrigin: true,
     },
   },
+  pre: {
+    '/api/': {
+      target: 'your pre url',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+  },
 };
