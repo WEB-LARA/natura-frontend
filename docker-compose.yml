@@ -12,8 +12,9 @@ services:
       - '8000'
     restart: always
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      - natura-frontend-network
+      - natura-backend-network
 
 # Networks to be created to facilitate communication between containers
 networks:
-  natura-frontend-network:
+  natura-backend-network:
+    external: true
