@@ -89,7 +89,7 @@ const NaturaAdd: React.FC = () => {
                   typeDisabled={id ? true : false}
                   typePUM={true}
                 />
-                <NaturaLinesForm formRef={detailsFormRef} />
+                <NaturaLinesForm formRef={detailsFormRef} typePUM={true} />
               </ProForm>
             </TabPane>
             <TabPane key="other" style={{ justifyContent: 'center' }} tab="Other">
@@ -107,7 +107,7 @@ const NaturaAdd: React.FC = () => {
                   typeDisabled={id ? true : false}
                   typePUM={false}
                 />
-                <NaturaLinesForm formRef={detailsFormRef} />
+                <NaturaLinesForm formRef={detailsFormRef} typePUM={false} />
               </ProForm>
             </TabPane>
           </Tabs>

@@ -136,17 +136,6 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
           },
         ]}
       />
-      <ProFormText
-        name="name"
-        label="Account Name"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Name required',
-          },
-        ]}
-      />
       <ProFormTextArea
         name="description"
         label="Description"

@@ -66,9 +66,9 @@ const Unit: React.FC = () => {
     },
     {
       title: 'Kode Inisial',
-      dataIndex: 'code2',
+      dataIndex: 'reference_id',
       width: 130,
-      key: 'code2', // Query field name
+      key: 'reference_id', // Query field name
     },
     {
       title: 'Name',
@@ -78,17 +78,13 @@ const Unit: React.FC = () => {
       key: 'name', // Query field name
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
+      title: 'Active',
+      dataIndex: 'flag_active',
       width: 130,
       search: false,
       render: (_, record) => {
-        const status = record.status;
-        return (
-          <Tag color={status === 'enabled' ? 'success' : 'error'}>
-            {status === 'enabled' ? 'enabled' : 'disabled'}
-          </Tag>
-        );
+        const status = record.flag_active;
+        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
       },
     },
     {
@@ -141,6 +137,7 @@ const Unit: React.FC = () => {
           reload: true,
         }}
         dateFormatter="string"
+        scroll={{ x: 1000 }}
         toolBarRender={() => [
           <AddButton
             key="add"

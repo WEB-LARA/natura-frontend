@@ -1,6 +1,12 @@
 import React from 'react';
 import { useIntl } from 'umi';
-import { ProFormList, ProForm, ProFormItem, ProFormMoney } from '@ant-design/pro-components';
+import {
+  ProFormList,
+  ProForm,
+  ProFormItem,
+  ProFormMoney,
+  ProFormDigit,
+} from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { Col } from 'antd';
 import AkunSelect from '@/pages/master/Akun/components/AkunSelect';
@@ -8,6 +14,7 @@ import NikSelectKey from '@/pages/master/Nik/components/NikSelectKey';
 
 type NaturaLinesFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaLine> | undefined>;
+  typePUM: boolean;
 };
 
 const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormProps) => {
@@ -41,7 +48,7 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
                 <NikSelectKey placeholder="Select NIK" />
               </ProFormItem>
             </Col>
-            <Col span={12}>
+            <Col span={8}>
               <ProFormItem
                 name="akun_id"
                 label="Akun"
@@ -52,9 +59,22 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
                   },
                 ]}
               >
-                <AkunSelect placeholder="Select Akun" />
+                <AkunSelect flagPUM={props.typePUM} placeholder="Select Akun" />
               </ProFormItem>
             </Col>
+            <ProFormDigit
+              hidden={!props.typePUM}
+              name="total_qty"
+              label="Qty"
+              width="sm"
+              colProps={{ span: 4 }}
+              rules={[
+                {
+                  required: props.typePUM,
+                  message: 'Jumlah required',
+                },
+              ]}
+            />
             <ProFormMoney
               label="Amount"
               colProps={{ span: 6 }}

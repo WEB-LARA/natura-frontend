@@ -85,6 +85,15 @@ const NaturaHeader: React.FC = () => {
       valueEnum: StatusFilter,
     },
     {
+      title: 'Cabang',
+      dataIndex: 'cabang.code',
+      width: 130,
+      search: false,
+      render: (_, record) => {
+        return record.cabang ? <Space>{record.cabang?.code}</Space> : '-';
+      },
+    },
+    {
       title: 'ID Natura',
       dataIndex: 'id_natura',
       ellipsis: true,
@@ -184,6 +193,7 @@ const NaturaHeader: React.FC = () => {
           reload: true,
         }}
         dateFormatter="string"
+        scroll={{ x: 1000 }}
       />
       <NaturaHeaderModal
         visible={state.visible}

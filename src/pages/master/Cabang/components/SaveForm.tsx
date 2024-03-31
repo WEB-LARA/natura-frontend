@@ -26,7 +26,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
       getCabang(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
-          data.statusChecked = data.status === 'enabled';
+          //data.statusChecked = data.status === 'enabled';
           formRef.current?.setFieldsValue(data);
         }
       });
@@ -57,7 +57,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
         },
       }}
       onFinish={async (values: API.Cabang) => {
-        values.status = values.statusChecked ? 'enabled' : 'disabled';
+        // values.status = values.statusChecked ? 'enabled' : 'disabled';
         //values.unit_id = values.unit?.id;
         delete values.statusChecked;
 
@@ -86,14 +86,26 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
         ]}
       />
       <ProFormText
-        name="code2"
+        name="dc_code"
         label="Kode DC"
         tooltip="Kode untuk keperluan dengan SD2"
         colProps={{ span: 12 }}
         rules={[
           {
             required: true,
-            message: 'Kode 2 required',
+            message: 'Kode DC required',
+          },
+        ]}
+      />
+      <ProFormText
+        name="reference_id"
+        label="Reference Id"
+        tooltip="Reference Id Example: 16,70,44"
+        colProps={{ span: 12 }}
+        rules={[
+          {
+            required: true,
+            message: 'Reference Id required',
           },
         ]}
       />
@@ -123,11 +135,11 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
         ]}
       />
       <ProFormSwitch
-        name="statusChecked"
+        name="flag_active"
         label="Active"
         fieldProps={{
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          checkedChildren: true,
+          unCheckedChildren: false,
         }}
         colProps={{ span: 12 }}
       />

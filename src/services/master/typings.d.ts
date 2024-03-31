@@ -4,12 +4,13 @@ declare namespace API {
     id?: string;
     /** Code of Code (unique for same parent) */
     code?: string;
+    reference_id?: string;
     /** Display name of Tes */
     name?: string;
     /** Sequence for sorting */
     sequence?: number;
     /** Status of unit (disabled, enabled) */
-    status?: string;
+    flag_active?: boolean;
     /** Create time */
     created_at?: string;
     /** Update time */
@@ -22,6 +23,7 @@ declare namespace API {
     id?: string;
     /** Code of Cabang (unique for same parent) */
     code?: string;
+    reference_id?: string;
     /** ID of Unit */
     unit_id?: string;
     /** Display name of Cabang */
@@ -29,7 +31,7 @@ declare namespace API {
     /** Sequence for sorting */
     sequence?: number;
     /** Status of unit (disabled, enabled) */
-    status?: string;
+    flag_active?: boolean;
     /** Create time */
     created_at?: string;
     /** Update time */
@@ -58,7 +60,7 @@ declare namespace API {
     /** Code of NikOld (unique for same parent) */
     nik_old?: string;
     /** Status of nik (disabled = 0, enabled = 1) */
-    status?: number;
+    flag_aktif?: boolean;
     /** Update time */
     updated_at_sd2?: string;
     /** Create time */

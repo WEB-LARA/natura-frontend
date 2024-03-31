@@ -14,7 +14,7 @@ const NikSelect: React.FC<NikSelectProps> = (props) => {
   //const [value, setValue] = useState<NikValue>();
 
   const requestNik = async (niksearch: string) => {
-    const res = await fetchNik({ status: 'enabled', resultType: 'select', nik: niksearch });
+    const res = await fetchNik({ flag_aktif: true, resultType: 'select', nik: niksearch });
     if (res.data) {
       return res.data.map((item) => {
         return { label: item.nik + ' - ' + item.name, value: item.id };

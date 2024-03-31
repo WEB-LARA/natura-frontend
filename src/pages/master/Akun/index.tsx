@@ -74,11 +74,11 @@ const Akun: React.FC = () => {
       key: 'account', // Query field name
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Description',
+      dataIndex: 'description',
       ellipsis: true,
       width: 160,
-      key: 'name', // Query field name
+      key: 'description', // Query field name
     },
     {
       title: 'Active',
@@ -143,6 +143,7 @@ const Akun: React.FC = () => {
           fullScreen: true,
           reload: true,
         }}
+        scroll={{ x: 1000 }}
         dateFormatter="string"
         toolBarRender={() => [
           <AddButton

@@ -25,7 +25,7 @@ const CabangTagSelect: React.FC<CabangTagSelectProps> = (props) => {
       }
     };
 
-    request({ unit_id: props.unitid, status: 'enabled', resultType: 'select', pageSize: 100 }).then(
+    request({ unit_id: props.unitid, flag_active: true, resultType: 'select', pageSize: 100 }).then(
       (data) => {
         setOptions(data);
       },

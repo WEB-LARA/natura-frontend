@@ -85,7 +85,7 @@ const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeader
       onCancel={props.onCancel}
     >
       <NaturaForm formRef={naturaFormRef} typeDisabled={props.id ? true : false} typePUM={true} />
-      <NaturaLinesForm formRef={detailsFormRef} />
+      <NaturaLinesForm formRef={detailsFormRef} typePUM={true} />
     </Modal>
   );
 };

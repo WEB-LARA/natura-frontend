@@ -64,6 +64,7 @@ const Cabang: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'unit_name', // Query field unit_name
+      search: false,
     },
     {
       title: 'Kode Cabang',
@@ -73,9 +74,15 @@ const Cabang: React.FC = () => {
     },
     {
       title: 'Kode DC',
-      dataIndex: 'code2',
+      dataIndex: 'dc_code',
       width: 130,
-      key: 'code2', // Query field name
+      key: 'dc_code', // Query field name
+    },
+    {
+      title: 'Reference ID',
+      dataIndex: 'reference_id',
+      width: 130,
+      key: 'reference_id', // Query field name
     },
     {
       title: 'Name',
@@ -85,17 +92,13 @@ const Cabang: React.FC = () => {
       key: 'name', // Query field name
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
+      title: 'Active',
+      dataIndex: 'flag_active',
       width: 130,
       search: false,
       render: (_, record) => {
-        const status = record.status;
-        return (
-          <Tag color={status === 'enabled' ? 'success' : 'error'}>
-            {status === 'enabled' ? 'enabled' : 'disabled'}
-          </Tag>
-        );
+        const status = record.flag_active;
+        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
       },
     },
     {
@@ -147,6 +150,7 @@ const Cabang: React.FC = () => {
           fullScreen: true,
           reload: true,
         }}
+        scroll={{ x: 1000 }}
         dateFormatter="string"
         toolBarRender={() => [
           <AddButton

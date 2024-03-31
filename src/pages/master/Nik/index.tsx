@@ -64,6 +64,7 @@ const Nik: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'unit_name', // Query field unit_name
+      search: false,
     },
     {
       title: 'Cabang',
@@ -86,17 +87,13 @@ const Nik: React.FC = () => {
       key: 'name', // Query field name
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
+      title: 'Active',
+      dataIndex: 'flag_aktif',
       width: 130,
       search: false,
       render: (_, record) => {
-        const status = record.status;
-        return (
-          <Tag color={status === 1 ? 'success' : 'error'}>
-            {status === 1 ? 'enabled' : 'disabled'}
-          </Tag>
-        );
+        const status = record.flag_aktif;
+        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
       },
     },
     {
@@ -148,6 +145,7 @@ const Nik: React.FC = () => {
           fullScreen: true,
           reload: true,
         }}
+        scroll={{ x: 1000 }}
         dateFormatter="string"
         toolBarRender={() => [
           <AddButton

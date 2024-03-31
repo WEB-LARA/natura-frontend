@@ -34,6 +34,7 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+    description?: string;
 
     /** Natura Lines */
     details?: NaturaLine[];
@@ -49,8 +50,11 @@ declare namespace API {
     natura_header_id?: string;
     /** From Akun.ID */
     akun_id?: string;
+    akun_acc?: string;
     /** From Nik.ID */
     nik_id?: string;
+    nik_num?: string;
+    total_qty?: number;
     /** Amount Natura */
     amount?: number;
     /** Amount Budget Natura */

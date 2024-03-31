@@ -94,8 +94,8 @@ const KelompokModal: React.FC<KelompokModalProps> = (props: KelompokModalProps) 
         name="flag_active"
         label="Active"
         fieldProps={{
-          checkedChildren: 'enabled',
-          unCheckedChildren: 'disabled',
+          checkedChildren: true,
+          unCheckedChildren: false,
         }}
         colProps={{ span: 12 }}
       />

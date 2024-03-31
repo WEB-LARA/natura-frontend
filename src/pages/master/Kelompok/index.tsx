@@ -78,11 +78,7 @@ const Kelompok: React.FC = () => {
       search: false,
       render: (_, record) => {
         const status = record.flag_active;
-        return (
-          <Tag color={status === true ? 'success' : 'error'}>
-            {status === true ? 'enabled' : 'disabled'}
-          </Tag>
-        );
+        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
       },
     },
     {
@@ -134,6 +130,7 @@ const Kelompok: React.FC = () => {
           fullScreen: true,
           reload: true,
         }}
+        scroll={{ x: 1000 }}
         dateFormatter="string"
         toolBarRender={() => [
           <AddButton

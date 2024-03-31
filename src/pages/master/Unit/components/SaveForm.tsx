@@ -25,7 +25,7 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
       getUnit(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
-          data.statusChecked = data.status === 'enabled';
+          //data.statusChecked = data.status === 'enabled';
           formRef.current?.setFieldsValue(data);
         }
       });
@@ -55,7 +55,7 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
         },
       }}
       onFinish={async (values: API.Unit) => {
-        values.status = values.statusChecked ? 'enabled' : 'disabled';
+        // values.status = values.statusChecked ? 'enabled' : 'disabled';
         delete values.statusChecked;
 
         if (props.id) {
@@ -82,9 +82,9 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
         ]}
       />
       <ProFormText
-        name="code2"
+        name="reference_id"
         label="Kode Inisial"
-        tooltip="Kode untuk keperluan dengan SD2"
+        tooltip="Kode untuk keperluan dengan SD2. Contoh: 1,9,A"
         colProps={{ span: 12 }}
         rules={[
           {
@@ -106,11 +106,11 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
       />
 
       <ProFormSwitch
-        name="statusChecked"
+        name="flag_active"
         label="Active"
         fieldProps={{
-          checkedChildren: 'Enabled',
-          unCheckedChildren: 'Disabled',
+          checkedChildren: true,
+          unCheckedChildren: false,
         }}
         colProps={{ span: 12 }}
       />

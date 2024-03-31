@@ -28,7 +28,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
       getNik(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
-          data.statusChecked = data.status === 0;
+          //  data.statusChecked = data.status === 0;
           formRef.current?.setFieldsValue(data);
         }
       });
@@ -58,7 +58,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
         },
       }}
       onFinish={async (values: API.Nik) => {
-        values.status = values.statusChecked ? 0 : 1;
+        //values.status = values.statusChecked ? 0 : 1;
         delete values.statusChecked;
 
         if (props.id) {
@@ -131,7 +131,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
         ]}
       />
       <ProFormSwitch
-        name="statusChecked"
+        name="flag_aktif"
         label="Active"
         fieldProps={{
           checkedChildren: 'Enabled',

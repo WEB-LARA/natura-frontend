@@ -24,7 +24,7 @@ const KelompokSelect: React.FC<KelompokSelectProps> = (props) => {
       }
     };
 
-    request({ status: 'enabled', resultType: 'select' }).then((data) => {
+    request({ flag_active: true, resultType: 'select' }).then((data) => {
       setOptions(data);
     });
   }, []);

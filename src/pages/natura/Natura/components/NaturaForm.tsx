@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   ProForm,
   ProFormText,
-  ProFormDigit,
   ProFormTextArea,
   ProFormItem,
   ProFormDatePicker,
@@ -97,19 +96,6 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
             <CabangSelect unitid={unitId} placeholder="Select Wilayah" />
           </ProFormItem>
         </Col>
-        <ProFormDigit
-          hidden={!props.typePUM}
-          name="days"
-          label="Jumlah Hari"
-          width="sm"
-          colProps={{ span: 12 }}
-          rules={[
-            {
-              required: props.typePUM,
-              message: 'Jumlah Hari required',
-            },
-          ]}
-        />
         <ProFormTextArea
           name="description"
           tooltip="keterangan"

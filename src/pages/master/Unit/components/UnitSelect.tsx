@@ -17,7 +17,7 @@ const UnitSelect: React.FC<UnitSelectProps> = (props) => {
       const res = await fetchUnit(params);
       if (res.data) {
         return res.data.map((item) => {
-          return { label: item.code2 + ' - ' + item.name, value: item.id };
+          return { label: item.reference_id + ' - ' + item.name, value: item.id };
         });
       } else {
         return [];

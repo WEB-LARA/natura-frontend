@@ -6,6 +6,7 @@ import { fetchAkun } from '@/services/master/akun';
 type AkunSelectProps = {
   value?: API.Akun[];
   onChange?: (value: string) => void;
+  flagPUM?: boolean;
 } & SelectProps;
 
 const AkunSelect: React.FC<AkunSelectProps> = (props) => {
@@ -17,17 +18,22 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
       const res = await fetchAkun(params);
       if (res.data) {
         return res.data.map((item) => {
-          return { label: item.account + ' - ' + item.name, value: item.id };
+          return { label: item.account + ' - ' + item.description, value: item.id };
         });
       } else {
         return [];
       }
     };
 
-    request({ status: 'enabled', resultType: 'select', pageSize: 100 }).then((data) => {
+    request({
+      flag_active: true,
+      flag_pum: props.flagPUM,
+      resultType: 'select',
+      pageSize: 100,
+    }).then((data) => {
       setOptions(data);
     });
-  }, []);
+  }, [props.flagPUM]);
 
   useEffect(() => {
     if (props.value) {
