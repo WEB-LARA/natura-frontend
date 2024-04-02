@@ -92,6 +92,7 @@ declare namespace API {
     id?: string;
     /** From Kelompok.ID */
     kelompok_id?: string;
+    source_id?: string;
     /** Unit.ID Account Natura */
     unit_id?: string;
     /** Account Natura */
@@ -118,5 +119,21 @@ declare namespace API {
     updated_at?: string;
     unit: Unit;
     kelompok: Kelompok;
+  };
+
+  // Table Master Source
+  type Source = {
+    /** Unique ID */
+    id?: string;
+    /** Source Name */
+    name?: string;
+    /** Flag Generate ID Natura (true/false) */
+    gen_id_natura?: boolean;
+    /** Flag Active */
+    flag_active?: boolean;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
   };
 }

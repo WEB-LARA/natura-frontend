@@ -90,12 +90,12 @@
         name: 'Kelompok',
         component: './master/Kelompok',
       },
-      // {
-      //   path: '/master/source',
-      //   code: 'source',
-      //   name: 'Source',
-      //   component: './master/source',
-      // },
+      {
+        path: '/master/msource',
+        code: 'msource',
+        name: 'Source',
+        component: './master/Msource',
+      },
       {
         path: '/master/akun',
         code: 'akun',

@@ -176,6 +176,7 @@ const ListFile: React.FC = () => {
           labelWidth: 'auto',
         }}
         pagination={{ pageSize: 10, showSizeChanger: true }}
+        scroll={{ x: 1000 }}
         options={{
           density: true,
           fullScreen: true,

@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/natura-process-headers */
-export async function fetchNaturaProcessHeader(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchNaturaProcessHeader(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.NaturaProcessHeader[]>>('/api/v1/natura-process-headers', {
     method: 'GET',
     params: {
@@ -17,7 +19,10 @@ export async function fetchNaturaProcessHeader(params: API.PaginationParam, opti
 }
 
 /** Create record POST /api/v1/natura-process-headers */
-export async function addNaturaProcessHeader(body: API.NaturaProcessHeader, options?: { [key: string]: any }) {
+export async function addNaturaProcessHeader(
+  body: API.NaturaProcessHeader,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.NaturaProcessHeader>>('/api/v1/natura-process-headers', {
     method: 'POST',
     data: body,
@@ -27,14 +32,21 @@ export async function addNaturaProcessHeader(body: API.NaturaProcessHeader, opti
 
 /** Get record by ID GET /api/v1/natura-process-headers/${id} */
 export async function getNaturaProcessHeader(id: string, options?: { [key: string]: any }) {
-  return request<API.ResponseResult<API.NaturaProcessHeader>>(`/api/v1/natura-process-headers/${id}`, {
-    method: 'GET',
-    ...(options || {}),
-  });
+  return request<API.ResponseResult<API.NaturaProcessHeader>>(
+    `/api/v1/natura-process-headers/${id}`,
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
 }
 
 /** Update record by ID PUT /api/v1/natura-process-headers/${id} */
-export async function updateNaturaProcessHeader(id: string, body: API.NaturaProcessHeader, options?: { [key: string]: any }) {
+export async function updateNaturaProcessHeader(
+  id: string,
+  body: API.NaturaProcessHeader,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/natura-process-headers/${id}`, {
     method: 'PUT',
     data: body,

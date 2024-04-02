@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/natura-process-lines */
-export async function fetchNaturaProcessLine(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchNaturaProcessLine(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.NaturaProcessLine[]>>('/api/v1/natura-process-lines', {
     method: 'GET',
     params: {
@@ -17,7 +19,10 @@ export async function fetchNaturaProcessLine(params: API.PaginationParam, option
 }
 
 /** Create record POST /api/v1/natura-process-lines */
-export async function addNaturaProcessLine(body: API.NaturaProcessLine, options?: { [key: string]: any }) {
+export async function addNaturaProcessLine(
+  body: API.NaturaProcessLine,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.NaturaProcessLine>>('/api/v1/natura-process-lines', {
     method: 'POST',
     data: body,
@@ -34,7 +39,11 @@ export async function getNaturaProcessLine(id: string, options?: { [key: string]
 }
 
 /** Update record by ID PUT /api/v1/natura-process-lines/${id} */
-export async function updateNaturaProcessLine(id: string, body: API.NaturaProcessLine, options?: { [key: string]: any }) {
+export async function updateNaturaProcessLine(
+  id: string,
+  body: API.NaturaProcessLine,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/natura-process-lines/${id}`, {
     method: 'PUT',
     data: body,

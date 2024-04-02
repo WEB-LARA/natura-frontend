@@ -13,6 +13,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { addAkun, getAkun, updateAkun } from '@/services/master/akun';
 import UnitSelect from '../../Unit/components/UnitSelect';
 import KelompokSelect from '../../Kelompok/components/KelompokSelect';
+import SourceSelect from '../../Msource/components/SourceSelect';
 
 type AkunModalProps = {
   onSuccess: () => void;
@@ -123,6 +124,20 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
           ]}
         >
           <KelompokSelect placeholder="Select Kelompok" />
+        </ProFormItem>
+      </Col>
+      <Col span={12}>
+        <ProFormItem
+          name="source_id"
+          label="Source"
+          rules={[
+            {
+              required: true,
+              message: 'source required',
+            },
+          ]}
+        >
+          <SourceSelect placeholder="Select Source" />
         </ProFormItem>
       </Col>
       <ProFormText

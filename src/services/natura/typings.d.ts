@@ -177,7 +177,7 @@ declare namespace API {
     /** Unique ID */
     id?: string;
     /** Document Number */
-    document_num?: string;
+    document_number?: string;
     /** ID Natura Cars */
     id_natura?: string;
     /** Program Source (Cars) */
