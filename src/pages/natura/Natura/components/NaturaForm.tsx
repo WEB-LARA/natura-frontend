@@ -10,6 +10,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { Col } from 'antd';
 import UnitSelect from '@/pages/master/Unit/components/UnitSelect';
 import CabangSelect from '@/pages/master/Cabang/components/CabangSelect';
+import WilayahSelect from '@/pages/master/Wilayah/components/WilayahSelect';
 
 type NaturaFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaHeader> | undefined>;
@@ -93,7 +94,7 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
               },
             ]}
           >
-            <CabangSelect unitid={unitId} placeholder="Select Wilayah" />
+            <WilayahSelect placeholder="Select Wilayah" />
           </ProFormItem>
         </Col>
         <ProFormTextArea

@@ -81,7 +81,7 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
         },
       }}
       onFinish={async (values: API.Akun) => {
-        values.flag_tax_object = values.flag_tax_object ? true : false;
+        values.tax_object = values.tax_object ? true : false;
         values.flag_pum = values.flag_pum ? true : false;
         values.flag_template = values.flag_template ? true : false;
         values.flag_active = values.flag_active ? true : false;
@@ -183,7 +183,7 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
       />
 
       <ProFormSwitch
-        name="flag_tax_object"
+        name="tax_object"
         label="Flag Tax Object"
         fieldProps={{
           checkedChildren: 'Enabled',

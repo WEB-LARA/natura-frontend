@@ -24,6 +24,7 @@ declare namespace API {
     /** Code of Cabang (unique for same parent) */
     code?: string;
     reference_id?: string;
+    dc_code?: string;
     /** ID of Unit */
     unit_id?: string;
     /** Display name of Cabang */
@@ -39,6 +40,19 @@ declare namespace API {
     statusChecked?: boolean;
     /** Unit */
     unit?: Unit;
+  };
+
+  type Wilayah = {
+    /** Unique ID */
+    id?: string;
+    /** Code of Code (unique for same parent) */
+    code?: string;
+    /** Display name of Tes */
+    name?: string;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
   };
 
   // Master Nik management
@@ -106,7 +120,7 @@ declare namespace API {
     /** Limit Amount Natura */
     limit_amount?: number;
     /** Flag Tax Object */
-    flag_tax_object?: boolean;
+    tax_object?: boolean;
     /** Flag PUM */
     flag_pum?: boolean;
     /** Flag Template */

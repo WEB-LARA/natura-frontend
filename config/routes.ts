@@ -69,14 +69,20 @@
       {
         path: '/master/unit',
         code: 'unit',
-        name: 'unit',
+        name: 'Unit',
         component: './master/Unit',
       },
       {
         path: '/master/cabang',
         code: 'cabang',
-        name: 'cabang',
+        name: 'Cabang',
         component: './master/Cabang',
+      },
+      {
+        path: '/master/wilayah',
+        code: 'wilayah',
+        name: 'Wilayah',
+        component: './master/Wilayah',
       },
       {
         path: '/master/nik',

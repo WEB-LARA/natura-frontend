@@ -2,10 +2,10 @@ import { PageContainer } from '@ant-design/pro-components';
 import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { Space, Tag, message } from 'antd';
-import { fetchCabang, delCabang } from '@/services/master/cabang';
-import CabangModal from './components/SaveForm';
+import { Space, message } from 'antd';
+import WilayahModal from './components/SaveForm';
 import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
+import { delWilayah, fetchWilayah } from '@/services/master/wilayah';
 
 enum ActionTypeEnum {
   ADD,
@@ -15,7 +15,7 @@ enum ActionTypeEnum {
 
 interface Action {
   type: ActionTypeEnum;
-  payload?: API.Cabang;
+  payload?: API.Wilayah;
 }
 
 interface State {
@@ -24,11 +24,11 @@ interface State {
   id?: string;
 }
 
-const Cabang: React.FC = () => {
+const Wilayah: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const addTitle = 'Add Cabang';
-  const editTitle = 'Edit Cabang';
-  const delTip = 'Delete Cabang';
+  const addTitle = 'Add Wilayah';
+  const editTitle = 'Edit Wilayah';
+  const delTip = 'Delete Wilayah';
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -57,41 +57,12 @@ const Cabang: React.FC = () => {
     { visible: false, title: '' },
   );
 
-  const columns: ProColumns<API.Cabang>[] = [
-    // {
-    //   title: 'Unit',
-    //   dataIndex: 'unit_name',
-    //   ellipsis: true,
-    //   width: 160,
-    //   key: 'unit_name', // Query field unit_name
-    //   search: false,
-    // },
+  const columns: ProColumns<API.Wilayah>[] = [
     {
-      title: 'Unit',
-      dataIndex: 'unit.code',
-      width: 100,
-      search: false,
-      render: (_, record) => {
-        return record.unit ? <Space>{record.unit?.code}</Space> : '-';
-      },
-    },
-    {
-      title: 'Kode Cabang',
+      title: 'Kode Wilayah',
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
-    },
-    {
-      title: 'Kode DC',
-      dataIndex: 'dc_code',
-      width: 130,
-      key: 'dc_code', // Query field name
-    },
-    {
-      title: 'Reference ID',
-      dataIndex: 'reference_id',
-      width: 130,
-      key: 'reference_id', // Query field name
     },
     {
       title: 'Name',
@@ -101,17 +72,7 @@ const Cabang: React.FC = () => {
       key: 'name', // Query field name
     },
     {
-      title: 'Active',
-      dataIndex: 'flag_active',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        const status = record.flag_active;
-        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
-      },
-    },
-    {
-      title: 'Actions',
+      title: 'Action',
       valueType: 'option',
       key: 'option',
       width: 130,
@@ -129,7 +90,7 @@ const Cabang: React.FC = () => {
             code="delete"
             title={delTip}
             onConfirm={async () => {
-              const res = await delCabang(record.id!);
+              const res = await delWilayah(record.id!);
               if (res.success) {
                 message.success('Delete successfully');
                 actionRef.current?.reload();
@@ -143,11 +104,11 @@ const Cabang: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<API.Cabang, API.PaginationParam>
-        headerTitle="Master Cabang"
+      <ProTable<API.Wilayah, API.PaginationParam>
+        headerTitle="Master Wilayah"
         columns={columns}
         actionRef={actionRef}
-        request={fetchCabang}
+        request={fetchWilayah}
         rowKey="id"
         cardBordered
         search={{
@@ -159,8 +120,8 @@ const Cabang: React.FC = () => {
           fullScreen: true,
           reload: true,
         }}
-        scroll={{ x: 1000 }}
         dateFormatter="string"
+        scroll={{ x: 1000 }}
         toolBarRender={() => [
           <AddButton
             key="add"
@@ -171,7 +132,7 @@ const Cabang: React.FC = () => {
           />,
         ]}
       />
-      <CabangModal
+      <WilayahModal
         visible={state.visible}
         title={state.title}
         id={state.id}
@@ -187,4 +148,4 @@ const Cabang: React.FC = () => {
   );
 };
 
-export default Cabang;
+export default Wilayah;
