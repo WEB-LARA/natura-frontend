@@ -4,6 +4,7 @@ import { PageHeader, message } from 'antd';
 import { useRef, useState } from 'react';
 import ListNaturasError from './components/ListNaturasError';
 import ResultRecon from './components/ResultRecon';
+import { reconNatura } from '@/services/natura/naturaheader';
 
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -75,6 +76,8 @@ const Recon: React.FC = () => {
               }}
               onFinish={async () => {
                 // TODO: check is still error in that period
+
+                await reconNatura({ period: period });
 
                 console.log(formRef.current?.getFieldsValue());
                 return true;

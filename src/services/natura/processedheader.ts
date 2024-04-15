@@ -19,6 +19,18 @@ export async function fetchNaturaProcessHeader(
 }
 
 /** Create record POST /api/v1/natura-process-headers */
+export async function createNaturaProcessHeader(
+  body: API.NaturaProcessCreate,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResponseResult<API.NaturaProcessCreate>>('/api/v1/natura-create-batch', {
+    method: 'POST',
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** Create record POST /api/v1/natura-process-headers */
 export async function addNaturaProcessHeader(
   body: API.NaturaProcessHeader,
   options?: { [key: string]: any },

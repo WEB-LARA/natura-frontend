@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useIntl } from 'umi';
 import { message, Modal } from 'antd';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import NaturaLinesForm from '../../Natura/components/NaturaLinesForm';
-import { getCarsApiHeader } from '@/services/natura/naturaapi';
-import NaturaHeaderAPIDesc from './APIHeaderDesc';
+import HeaderAPIDesc from './APIHeaderDesc';
+import { getOracleGl, updateOracleGl } from '@/services/oracle/oraclegl';
+import GlAPILinesForm from './GlAPILinesForm';
 
-type TampFileHeaderModalProps = {
+type GlAPIModalProps = {
   onSuccess: () => void;
   onCancel: () => void;
   visible: boolean;
@@ -14,28 +14,24 @@ type TampFileHeaderModalProps = {
   id: string;
 };
 
-const TampFileHeaderModal: React.FC<TampFileHeaderModalProps> = (
-  props: TampFileHeaderModalProps,
-) => {
+const GlAPIModal: React.FC<GlAPIModalProps> = (props: GlAPIModalProps) => {
   const intl = useIntl();
-  const naturaFormRef = useRef<ProFormInstance<API.CarsHeader>>();
-  const detailsFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
-  const [formData, setFormData] = useState<API.CarsHeader>({});
+  const detailsFormRef = useRef<ProFormInstance<API.OracleGl>>();
+  const [formData, setFormData] = useState<API.OracleGl>({});
 
   useEffect(() => {
     if (!props.visible) {
       return;
     }
 
-    naturaFormRef.current?.resetFields();
     detailsFormRef.current?.resetFields();
 
     if (props.id) {
-      getCarsApiHeader(props.id).then(async (res) => {
+      getOracleGl(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
+          console.log(data);
 
-          naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
           setFormData(data);
         }
@@ -44,18 +40,21 @@ const TampFileHeaderModal: React.FC<TampFileHeaderModalProps> = (
   }, [props]);
 
   const handleFinish = async () => {
-    const natura = await naturaFormRef.current?.validateFields();
-    if (natura) {
-      delete natura.statusChecked;
-
-      const naturadetails = await detailsFormRef.current?.validateFields();
-      if (naturadetails) {
-        // natura.details = naturadetails?.details;
+    if (formData) {
+      const datadetails = await detailsFormRef.current?.validateFields();
+      if (datadetails) {
+        let total = 0;
+        datadetails?.details?.forEach(function (value) {
+          total = total + value.amount!;
+        });
+        if (formData.amount! != total) {
+          message.error('Jumlah Total belum sama: ' + formData.amount! + ' Input: ' + total);
+          return;
+        }
+        formData.details = datadetails?.details;
       }
-
       if (props.id) {
-        //delete formData.details;
-        //await updateTampFileHeader(props.id, { ...formData, ...natura });
+        await updateOracleGl(props.id, { ...formData });
       }
       message.success(intl.formatMessage({ id: 'component.message.success.save' }));
       props.onSuccess();
@@ -80,11 +79,11 @@ const TampFileHeaderModal: React.FC<TampFileHeaderModalProps> = (
       }}
       onCancel={props.onCancel}
     >
-      <NaturaHeaderAPIDesc data={formData} visible={true} />
+      <HeaderAPIDesc data={formData} visible={true} />
       <br />
-      <NaturaLinesForm formRef={detailsFormRef} typePUM={false} />
+      <GlAPILinesForm formRef={detailsFormRef} />
     </Modal>
   );
 };
 
-export default TampFileHeaderModal;
+export default GlAPIModal;

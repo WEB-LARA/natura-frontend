@@ -129,6 +129,7 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         loading: true,
         status: 'success',
       };
+      return ret;
     case 100:
       ret = {
         color: 'orange',

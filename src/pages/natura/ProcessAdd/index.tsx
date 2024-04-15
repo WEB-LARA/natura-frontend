@@ -4,7 +4,7 @@ import { PageHeader, message } from 'antd';
 import { useRef, useState } from 'react';
 import ListNaturas from './components/ListNaturas';
 import ResultProcess from './components/ResultProcess';
-import { addNaturaProcessBatch } from '@/services/natura/processedbatch';
+import { createNaturaProcessHeader } from '@/services/natura/processedheader';
 
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -77,7 +77,7 @@ const ProcessAdd: React.FC = () => {
               onFinish={async () => {
                 // TODO: call process API
 
-                await addNaturaProcessBatch({ period: period });
+                await createNaturaProcessHeader({ period: period });
 
                 console.log(formRef.current?.getFieldsValue());
                 return true;

@@ -2,59 +2,93 @@ import { PageContainer } from '@ant-design/pro-components';
 import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { Button, PageHeader, Space, Tabs, Tag, message } from 'antd';
+import { Alert, Button, PageHeader, Space, Tabs, Tag, message } from 'antd';
 import { EditIconButton, DelIconButton } from '@/components/Button';
 import type { StatusCase } from '@/utils/util';
 import { codeToStatusCase } from '@/utils/util';
-import { PlusOutlined } from '@ant-design/icons';
-import { history } from 'umi';
+import { CheckCircleOutlined, RedoOutlined } from '@ant-design/icons';
 import StatisticAPI from './components/StatisticAPI';
-import TampFileHeaderModal from './components/SaveForm';
+
 import { delOracleAp, fetchOracleAp } from '@/services/oracle/oracleap';
 import { fetchOracleGl } from '@/services/oracle/oraclegl';
 import { fetchOracleGlNik } from '@/services/oracle/oracleglnik';
 import { fetchCarsApiHeader } from '@/services/natura/naturaapi';
+import APAPIModal from './components/SaveFormAP';
+import GlAPIModal from './components/SaveFormGL';
+import { proccessAll, validateAll } from '@/services/oracle/oracle';
 
 enum ActionTypeEnum {
-  ADD,
-  EDIT,
+  EDITCARS,
+  EDITAP,
+  EDITGL,
+  EDITGLNIK,
   CANCEL,
 }
 
 interface Action {
   type: ActionTypeEnum;
-  payload?: API.CarsHeader;
+  payload?: API.CarsHeader | API.OracleAp;
 }
 
 interface State {
-  visible: boolean;
+  visibleAP: boolean;
+  visibleGL: boolean;
+  visibleGLNIK: boolean;
+  visibleCars: boolean;
   title: string;
   id?: string;
 }
 
 const ListApi: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const addTitle = 'Add Natura API';
-  const editTitle = 'Edit Natura API';
-  const delTip = 'Delete Natura API';
+  const editTitle = 'Edit API';
+  const delTip = 'Delete API';
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
       switch (action.type) {
-        case ActionTypeEnum.ADD:
+        case ActionTypeEnum.EDITCARS:
           return {
-            visible: true,
-            title: addTitle,
+            visibleCars: true,
+            visibleAP: false,
+            visibleGL: false,
+            visibleGLNIK: false,
+            title: editTitle,
+            id: action.payload?.id,
           };
-        case ActionTypeEnum.EDIT:
+        case ActionTypeEnum.EDITAP:
           return {
-            visible: true,
+            visibleCars: false,
+            visibleAP: true,
+            visibleGL: false,
+            visibleGLNIK: false,
+            title: editTitle,
+            id: action.payload?.id,
+          };
+        case ActionTypeEnum.EDITGL:
+          return {
+            visibleCars: false,
+            visibleAP: false,
+            visibleGL: true,
+            visibleGLNIK: false,
+            title: editTitle,
+            id: action.payload?.id,
+          };
+        case ActionTypeEnum.EDITGLNIK:
+          return {
+            visibleCars: false,
+            visibleAP: false,
+            visibleGL: false,
+            visibleGLNIK: true,
             title: editTitle,
             id: action.payload?.id,
           };
         case ActionTypeEnum.CANCEL:
           return {
-            visible: false,
+            visibleCars: false,
+            visibleAP: false,
+            visibleGL: false,
+            visibleGLNIK: false,
             title: '',
             id: undefined,
           };
@@ -62,7 +96,7 @@ const ListApi: React.FC = () => {
           return pre;
       }
     },
-    { visible: false, title: '' },
+    { visibleCars: false, visibleAP: false, visibleGLNIK: false, visibleGL: false, title: '' },
   );
 
   const columnAps: ProColumns<API.OracleAp>[] = [
@@ -92,6 +126,13 @@ const ListApi: React.FC = () => {
       key: 'id_natura',
     },
     {
+      title: 'Account',
+      dataIndex: 'account',
+      ellipsis: true,
+      width: 100,
+      key: 'account',
+    },
+    {
       title: 'Trx Date',
       dataIndex: 'trx_date',
       ellipsis: true,
@@ -112,35 +153,35 @@ const ListApi: React.FC = () => {
       width: 160,
       key: 'branch_name',
     },
-    {
-      title: 'Actions',
-      valueType: 'option',
-      key: 'option',
-      width: 130,
-      render: (_, record) => (
-        <Space size={2}>
-          <EditIconButton
-            key="edit"
-            code="edit"
-            onClick={() => {
-              dispatch({ type: ActionTypeEnum.EDIT, payload: record });
-            }}
-          />
-          <DelIconButton
-            key="delete"
-            code="delete"
-            title={delTip}
-            onConfirm={async () => {
-              const res = await delOracleAp(record.id!);
-              if (res.success) {
-                message.success('Delete successfully');
-                actionRef.current?.reload();
-              }
-            }}
-          />
-        </Space>
-      ),
-    },
+    // {
+    //   title: 'Actions',
+    //   valueType: 'option',
+    //   key: 'option',
+    //   width: 130,
+    //   render: (_, record) => (
+    //     <Space size={2}>
+    //       <EditIconButton
+    //         key="edit"
+    //         code="edit"
+    //         onClick={() => {
+    //           dispatch({ type: ActionTypeEnum.EDITAP, payload: record });
+    //         }}
+    //       />
+    //       <DelIconButton
+    //         key="delete"
+    //         code="delete"
+    //         title={delTip}
+    //         onConfirm={async () => {
+    //           const res = await delOracleAp(record.id!);
+    //           if (res.success) {
+    //             message.success('Delete successfully');
+    //             actionRef.current?.reload();
+    //           }
+    //         }}
+    //       />
+    //     </Space>
+    //   ),
+    // },
   ];
 
   const columnGls: ProColumns<API.OracleGl>[] = [
@@ -201,7 +242,7 @@ const ListApi: React.FC = () => {
             key="edit"
             code="edit"
             onClick={() => {
-              dispatch({ type: ActionTypeEnum.EDIT, payload: record });
+              dispatch({ type: ActionTypeEnum.EDITGL, payload: record });
             }}
           />
           <DelIconButton
@@ -274,14 +315,7 @@ const ListApi: React.FC = () => {
       key: 'option',
       width: 130,
       render: (_, record) => (
-        <Space size={2}>
-          <EditIconButton
-            key="edit"
-            code="edit"
-            onClick={() => {
-              dispatch({ type: ActionTypeEnum.EDIT, payload: record });
-            }}
-          />
+        <Space size={1}>
           <DelIconButton
             key="delete"
             code="delete"
@@ -352,14 +386,7 @@ const ListApi: React.FC = () => {
       key: 'option',
       width: 130,
       render: (_, record) => (
-        <Space size={2}>
-          <EditIconButton
-            key="edit"
-            code="edit"
-            onClick={() => {
-              dispatch({ type: ActionTypeEnum.EDIT, payload: record });
-            }}
-          />
+        <Space size={1}>
           <DelIconButton
             key="delete"
             code="delete"
@@ -377,6 +404,33 @@ const ListApi: React.FC = () => {
     },
   ];
 
+  const handleValidate = async () => {
+    await validateAll().then((response) => {
+      message.success(
+        'Success Validate = Oracle GL: ' +
+          response.data?.oracle_gl_jml +
+          ' Oracle GL NIK: ' +
+          response.data?.oracle_gl_nik_jml +
+          ' Cars: ' +
+          response.data?.cars_jml,
+      );
+    });
+  };
+
+  const handleProccess = async () => {
+    await proccessAll().then((response) => {
+      message.success(
+        'Success Proccess = Oracle GL: ' +
+          response.data?.oracle_gl_jml +
+          ' Oracle GL NIK: ' +
+          response.data?.oracle_gl_nik_jml +
+          ' Cars: ' +
+          response.data?.cars_jml,
+      );
+    });
+    // message.success('Success Proccess');
+  };
+
   return (
     <>
       <PageContainer>
@@ -390,10 +444,18 @@ const ListApi: React.FC = () => {
               <Button
                 key="1"
                 type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => history.push(`/natura/naturaadd`)}
+                icon={<CheckCircleOutlined />}
+                onClick={() => handleValidate()}
               >
-                Process Validate API
+                Validate API
+              </Button>,
+              <Button
+                key="2"
+                type="primary"
+                icon={<RedoOutlined />}
+                onClick={() => handleProccess()}
+              >
+                Proccess API
               </Button>,
             ]}
           >
@@ -402,39 +464,13 @@ const ListApi: React.FC = () => {
         </div>
 
         <Tabs>
-          <Tabs.TabPane tab="Oracle AP" key="item-1">
-            <ProTable<API.OracleAp, API.PaginationParam>
-              columns={columnAps}
-              actionRef={actionRef}
-              request={fetchOracleAp}
-              rowKey="id"
-              cardBordered
-              search={{
-                labelWidth: 'auto',
-              }}
-              pagination={{ pageSize: 10, showSizeChanger: true }}
-              scroll={{ x: 1000 }}
-              options={{
-                density: true,
-                fullScreen: true,
-                reload: true,
-              }}
-              dateFormatter="string"
-            />
-            <TampFileHeaderModal
-              visible={state.visible}
-              title={state.title}
-              id={state.id == null ? '' : state.id}
-              onCancel={() => {
-                dispatch({ type: ActionTypeEnum.CANCEL });
-              }}
-              onSuccess={() => {
-                dispatch({ type: ActionTypeEnum.CANCEL });
-                actionRef.current?.reload();
-              }}
-            />
-          </Tabs.TabPane>
           <Tabs.TabPane tab="Oracle GL" key="item-2">
+            <Alert
+              message="Wajib melengkapi NIK di (edit) untuk dapat di Validate"
+              type="info"
+              showIcon
+            />
+            <br />
             <ProTable<API.OracleGl, API.PaginationParam>
               columns={columnGls}
               actionRef={actionRef}
@@ -453,8 +489,8 @@ const ListApi: React.FC = () => {
               }}
               dateFormatter="string"
             />
-            <TampFileHeaderModal
-              visible={state.visible}
+            <GlAPIModal
+              visible={state.visibleGL}
               title={state.title}
               id={state.id == null ? '' : state.id}
               onCancel={() => {
@@ -485,18 +521,6 @@ const ListApi: React.FC = () => {
               }}
               dateFormatter="string"
             />
-            <TampFileHeaderModal
-              visible={state.visible}
-              title={state.title}
-              id={state.id == null ? '' : state.id}
-              onCancel={() => {
-                dispatch({ type: ActionTypeEnum.CANCEL });
-              }}
-              onSuccess={() => {
-                dispatch({ type: ActionTypeEnum.CANCEL });
-                actionRef.current?.reload();
-              }}
-            />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Cars" key="item-4">
             <ProTable<API.CarsHeader, API.PaginationParam>
@@ -517,20 +541,40 @@ const ListApi: React.FC = () => {
               }}
               dateFormatter="string"
             />
-            <TampFileHeaderModal
-              visible={state.visible}
-              title={state.title}
-              id={state.id == null ? '' : state.id}
-              onCancel={() => {
-                dispatch({ type: ActionTypeEnum.CANCEL });
-              }}
-              onSuccess={() => {
-                dispatch({ type: ActionTypeEnum.CANCEL });
-                actionRef.current?.reload();
-              }}
-            />
           </Tabs.TabPane>
         </Tabs>
+        <Tabs.TabPane tab="Oracle AP" key="item-5">
+          <ProTable<API.OracleAp, API.PaginationParam>
+            columns={columnAps}
+            actionRef={actionRef}
+            request={fetchOracleAp}
+            rowKey="id"
+            cardBordered
+            search={{
+              labelWidth: 'auto',
+            }}
+            pagination={{ pageSize: 10, showSizeChanger: true }}
+            scroll={{ x: 1000 }}
+            options={{
+              density: true,
+              fullScreen: true,
+              reload: true,
+            }}
+            dateFormatter="string"
+          />
+          <APAPIModal
+            visible={state.visibleAP}
+            title={state.title}
+            id={state.id == null ? '' : state.id}
+            onCancel={() => {
+              dispatch({ type: ActionTypeEnum.CANCEL });
+            }}
+            onSuccess={() => {
+              dispatch({ type: ActionTypeEnum.CANCEL });
+              actionRef.current?.reload();
+            }}
+          />
+        </Tabs.TabPane>
       </PageContainer>
     </>
   );

@@ -27,6 +27,15 @@ export async function addNaturaHeader(body: API.NaturaHeader, options?: { [key: 
   });
 }
 
+/** Create record POST /api/v1/natura-recon */
+export async function reconNatura(body: API.NaturaRecon, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.NaturaRecon>>('/api/v1/natura-recon', {
+    method: 'POST',
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** Get record by ID GET /api/v1/natura-headers/${id} */
 export async function getNaturaHeader(id: string, options?: { [key: string]: any }) {
   return request<API.ResponseResult<API.NaturaHeader>>(`/api/v1/natura-headers/${id}`, {

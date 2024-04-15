@@ -30,6 +30,9 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+
+    /** Oracle AP Lines */
+    details?: OracleApLine[];
   };
 
   // Tabel Lines Tampungan Data Oracle ga ada NIK
@@ -39,6 +42,7 @@ declare namespace API {
     /** From OracleAp.ID */
     oracle_ap_id?: string;
     /** Nik Employee */
+    nik_num?: string;
     nik?: string;
     /** Description Oracles Line */
     description?: string;
@@ -130,6 +134,9 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+
+    /** Oracle GL Lines */
+    details?: OracleGlLine[];
   };
 
   // Tabel Lines Tampungan Data Oracle ga ada NIK
@@ -148,5 +155,12 @@ declare namespace API {
     created_at?: string;
     /** Update time */
     updated_at?: string;
+  };
+
+  type OracleReturnProccess = {
+    oracle_ap_jml?: number;
+    oracle_gl_jml?: number;
+    oracle_gl_nik_jml?: number;
+    cars_jml?: number;
   };
 }

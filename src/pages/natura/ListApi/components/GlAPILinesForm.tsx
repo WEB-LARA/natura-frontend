@@ -5,24 +5,21 @@ import {
   ProForm,
   ProFormItem,
   ProFormMoney,
-  ProFormDigit,
   ProFormText,
 } from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { Col } from 'antd';
-import AkunSelect from '@/pages/master/Akun/components/AkunSelect';
 import NikSelectKey from '@/pages/master/Nik/components/NikSelectKey';
 
-type NaturaLinesFormProps = {
-  formRef: React.MutableRefObject<ProFormInstance<API.NaturaLine> | undefined>;
-  typePUM: boolean;
+type GlAPILinesFormProps = {
+  formRef: React.MutableRefObject<ProFormInstance<API.OracleGl> | undefined>;
 };
 
-const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormProps) => {
+const GlAPILinesForm: React.FC<GlAPILinesFormProps> = (props: GlAPILinesFormProps) => {
   const intl = useIntl();
 
   return (
-    <ProForm<API.NaturaLine> formRef={props.formRef} grid={true} submitter={false}>
+    <ProForm<API.OracleGl> formRef={props.formRef} grid={true} submitter={false}>
       <ProForm.Group title="Details">
         <ProFormList
           name="details"
@@ -35,9 +32,9 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
           creatorRecord={{ method: 'GET' }}
         >
           <ProForm.Group key="id">
-            <Col span={6}>
+            <Col span={12}>
               <ProFormItem
-                name="nik_id"
+                name="nik"
                 label="NIK"
                 rules={[
                   {
@@ -55,36 +52,9 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
               </ProFormItem>
               <ProFormText name="nik_num" label="nik_num" hidden={true} />
             </Col>
-            <Col span={8}>
-              <ProFormItem
-                name="akun_id"
-                label="Akun"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Akun required',
-                  },
-                ]}
-              >
-                <AkunSelect flagPUM={props.typePUM} placeholder="Select Akun" />
-              </ProFormItem>
-            </Col>
-            <ProFormDigit
-              hidden={!props.typePUM}
-              name="total_qty"
-              label="Qty"
-              width="sm"
-              colProps={{ span: 4 }}
-              rules={[
-                {
-                  required: props.typePUM,
-                  message: 'Jumlah required',
-                },
-              ]}
-            />
             <ProFormMoney
               label="Amount"
-              colProps={{ span: 6 }}
+              colProps={{ span: 8 }}
               name="amount"
               fieldProps={{
                 customSymbol: 'Rp ',
@@ -99,4 +69,4 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
   );
 };
 
-export default NaturaLinesForm;
+export default GlAPILinesForm;

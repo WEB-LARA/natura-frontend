@@ -149,6 +149,7 @@ declare namespace API {
     cabang_id?: string;
     /** Period Natura */
     period?: string;
+    print_period?: string;
     /** ID Natura */
     id_natura?: string;
     /** Status of nik (New = 0, Proccess = 1, Error = -1, Finish = 2, Reject = -2) */
@@ -170,6 +171,7 @@ declare namespace API {
     unit_id?: string;
     /** From Cabang.ID */
     cabang_id?: string;
+    tahun?: string;
   };
 
   // Tabel Header Tampungan Data Cars
@@ -194,6 +196,9 @@ declare namespace API {
     branch_name?: string;
     /** Status of api (New = 0, Proccess = 1, Error = -1) */
     status?: number;
+    /** Tamp Account Natura */
+    account?: string;
+    amount?: number;
     /** Create time */
     created_at?: string;
     /** Update time */
@@ -309,5 +314,15 @@ declare namespace API {
     created_at?: string;
     /** Update time */
     updated_at?: string;
+  };
+
+  // Create processed Natura
+  type NaturaProcessCreate = {
+    period?: string;
+  };
+
+  // Create NaturaRecon Natura
+  type NaturaRecon = {
+    period?: string;
   };
 }
