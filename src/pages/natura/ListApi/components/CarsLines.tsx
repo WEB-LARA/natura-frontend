@@ -1,34 +1,38 @@
 import React, { useRef } from 'react';
-import { Space } from 'antd';
-import { fetchNaturaLine } from '@/services/natura/naturaline';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
+import { fetchCarsApiLine } from '@/services/natura/naturaapi';
 
-type ListNaturaLinesProps = {
+type CarsLinesProps = {
   idheader: string;
 };
 
-const NaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesProps) => {
+const CarsLines: React.FC<CarsLinesProps> = (props: CarsLinesProps) => {
   const actionRef = useRef<ActionType>();
 
-  const columns: ProColumns<API.NaturaLine>[] = [
-    {
-      title: 'Akun',
-      dataIndex: 'akun.description',
-      ellipsis: true,
-      width: 200,
-      key: 'akun_id',
-      editable: false,
-      render: (_, record) => {
-        return record.akun ? <Space>{record.akun?.description}</Space> : '-';
-      },
-    },
+  const columns: ProColumns<API.CarsLine>[] = [
     {
       title: 'NIK',
-      dataIndex: 'nik_num',
+      dataIndex: 'nik',
       ellipsis: true,
       width: 130,
-      key: 'nik_num',
+      key: 'nik',
+      editable: false,
+    },
+    {
+      title: 'Account',
+      dataIndex: 'account',
+      ellipsis: true,
+      width: 130,
+      key: 'account',
+      editable: false,
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      ellipsis: true,
+      width: 130,
+      key: 'description',
       editable: false,
     },
     {
@@ -43,11 +47,11 @@ const NaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesProps
 
   return (
     <>
-      <ProTable<API.NaturaLine, API.PaginationParam>
+      <ProTable<API.CarsLine, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        params={{ natura_header_id: props.idheader }}
-        request={fetchNaturaLine}
+        params={{ cars_header_id: props.idheader }}
+        request={fetchCarsApiLine}
         rowKey="id"
         cardBordered
         search={{
@@ -64,4 +68,4 @@ const NaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesProps
   );
 };
 
-export default NaturaLines;
+export default CarsLines;

@@ -206,6 +206,26 @@ declare namespace API {
     statusChecked?: boolean;
   };
 
+  // Table GL Lines for Data from Oracle
+  type CarsLine = {
+    /** Unique ID */
+    id?: string;
+    /** From CarsHeader.ID */
+    cars_header_id?: string;
+    /** Nik Employee */
+    nik?: string;
+    /** Account Natura */
+    account?: string;
+    /** Description Lines */
+    description?: string;
+    /** Amount Oracle */
+    amount?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
+
   // Tabel Header Tampungan Data File Upload
   type TampFileHeader = {
     /** Unique ID */

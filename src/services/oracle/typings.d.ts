@@ -81,6 +81,11 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+    /** tamp */
+    account?: string;
+    amount?: number;
+    unit_name?: string;
+    branch_name?: string;
   };
 
   // Table GL Lines for Data from Oracle
@@ -101,6 +106,8 @@ declare namespace API {
     created_at?: string;
     /** Update time */
     updated_at?: string;
+
+    akun?: Akun;
   };
 
   // Table Header GL for Data from Oracle
@@ -151,6 +158,19 @@ declare namespace API {
     description?: string;
     /** Amount Oracles */
     amount?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
+
+  type ErrLine = {
+    /** Unique ID */
+    id?: string;
+    /** From OracleAp.ID */
+    header_id?: string;
+    /** Description Oracles Line */
+    description?: string;
     /** Create time */
     created_at?: string;
     /** Update time */

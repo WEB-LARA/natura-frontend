@@ -1,34 +1,22 @@
 import React, { useRef } from 'react';
-import { Space } from 'antd';
-import { fetchNaturaLine } from '@/services/natura/naturaline';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
+import { fetchOracleGlLine } from '@/services/oracle/oraclegllines';
 
-type ListNaturaLinesProps = {
+type GlLinesProps = {
   idheader: string;
 };
 
-const NaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesProps) => {
+const GlLines: React.FC<GlLinesProps> = (props: GlLinesProps) => {
   const actionRef = useRef<ActionType>();
 
-  const columns: ProColumns<API.NaturaLine>[] = [
-    {
-      title: 'Akun',
-      dataIndex: 'akun.description',
-      ellipsis: true,
-      width: 200,
-      key: 'akun_id',
-      editable: false,
-      render: (_, record) => {
-        return record.akun ? <Space>{record.akun?.description}</Space> : '-';
-      },
-    },
+  const columns: ProColumns<API.OracleGlLine>[] = [
     {
       title: 'NIK',
-      dataIndex: 'nik_num',
+      dataIndex: 'nik',
       ellipsis: true,
       width: 130,
-      key: 'nik_num',
+      key: 'nik',
       editable: false,
     },
     {
@@ -43,11 +31,11 @@ const NaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesProps
 
   return (
     <>
-      <ProTable<API.NaturaLine, API.PaginationParam>
+      <ProTable<API.OracleGlLine, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        params={{ natura_header_id: props.idheader }}
-        request={fetchNaturaLine}
+        params={{ oracle_gl_id: props.idheader }}
+        request={fetchOracleGlLine}
         rowKey="id"
         cardBordered
         search={{
@@ -64,4 +52,4 @@ const NaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesProps
   );
 };
 
-export default NaturaLines;
+export default GlLines;

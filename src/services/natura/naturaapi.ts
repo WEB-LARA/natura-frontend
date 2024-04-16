@@ -55,3 +55,19 @@ export async function delCarsApiHeader(id: string, options?: { [key: string]: an
     ...(options || {}),
   });
 }
+
+/** Query list GET /api/v1/cars-lines */
+export async function fetchCarsApiLine(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResponseResult<API.CarsLine[]>>('/api/v1/cars-lines', {
+    method: 'GET',
+    params: {
+      current: '1',
+      pageSize: '10',
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
