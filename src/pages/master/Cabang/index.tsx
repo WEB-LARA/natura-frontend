@@ -80,18 +80,27 @@ const Cabang: React.FC = () => {
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
+      sorter: (a, b) => {
+        return a.code!.localeCompare(b.code!);
+      },
     },
     {
       title: 'Kode DC',
       dataIndex: 'dc_code',
       width: 130,
       key: 'dc_code', // Query field name
+      sorter: (a, b) => {
+        return a.dc_code!.localeCompare(b.dc_code!);
+      },
     },
     {
       title: 'Reference ID',
       dataIndex: 'reference_id',
       width: 130,
       key: 'reference_id', // Query field name
+      sorter: (a, b) => {
+        return a.reference_id!.localeCompare(b.reference_id!);
+      },
     },
     {
       title: 'Name',
@@ -99,6 +108,9 @@ const Cabang: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: (a, b) => {
+        return a.name!.localeCompare(b.name!);
+      },
     },
     {
       title: 'Active',
@@ -153,7 +165,7 @@ const Cabang: React.FC = () => {
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

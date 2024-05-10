@@ -63,12 +63,18 @@ const Unit: React.FC = () => {
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
+      sorter: (a, b) => {
+        return a.code!.localeCompare(b.code!);
+      },
     },
     {
       title: 'Kode Inisial',
       dataIndex: 'reference_id',
       width: 130,
       key: 'reference_id', // Query field name
+      sorter: (a, b) => {
+        return a.reference_id!.localeCompare(b.reference_id!);
+      },
     },
     {
       title: 'Name',
@@ -76,6 +82,9 @@ const Unit: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: (a, b) => {
+        return a.name!.localeCompare(b.name!);
+      },
     },
     {
       title: 'Active',
@@ -130,7 +139,7 @@ const Unit: React.FC = () => {
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

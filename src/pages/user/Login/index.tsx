@@ -96,9 +96,9 @@ const Login: React.FC = () => {
           - {Settings.title}
         </title>
       </Helmet>
-      <div className={styles.lang} data-lang>
+      {/* <div className={styles.lang} data-lang>
         {SelectLang && <SelectLang />}
-      </div>
+      </div> */}
       <div className={styles.content}>
         <LoginForm<API.LoginForm>
           formRef={formRef}

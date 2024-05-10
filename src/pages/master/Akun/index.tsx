@@ -72,6 +72,9 @@ const Akun: React.FC = () => {
       dataIndex: 'account',
       width: 130,
       key: 'account', // Query field name
+      sorter: (a, b) => {
+        return a.account!.localeCompare(b.account!);
+      },
     },
     {
       title: 'Description',
@@ -79,6 +82,9 @@ const Akun: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'description', // Query field name
+      sorter: (a, b) => {
+        return a.description!.localeCompare(b.description!);
+      },
     },
     {
       title: 'Active',
@@ -137,7 +143,7 @@ const Akun: React.FC = () => {
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

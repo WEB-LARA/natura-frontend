@@ -16,7 +16,6 @@ import { fetchCarsApiHeader } from '@/services/natura/naturaapi';
 import APAPIModal from './components/SaveFormAP';
 import GlAPIModal from './components/SaveFormGL';
 import { proccessAll, validateAll } from '@/services/oracle/oracle';
-import NaturaDetailsDrawer from '../Natura/components/DetailDrawer';
 import GlNiDetailsDrawer from './components/GlNikDetailDrawer';
 
 enum ActionTypeEnum {

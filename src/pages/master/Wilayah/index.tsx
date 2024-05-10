@@ -63,6 +63,9 @@ const Wilayah: React.FC = () => {
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
+      sorter: (a, b) => {
+        return a.code!.localeCompare(b.code!);
+      },
     },
     {
       title: 'Name',
@@ -70,6 +73,9 @@ const Wilayah: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: (a, b) => {
+        return a.name!.localeCompare(b.name!);
+      },
     },
     {
       title: 'Action',
@@ -114,7 +120,7 @@ const Wilayah: React.FC = () => {
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

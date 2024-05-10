@@ -78,6 +78,9 @@ const Nik: React.FC = () => {
       dataIndex: 'nik',
       width: 130,
       key: 'nik', // Query field nik
+      sorter: (a, b) => {
+        return a.nik!.localeCompare(b.nik!);
+      },
     },
     {
       title: 'Name',
@@ -85,6 +88,9 @@ const Nik: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: (a, b) => {
+        return a.name!.localeCompare(b.name!);
+      },
     },
     {
       title: 'Active',
@@ -139,7 +145,7 @@ const Nik: React.FC = () => {
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

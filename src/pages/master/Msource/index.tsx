@@ -64,6 +64,9 @@ const Msource: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: (a, b) => {
+        return a.name!.localeCompare(b.name!);
+      },
     },
     {
       title: 'Generate ID Natura',
@@ -128,7 +131,7 @@ const Msource: React.FC = () => {
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,
