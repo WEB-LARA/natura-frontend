@@ -17,6 +17,7 @@ type NikModalProps = {
 const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
   const formRef = useRef<ProFormInstance<API.Nik>>();
   const [unitId, setUnitId] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!props.visible) {
@@ -25,6 +26,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
 
     formRef.current?.resetFields();
     if (props.id) {
+      setLoading(true);
       getNik(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
@@ -32,6 +34,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
           formRef.current?.setFieldsValue(data);
         }
       });
+      setLoading(false);
     }
   }, [props]);
 
@@ -43,6 +46,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
       formRef={formRef}
       layout="vertical"
       grid={true}
+      loading={loading}
       submitTimeout={3000}
       submitter={{
         searchConfig: {
