@@ -52,3 +52,11 @@ export async function delWilayah(id: string, options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+/** Create record POST /api/v1/sync-wilayah */
+export async function syncWilayah(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.Wilayah>>('/api/v1/sync-wilayah', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}

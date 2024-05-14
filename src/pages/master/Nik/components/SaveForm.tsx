@@ -96,7 +96,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
 
       <Col span={12}>
         <ProFormItem
-          name="cabang_code"
+          name="cabang_id"
           label="Cabang"
           rules={[
             {

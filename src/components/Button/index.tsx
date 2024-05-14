@@ -10,6 +10,7 @@ import {
   PlayCircleOutlined,
   EyeOutlined,
   CheckCircleOutlined,
+  SyncOutlined,
 } from '@ant-design/icons';
 import { Button, Tooltip, Popconfirm } from 'antd';
 import type { ButtonProps, PopconfirmProps } from 'antd';
@@ -278,6 +279,25 @@ const ProcessButton: React.FC<ProcessButtonProps> = (props) => {
   );
 };
 
+export type SyncButtonProps = ButtonProps & { code: string };
+
+const SyncButton: React.FC<SyncButtonProps> = (props) => {
+  const { initialState } = useModel('@@initialState');
+  const match = useRouteMatch();
+  const code = initialState!.routePathCodeMap![match.path];
+  const show = initialState!.flatMenus!.hasOwnProperty(`${code}.${props.code}`);
+
+  return (
+    <>
+      {show && (
+        <Button icon={<SyncOutlined />} type="primary" {...props} title={undefined}>
+          {props.title ? props.title : 'Sync'}
+        </Button>
+      )}
+    </>
+  );
+};
+
 export {
   AddButton,
   AddIconButton,
@@ -287,6 +307,7 @@ export {
   DetailIconShowButton,
   ExportButton,
   ImportButton,
+  SyncButton,
   ProcessButton,
   SelectIconShowButton,
 };

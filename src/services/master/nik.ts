@@ -48,3 +48,11 @@ export async function delNik(id: string, options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+/** Create record POST /api/v1/sync-karyawan */
+export async function syncKaryawan(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.Nik>>('/api/v1/sync-karyawan', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}

@@ -14,7 +14,6 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
   const [values, setValues] = useState<string>();
 
   useEffect(() => {
-    const ac = new AbortController();
     const request = async (params: API.PaginationParam) => {
       const res = await fetchAkun(params);
       if (res.data) {
@@ -34,15 +33,12 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
     }).then((data) => {
       setOptions(data);
     });
-    return () => ac.abort(); // Abort both fetches on unmount
   }, [props.flagPUM]);
 
   useEffect(() => {
-    const ac = new AbortController();
     if (props.value) {
       setValues(props.value);
     }
-    return () => ac.abort(); // Abort both fetches on unmount
   }, [props.value]);
 
   return (

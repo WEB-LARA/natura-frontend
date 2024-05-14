@@ -18,7 +18,7 @@ const CabangSelectCode: React.FC<CabangSelectCodeProps> = (props) => {
       const res = await fetchCabang(params);
       if (res.data) {
         return res.data.map((item) => {
-          return { label: item.code + ' - ' + item.name, value: item.code };
+          return { label: item.code + ' - ' + item.name, value: item.reference_id };
         });
       } else {
         return [];

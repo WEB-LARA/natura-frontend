@@ -4,8 +4,8 @@ import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, message } from 'antd';
 import WilayahModal from './components/SaveForm';
-import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
-import { delWilayah, fetchWilayah } from '@/services/master/wilayah';
+import { AddButton, EditIconButton, DelIconButton, SyncButton } from '@/components/Button';
+import { delWilayah, fetchWilayah, syncWilayah } from '@/services/master/wilayah';
 
 enum ActionTypeEnum {
   ADD,
@@ -134,6 +134,15 @@ const Wilayah: React.FC = () => {
             code="add"
             onClick={() => {
               dispatch({ type: ActionTypeEnum.ADD });
+            }}
+          />,
+          <SyncButton
+            key="SyncWilayah"
+            code="SyncWilayah"
+            onClick={async () => {
+              await syncWilayah();
+
+              message.success('Sync Process in background, Please wait in 10 minute');
             }}
           />,
         ]}
