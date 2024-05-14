@@ -15,7 +15,7 @@ const NaturaFormUpload: React.FC = () => {
       <ProFormUploadDragger
         label="Upload"
         name="file_upload"
-        action="/api/v1/tamp-file-headers"
+        action="/api/v1/tamp-file-headers/upload"
         fieldProps={{
           headers: headersUpload,
         }}
