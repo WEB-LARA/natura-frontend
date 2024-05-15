@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, PageHeader, Space, Tag, message } from 'antd';
-import { DelIconButton, ProcessButton } from '@/components/Button';
+import { DelIconButton, DetailIconButton, ProcessButton } from '@/components/Button';
 import type { StatusCase } from '@/utils/util';
 import { codeToStatusCase } from '@/utils/util';
 import { PlusOutlined } from '@ant-design/icons';
@@ -13,10 +13,13 @@ import {
   fetchTampFileHeader,
   processTampFileHeader,
 } from '@/services/natura/naturafile';
+import DetailsDrawer from './components/DetailDrawer';
 
 const ListFile: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [loading, setLoading] = useState(false);
+  const [visibledetail, setVisibledetail] = useState(false);
+  const [idHeader, setIdHeader] = useState('');
 
   const columns: ProColumns<API.TampFileHeader>[] = [
     {
@@ -91,6 +94,14 @@ const ListFile: React.FC = () => {
               setLoading(false);
             }}
           />
+          <DetailIconButton
+            key="Detail"
+            code="detail"
+            onClick={async () => {
+              setIdHeader(record.id!);
+              setVisibledetail(true);
+            }}
+          />
           <DelIconButton
             key="Delete"
             code="delete"
@@ -109,49 +120,60 @@ const ListFile: React.FC = () => {
   ];
 
   return (
-    <PageContainer>
-      <div className="site-page-header-ghost-wrapper">
-        <PageHeader
-          ghost={false}
-          onBack={() => window.history.back()}
-          title="Natura List File"
-          subTitle="List Natura File berisi semua file yang telah di-Upload"
-          extra={[
-            <Button
-              key="1"
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => history.push(`/natura/upload`)}
-            >
-              Upload Templete
-            </Button>,
-          ]}
-        />
-      </div>
+    <>
+      <PageContainer>
+        <div className="site-page-header-ghost-wrapper">
+          <PageHeader
+            ghost={false}
+            onBack={() => window.history.back()}
+            title="Natura List File"
+            subTitle="List Natura File berisi semua file yang telah di-Upload"
+            extra={[
+              <Button
+                key="1"
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => history.push(`/natura/upload`)}
+              >
+                Upload Templete
+              </Button>,
+            ]}
+          />
+        </div>
 
-      <ProTable<API.TampFileHeader, API.PaginationParam>
-        columns={columns}
-        actionRef={actionRef}
-        request={(params, sorter, filter) => {
-          // console.log(sorter == null ? '' : Object.keys(sorter));
-          return fetchTampFileHeader({ ...params, sorter, filter });
+        <ProTable<API.TampFileHeader, API.PaginationParam>
+          columns={columns}
+          actionRef={actionRef}
+          request={(params, sorter, filter) => {
+            // console.log(sorter == null ? '' : Object.keys(sorter));
+            return fetchTampFileHeader({ ...params, sorter, filter });
+          }}
+          //request={fetchTampFileHeader}
+          rowKey="id"
+          cardBordered
+          search={{
+            labelWidth: 'auto',
+          }}
+          pagination={{ pageSize: 10, showSizeChanger: true }}
+          scroll={{ x: 1000 }}
+          options={{
+            density: true,
+            fullScreen: true,
+            reload: true,
+          }}
+          dateFormatter="string"
+        />
+      </PageContainer>
+
+      <DetailsDrawer
+        visible={visibledetail}
+        title="Natura List File Detail"
+        id={idHeader}
+        onCancel={() => {
+          setVisibledetail(false);
         }}
-        //request={fetchTampFileHeader}
-        rowKey="id"
-        cardBordered
-        search={{
-          labelWidth: 'auto',
-        }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
-        scroll={{ x: 1000 }}
-        options={{
-          density: true,
-          fullScreen: true,
-          reload: true,
-        }}
-        dateFormatter="string"
       />
-    </PageContainer>
+    </>
   );
 };
 

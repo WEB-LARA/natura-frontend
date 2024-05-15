@@ -345,4 +345,44 @@ declare namespace API {
   type NaturaRecon = {
     period?: string;
   };
+
+  // Temporary Table Lines for File Upload
+  type TampFileLine = {
+    /** Unique ID */
+    id?: string;
+    /** Document Number */
+    tamp_file_header_id?: string;
+    /** Document Number */
+    document_num?: string;
+    /** ID Natura Template */
+    id_natura?: string;
+    /** Transaction Date */
+    trx_date?: string;
+    /** Nik Employee */
+    nik?: string;
+    /** Account Natura */
+    account?: string;
+    /** Description Lines */
+    description?: string;
+    /** Amount File */
+    amount?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
+
+  // Tabel Error Tampungan Data File Upload
+  type TampFileErr = {
+    /** Unique ID */
+    id?: string;
+    /** From TampFileHeader.ID */
+    tamp_file_header_id?: string;
+    /** Description Error */
+    description?: string;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
 }
