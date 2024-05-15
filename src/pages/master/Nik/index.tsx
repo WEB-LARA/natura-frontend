@@ -3,9 +3,9 @@ import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, Tag, message } from 'antd';
-import { fetchNik, delNik } from '@/services/master/nik';
+import { fetchNik, delNik, syncKaryawan } from '@/services/master/nik';
 import NikModal from './components/SaveForm';
-import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
+import { AddButton, EditIconButton, DelIconButton, SyncButton } from '@/components/Button';
 
 enum ActionTypeEnum {
   ADD,
@@ -159,6 +159,15 @@ const Nik: React.FC = () => {
             code="add"
             onClick={() => {
               dispatch({ type: ActionTypeEnum.ADD });
+            }}
+          />,
+          <SyncButton
+            key="SyncKaryawan"
+            code="SyncKaryawan"
+            onClick={async () => {
+              await syncKaryawan();
+
+              message.success('Sync will be Process in background, Please wait in 10 minute');
             }}
           />,
         ]}

@@ -1,41 +1,36 @@
 import { useState, useEffect } from 'react';
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
-import { fetchAkun } from '@/services/master/akun';
+import { fetchUnit } from '@/services/master/unit';
 
-type AkunSelectProps = {
-  value?: API.Akun[];
+type UnitSelectCodeProps = {
+  value?: API.Unit[];
   onChange?: (value: string) => void;
-  flagPUM?: boolean;
 } & SelectProps;
 
-const AkunSelect: React.FC<AkunSelectProps> = (props) => {
+const UnitSelectCode: React.FC<UnitSelectCodeProps> = (props) => {
   const [options, setOptions] = useState<SelectProps['options']>([]);
   const [values, setValues] = useState<string>();
 
   useEffect(() => {
     const request = async (params: API.PaginationParam) => {
-      const res = await fetchAkun(params);
+      const res = await fetchUnit(params);
       if (res.data) {
         return res.data.map((item) => {
-          return { label: item.account + ' - ' + item.description, value: item.id };
+          return { label: item.reference_id + ' - ' + item.name, value: item.code };
         });
       } else {
         return [];
       }
     };
 
-    request({
-      flag_active: true,
-      flag_pum: props.flagPUM,
-      resultType: 'select',
-      pageSize: 100,
-    }).then((data) => {
+    request({ status: 'enabled', resultType: 'select', pageSize: 100 }).then((data) => {
       setOptions(data);
     });
-  }, [props.flagPUM]);
+  }, []);
 
   useEffect(() => {
+    console.log(props.value);
     if (props.value) {
       setValues(props.value);
     }
@@ -48,6 +43,11 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
       {...props}
       options={options}
       value={values}
+      filterOption={(input, option) =>
+        String(option?.label ?? '')
+          .toLowerCase()
+          .includes(input.toLowerCase())
+      }
       onChange={(value: string) => {
         setValues(value);
         if (props.onChange) {
@@ -58,4 +58,4 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
   );
 };
 
-export default AkunSelect;
+export default UnitSelectCode;

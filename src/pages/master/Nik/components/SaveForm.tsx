@@ -3,8 +3,8 @@ import { Col, message } from 'antd';
 import { ModalForm, ProFormText, ProFormSwitch, ProFormItem } from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { addNik, getNik, updateNik } from '@/services/master/nik';
-import UnitSelect from '../../Unit/components/UnitSelect';
-import CabangSelect from '../../Cabang/components/CabangSelect';
+import UnitSelectCode from '../../Unit/components/UnitSelectCode';
+import CabangSelectCode from '../../Cabang/components/CabangSelectCode';
 
 type NikModalProps = {
   onSuccess: () => void;
@@ -31,6 +31,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
         if (res.data) {
           const data = res.data;
           //  data.statusChecked = data.status === 0;
+          setUnitId(data.unit_id!);
           formRef.current?.setFieldsValue(data);
         }
       });
@@ -79,7 +80,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
     >
       <Col span={12}>
         <ProFormItem
-          name="unit_id"
+          name="unit_code"
           label="Unit"
           rules={[
             {
@@ -88,7 +89,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
             },
           ]}
         >
-          <UnitSelect
+          <UnitSelectCode
             onChange={(value: string) => {
               setUnitId(value);
             }}
@@ -108,7 +109,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
             },
           ]}
         >
-          <CabangSelect unitid={unitId} placeholder="Select Cabang" />
+          <CabangSelectCode unitid={unitId} placeholder="Select Cabang" />
         </ProFormItem>
       </Col>
 

@@ -1,5 +1,5 @@
 import { PageContainer } from '@ant-design/pro-components';
-import React, { useRef, useReducer } from 'react';
+import React, { useRef, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, PageHeader, Space, Tag, message } from 'antd';
@@ -8,57 +8,15 @@ import type { StatusCase } from '@/utils/util';
 import { codeToStatusCase } from '@/utils/util';
 import { PlusOutlined } from '@ant-design/icons';
 import { history } from 'umi';
-import { delTampFileHeader, fetchTampFileHeader } from '@/services/natura/naturafile';
-
-enum ActionTypeEnum {
-  ADD,
-  EDIT,
-  CANCEL,
-}
-
-interface Action {
-  type: ActionTypeEnum;
-  payload?: API.CarsHeader;
-}
-
-interface State {
-  visible: boolean;
-  title: string;
-  id?: string;
-}
+import {
+  delTampFileHeader,
+  fetchTampFileHeader,
+  processTampFileHeader,
+} from '@/services/natura/naturafile';
 
 const ListFile: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const addTitle = 'Add Natura File';
-  const editTitle = 'Edit Natura File';
-  const delTip = 'Delete Natura File';
-
-  const [state, dispatch] = useReducer(
-    (pre: State, action: Action) => {
-      switch (action.type) {
-        case ActionTypeEnum.ADD:
-          return {
-            visible: true,
-            title: addTitle,
-          };
-        case ActionTypeEnum.EDIT:
-          return {
-            visible: true,
-            title: editTitle,
-            id: action.payload?.id,
-          };
-        case ActionTypeEnum.CANCEL:
-          return {
-            visible: false,
-            title: '',
-            id: undefined,
-          };
-        default:
-          return pre;
-      }
-    },
-    { visible: false, title: '' },
-  );
+  const [loading, setLoading] = useState(false);
 
   const columns: ProColumns<API.TampFileHeader>[] = [
     {
@@ -118,16 +76,25 @@ const ListFile: React.FC = () => {
           <ProcessButton
             key="Process"
             code="process"
-            onClick={() => {
-              // TODO: call api process
-              // history.push(`/natura/naturaadd/${record.id}`);
-              // dispatch({ type: ActionTypeEnum.EDIT, payload: record });
+            loading={loading}
+            onClick={async () => {
+              setLoading(true);
+              const dataSave: API.TampFileHeader = {
+                nama_file: record.nama_file,
+              };
+              dataSave.nama_file = record.nama_file;
+              const res = await processTampFileHeader(dataSave);
+              if (res.success) {
+                message.success('Process successfully');
+                actionRef.current?.reload();
+              }
+              setLoading(false);
             }}
           />
           <DelIconButton
             key="Delete"
             code="delete"
-            title={delTip}
+            title="Delete"
             onConfirm={async () => {
               const res = await delTampFileHeader(record.id!);
               if (res.success) {

@@ -46,6 +46,7 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
           data.nik_id = res.data?.username + ' - ' + res.data?.name;
           setUserData(data);
           setUsername(data.username);
+          setNikID(data.nik_id);
           data.statusChecked = data.status === 'activated';
           formRef.current?.setFieldsValue(data);
         }

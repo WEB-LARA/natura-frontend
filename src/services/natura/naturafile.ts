@@ -71,3 +71,15 @@ export async function delTampFileHeader(id: string, options?: { [key: string]: a
     ...(options || {}),
   });
 }
+
+/** Create record POST /api/v1/tamp-file-headers/process */
+export async function processTampFileHeader(
+  body: API.TampFileHeader,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResponseResult<API.TampFileHeader>>('/api/v1/tamp-file-headers/process', {
+    method: 'POST',
+    data: body,
+    ...(options || {}),
+  });
+}

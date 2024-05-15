@@ -1,41 +1,39 @@
 import { useState, useEffect } from 'react';
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
-import { fetchAkun } from '@/services/master/akun';
+import { fetchCabang } from '@/services/master/cabang';
 
-type AkunSelectProps = {
-  value?: API.Akun[];
+type CabangSelectCodeProps = {
+  value?: API.Cabang[];
+  unitid: string;
   onChange?: (value: string) => void;
-  flagPUM?: boolean;
 } & SelectProps;
 
-const AkunSelect: React.FC<AkunSelectProps> = (props) => {
+const CabangSelectCode: React.FC<CabangSelectCodeProps> = (props) => {
   const [options, setOptions] = useState<SelectProps['options']>([]);
   const [values, setValues] = useState<string>();
 
   useEffect(() => {
     const request = async (params: API.PaginationParam) => {
-      const res = await fetchAkun(params);
+      const res = await fetchCabang(params);
       if (res.data) {
         return res.data.map((item) => {
-          return { label: item.account + ' - ' + item.description, value: item.id };
+          return { label: item.code + ' - ' + item.name, value: item.reference_id };
         });
       } else {
         return [];
       }
     };
 
-    request({
-      flag_active: true,
-      flag_pum: props.flagPUM,
-      resultType: 'select',
-      pageSize: 100,
-    }).then((data) => {
-      setOptions(data);
-    });
-  }, [props.flagPUM]);
+    request({ unit_id: props.unitid, flag_active: true, resultType: 'select', pageSize: 100 }).then(
+      (data) => {
+        setOptions(data);
+      },
+    );
+  }, [props.unitid]);
 
   useEffect(() => {
+    console.log(props.value);
     if (props.value) {
       setValues(props.value);
     }
@@ -58,4 +56,4 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
   );
 };
 
-export default AkunSelect;
+export default CabangSelectCode;

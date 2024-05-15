@@ -61,8 +61,10 @@ declare namespace API {
     id?: string;
     /** From Unit.ID */
     unit_id?: string;
+    unit_code?: string;
     /** From Cabang.ID */
     cabang_id?: string;
+    cabang_code?: string;
     /** Code of NIK (unique for same parent) */
     nik?: string;
     /** Display name of Name */
