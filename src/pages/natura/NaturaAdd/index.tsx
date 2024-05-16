@@ -8,8 +8,9 @@ import {
   getNaturaHeader,
   updateNaturaHeader,
 } from '@/services/natura/naturaheader';
-import { PageHeader, Tabs, message } from 'antd';
-import { useParams } from 'umi';
+import { Modal, PageHeader, Tabs, message } from 'antd';
+import { useParams, history } from 'umi';
+import ModalSave from './components/ModalSave';
 
 const { TabPane } = Tabs;
 
@@ -19,6 +20,8 @@ const NaturaAdd: React.FC = () => {
   const naturaFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const detailsFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const [formData, setFormData] = useState<API.NaturaHeader>({});
+  const [modalSave, setModalSave] = useState<boolean>(false);
+  const [noNaturaSave, setNoNaturaSave] = useState<string>('');
 
   useEffect(() => {
     naturaFormRef.current?.resetFields();
@@ -49,12 +52,48 @@ const NaturaAdd: React.FC = () => {
       }
 
       if (id) {
-        delete formData.details;
-        await updateNaturaHeader(id, { ...formData, ...natura });
+        try {
+          delete formData.details;
+          const dataupdate = await updateNaturaHeader(id, { ...formData, ...natura });
+          if (dataupdate.success) {
+            const result: string[] = [];
+            dataupdate.data!.forEach((data) => {
+              result.push(data.id_natura!);
+            });
+            const subtitle: string = 'ID NATURA :' + result.toString();
+            message.success('Edit successfully');
+            setNoNaturaSave(subtitle);
+            setModalSave(true);
+          }
+        } catch (e) {
+          const subtitleErr: string = ' Error: ' + e;
+          Modal.error({
+            title: 'Error Save Natura',
+            content: subtitleErr,
+          });
+        }
       } else {
-        await addNaturaHeader(natura);
+        try {
+          const datainsert = await addNaturaHeader(natura);
+
+          if (datainsert.success) {
+            const result: string[] = [];
+            datainsert.data!.forEach((data) => {
+              result.push(data.id_natura!);
+            });
+            const subtitle: string = 'ID NATURA :' + result.toString();
+            message.success('Save successfully');
+            setNoNaturaSave(subtitle);
+            setModalSave(true);
+          }
+        } catch (e) {
+          const subtitleErr: string = ' Error: ' + e;
+          Modal.error({
+            title: 'Error Save Natura',
+            content: subtitleErr,
+          });
+        }
       }
-      message.success('Save successfully');
     }
   };
 
@@ -113,6 +152,19 @@ const NaturaAdd: React.FC = () => {
           </Tabs>
         </ProCard>
       </PageContainer>
+
+      <ModalSave
+        visible={modalSave}
+        subTitle={noNaturaSave}
+        onCancel={() => {
+          naturaFormRef.current?.resetFields();
+          detailsFormRef.current?.resetFields();
+          setModalSave(false);
+        }}
+        onSuccess={() => {
+          history.push(`/natura`);
+        }}
+      />
     </>
   );
 };

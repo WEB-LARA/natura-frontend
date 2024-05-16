@@ -20,7 +20,7 @@ export async function fetchNaturaHeader(
 
 /** Create record POST /api/v1/natura-headers */
 export async function addNaturaHeader(body: API.NaturaHeader, options?: { [key: string]: any }) {
-  return request<API.ResponseResult<API.NaturaHeader>>('/api/v1/natura-headers', {
+  return request<API.ResponseResult<API.NaturaHeader[]>>('/api/v1/natura-headers', {
     method: 'POST',
     data: body,
     ...(options || {}),
