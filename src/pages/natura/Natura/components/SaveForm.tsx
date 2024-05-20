@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useIntl } from 'umi';
 import { message, Modal } from 'antd';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -19,7 +18,6 @@ type NaturaHeaderModalProps = {
 };
 
 const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeaderModalProps) => {
-  const intl = useIntl();
   const naturaFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const detailsFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const [formData, setFormData] = useState<API.NaturaHeader>({});
@@ -36,7 +34,6 @@ const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeader
       getNaturaHeader(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
-
           naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
           setFormData(data);
@@ -61,7 +58,7 @@ const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeader
       } else {
         await addNaturaHeader(natura);
       }
-      message.success(intl.formatMessage({ id: 'component.message.success.save' }));
+      message.success('Successfully Save Natura');
       props.onSuccess();
     }
   };
@@ -73,13 +70,13 @@ const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeader
       width={800}
       destroyOnClose
       maskClosable={false}
-      okText={intl.formatMessage({ id: 'button.confirm' })}
-      cancelText={intl.formatMessage({ id: 'button.cancel' })}
+      okText={'Save'}
+      cancelText={'Cancel'}
       onOk={async () => {
         try {
           await handleFinish();
         } catch {
-          message.error(intl.formatMessage({ id: 'component.message.error.save' }));
+          message.error('Failed to save Natura');
         }
       }}
       onCancel={props.onCancel}

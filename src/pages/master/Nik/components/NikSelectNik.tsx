@@ -3,21 +3,21 @@ import type { SelectProps } from 'antd';
 import { fetchNik } from '@/services/master/nik';
 import DebounceSelect from '@/components/SelectDebounce';
 
-type NikSelectKeyProps = {
+type NikSelectNikProps = {
   value?: API.Nik[];
   onChange?: (value: any) => void;
 } & SelectProps;
 
-const NikSelectKey: React.FC<NikSelectKeyProps> = (props) => {
+const NikSelectNik: React.FC<NikSelectNikProps> = (props) => {
   //const [options, setOptions] = useState<SelectProps['options']>([]);
-  const [values, setValues] = useState<string>();
+  const [values, setValues] = useState<any>();
   //const [value, setValue] = useState<NikValue>();
 
   const requestNik = async (niksearch: string) => {
     const res = await fetchNik({ flag_aktif: true, resultType: 'select', nik: niksearch });
     if (res.data) {
       return res.data.map((item) => {
-        return { label: item.nik + ' - ' + item.name, value: item.id };
+        return { label: item.nik + ' - ' + item.name, value: item.nik, key: item.id };
       });
     } else {
       return [];
@@ -42,7 +42,7 @@ const NikSelectKey: React.FC<NikSelectKeyProps> = (props) => {
       onChange={(value) => {
         console.log('NikSelectKey');
         console.log(value);
-        setValues(value.key);
+        setValues(value.value);
         if (props.onChange) {
           props.onChange(value.key);
         }
@@ -51,4 +51,4 @@ const NikSelectKey: React.FC<NikSelectKeyProps> = (props) => {
   );
 };
 
-export default NikSelectKey;
+export default NikSelectNik;

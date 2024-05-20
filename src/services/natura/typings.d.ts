@@ -31,6 +31,7 @@ declare namespace API {
     soft_delete?: boolean;
     /** Create time */
     created_at?: string;
+    trx_date?: string;
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;

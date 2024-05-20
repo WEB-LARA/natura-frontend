@@ -56,11 +56,7 @@ const NaturaAdd: React.FC = () => {
           delete formData.details;
           const dataupdate = await updateNaturaHeader(id, { ...formData, ...natura });
           if (dataupdate.success) {
-            const result: string[] = [];
-            dataupdate.data!.forEach((data) => {
-              result.push(data.id_natura!);
-            });
-            const subtitle: string = 'ID NATURA :' + result.toString();
+            const subtitle: string = 'EDIT ID NATURA :' + formData.id_natura;
             message.success('Edit successfully');
             setNoNaturaSave(subtitle);
             setModalSave(true);

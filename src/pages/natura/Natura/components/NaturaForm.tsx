@@ -39,7 +39,7 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
         />
         <ProFormDatePicker
           width="sm"
-          name="transaction_date"
+          name="trx_date"
           label="Transaction Date"
           colProps={{ span: 12 }}
           rules={[

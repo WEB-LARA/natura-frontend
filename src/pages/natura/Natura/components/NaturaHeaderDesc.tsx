@@ -1,6 +1,7 @@
 import type { StatusCase } from '@/utils/util';
 import { codeToStatusCase } from '@/utils/util';
 import { Badge, Descriptions, Steps } from 'antd';
+import moment from 'moment';
 
 type NaturaHeaderDescProps = {
   visible: boolean;
@@ -14,6 +15,8 @@ const NaturaHeaderDesc: React.FC<NaturaHeaderDescProps> = (props: NaturaHeaderDe
     props.data.status! >= 50 ? 'error' : 'wait';
   const currentStep: number =
     props.data.status! >= 50 ? props.data.status! % 10 : props.data.status!;
+
+  const dateconvert = moment(props.data.trx_date!).format('DD-MM-YYYY');
 
   return (
     <>
@@ -55,7 +58,7 @@ const NaturaHeaderDesc: React.FC<NaturaHeaderDescProps> = (props: NaturaHeaderDe
           <Badge status={stt.status} text={stt.tulis} />
         </Descriptions.Item>
         {/* <Descriptions.Item label="Trx Date">{props.data.trx_date}</Descriptions.Item> */}
-        <Descriptions.Item label="Trx Date">2018-04-24</Descriptions.Item>
+        <Descriptions.Item label="Trx Date">{dateconvert}</Descriptions.Item>
         <Descriptions.Item label="Total">
           Rp. {String(props.data.total).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         </Descriptions.Item>
