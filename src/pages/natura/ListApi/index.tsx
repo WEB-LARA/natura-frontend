@@ -17,6 +17,7 @@ import APAPIModal from './components/SaveFormAP';
 import GlAPIModal from './components/SaveFormGL';
 import { proccessAll, validateAll } from '@/services/oracle/oracle';
 import GlNiDetailsDrawer from './components/GlNikDetailDrawer';
+import CarsDetailsDrawer from './components/CarsDetailDrawer';
 
 enum ActionTypeEnum {
   EDITCARS,
@@ -24,6 +25,7 @@ enum ActionTypeEnum {
   EDITGL,
   EDITGLNIK,
   DETAIL,
+  DETAILCARS,
   CANCEL,
 }
 
@@ -57,6 +59,16 @@ const ListApi: React.FC = () => {
             visibleGL: false,
             visibleGLNIK: false,
             visibledetail: true,
+            title: 'Detail Data',
+            id: action.payload?.id,
+          };
+        case ActionTypeEnum.DETAILCARS:
+          return {
+            visibleCars: true,
+            visibleAP: false,
+            visibleGL: false,
+            visibleGLNIK: false,
+            visibledetail: false,
             title: 'Detail Data',
             id: action.payload?.id,
           };
@@ -418,7 +430,14 @@ const ListApi: React.FC = () => {
       key: 'option',
       width: 130,
       render: (_, record) => (
-        <Space size={1}>
+        <Space size={2}>
+          <DetailIconButton
+            key="Detail"
+            code="detail"
+            onClick={async () => {
+              dispatch({ type: ActionTypeEnum.DETAILCARS, payload: record });
+            }}
+          />
           <DelIconButton
             key="delete"
             code="delete"
@@ -572,6 +591,15 @@ const ListApi: React.FC = () => {
                 reload: true,
               }}
               dateFormatter="string"
+            />
+
+            <CarsDetailsDrawer
+              visible={state.visibleCars}
+              title={state.title}
+              id={state.id == null ? '' : state.id}
+              onCancel={() => {
+                dispatch({ type: ActionTypeEnum.CANCEL });
+              }}
             />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Oracle AP" key="item-4">

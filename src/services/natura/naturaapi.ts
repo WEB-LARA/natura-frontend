@@ -20,7 +20,7 @@ export async function fetchCarsApiHeader(
 
 /** Create record POST /api/v1/cars-api-headers */
 export async function addCarsApiHeader(body: API.CarsHeader, options?: { [key: string]: any }) {
-  return request<API.ResponseResult<API.CarsHeader>>('/api/v1/car-headers', {
+  return request<API.ResponseResult<API.CarsHeader>>('/api/v1/cars-headers', {
     method: 'POST',
     data: body,
     ...(options || {}),
@@ -29,7 +29,7 @@ export async function addCarsApiHeader(body: API.CarsHeader, options?: { [key: s
 
 /** Get record by ID GET /api/v1/cars-api-headers/${id} */
 export async function getCarsApiHeader(id: string, options?: { [key: string]: any }) {
-  return request<API.ResponseResult<API.CarsHeader>>(`/api/v1/car-headers/${id}`, {
+  return request<API.ResponseResult<API.CarsHeader>>(`/api/v1/cars-headers/${id}`, {
     method: 'GET',
     ...(options || {}),
   });
@@ -41,7 +41,7 @@ export async function updateCarsApiHeader(
   body: API.CarsHeader,
   options?: { [key: string]: any },
 ) {
-  return request<API.ResponseResult<any>>(`/api/v1/car-headers/${id}`, {
+  return request<API.ResponseResult<any>>(`/api/v1/cars-headers/${id}`, {
     method: 'PUT',
     data: body,
     ...(options || {}),
@@ -50,7 +50,7 @@ export async function updateCarsApiHeader(
 
 /** Delete record by ID DELETE /api/v1/cars-api-headers/${id} */
 export async function delCarsApiHeader(id: string, options?: { [key: string]: any }) {
-  return request<API.ResponseResult<any>>(`/api/v1/car-headers/${id}`, {
+  return request<API.ResponseResult<any>>(`/api/v1/cars-headers/${id}`, {
     method: 'DELETE',
     ...(options || {}),
   });
