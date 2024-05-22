@@ -21,6 +21,7 @@ const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeader
   const naturaFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const detailsFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const [formData, setFormData] = useState<API.NaturaHeader>({});
+  const [kelompokID, setKelompokID] = useState<string | undefined>();
 
   useEffect(() => {
     if (!props.visible) {
@@ -37,6 +38,7 @@ const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeader
           naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
           setFormData(data);
+          setKelompokID(data.kelompok_id);
         }
       });
     }
@@ -82,7 +84,7 @@ const NaturaHeaderModal: React.FC<NaturaHeaderModalProps> = (props: NaturaHeader
       onCancel={props.onCancel}
     >
       <NaturaForm formRef={naturaFormRef} typeDisabled={props.id ? true : false} typePUM={true} />
-      <NaturaLinesForm formRef={detailsFormRef} typePUM={true} />
+      <NaturaLinesForm kelompokId={kelompokID} formRef={detailsFormRef} typePUM={true} />
     </Modal>
   );
 };

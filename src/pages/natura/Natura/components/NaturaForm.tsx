@@ -64,6 +64,7 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
               onChange={(value: string) => {
                 setUnitId(value);
               }}
+              disabled={props.typeDisabled}
               placeholder="Select Unit"
             />
           </ProFormItem>
@@ -79,7 +80,11 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
               },
             ]}
           >
-            <CabangSelect unitid={unitId} placeholder="Select Cabang" />
+            <CabangSelect
+              unitid={unitId}
+              disabled={props.typeDisabled}
+              placeholder="Select Cabang"
+            />
           </ProFormItem>
         </Col>
         <Col span={12}>
@@ -94,7 +99,7 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
               },
             ]}
           >
-            <WilayahSelect placeholder="Select Wilayah" />
+            <WilayahSelect disabled={props.typeDisabled} placeholder="Select Wilayah" />
           </ProFormItem>
         </Col>
         <ProFormTextArea

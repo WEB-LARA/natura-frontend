@@ -15,6 +15,7 @@ import NikSelectNik from '@/pages/master/Nik/components/NikSelectNik';
 type NaturaLinesFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaLine> | undefined>;
   typePUM: boolean;
+  kelompokId?: string;
 };
 
 const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormProps) => {
@@ -70,7 +71,11 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
                   },
                 ]}
               >
-                <AkunSelect flagPUM={props.typePUM} placeholder="Select Akun" />
+                <AkunSelect
+                  kelompokId={props.kelompokId}
+                  flagPUM={props.typePUM}
+                  placeholder="Select Akun"
+                />
               </ProFormItem>
             </Col>
             <ProFormDigit

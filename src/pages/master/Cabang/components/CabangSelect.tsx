@@ -7,6 +7,7 @@ type CabangSelectProps = {
   value?: API.Cabang[];
   unitid: string;
   onChange?: (value: string) => void;
+  disabled?: boolean;
 } & SelectProps;
 
 const CabangSelect: React.FC<CabangSelectProps> = (props) => {
@@ -46,6 +47,7 @@ const CabangSelect: React.FC<CabangSelectProps> = (props) => {
       {...props}
       options={options}
       value={values}
+      disabled={props.disabled}
       onChange={(value: string) => {
         setValues(value);
         if (props.onChange) {

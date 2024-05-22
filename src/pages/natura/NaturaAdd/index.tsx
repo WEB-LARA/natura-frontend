@@ -22,6 +22,7 @@ const NaturaAdd: React.FC = () => {
   const [formData, setFormData] = useState<API.NaturaHeader>({});
   const [modalSave, setModalSave] = useState<boolean>(false);
   const [noNaturaSave, setNoNaturaSave] = useState<string>('');
+  const [kelompokID, setKelompokID] = useState<string | undefined>();
 
   useEffect(() => {
     naturaFormRef.current?.resetFields();
@@ -36,6 +37,7 @@ const NaturaAdd: React.FC = () => {
           naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
           setFormData(data);
+          setKelompokID(data.kelompok_id);
         }
       });
     }
@@ -124,7 +126,7 @@ const NaturaAdd: React.FC = () => {
                   typeDisabled={id ? true : false}
                   typePUM={true}
                 />
-                <NaturaLinesForm formRef={detailsFormRef} typePUM={true} />
+                <NaturaLinesForm kelompokId={kelompokID} formRef={detailsFormRef} typePUM={true} />
               </ProForm>
             </TabPane>
             <TabPane key="other" style={{ justifyContent: 'center' }} tab="Other">
@@ -142,7 +144,7 @@ const NaturaAdd: React.FC = () => {
                   typeDisabled={id ? true : false}
                   typePUM={false}
                 />
-                <NaturaLinesForm formRef={detailsFormRef} typePUM={false} />
+                <NaturaLinesForm kelompokId={kelompokID} formRef={detailsFormRef} typePUM={false} />
               </ProForm>
             </TabPane>
           </Tabs>

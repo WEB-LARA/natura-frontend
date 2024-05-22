@@ -5,6 +5,7 @@ import { fetchAkun } from '@/services/master/akun';
 
 type AkunSelectProps = {
   value?: API.Akun[];
+  kelompokId?: string;
   onChange?: (value: string) => void;
   flagPUM?: boolean;
 } & SelectProps;
@@ -26,6 +27,7 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
     };
 
     request({
+      kelompok_id: props.kelompokId,
       flag_active: true,
       flag_pum: props.flagPUM,
       resultType: 'select',
@@ -33,7 +35,7 @@ const AkunSelect: React.FC<AkunSelectProps> = (props) => {
     }).then((data) => {
       setOptions(data);
     });
-  }, [props.flagPUM]);
+  }, [props.flagPUM, props.kelompokId]);
 
   useEffect(() => {
     if (props.value) {
