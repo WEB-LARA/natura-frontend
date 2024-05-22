@@ -20,6 +20,7 @@ const ReportPerincian: React.FC = () => {
           await postLptn(report!)
             .then((res) => res.blob())
             .then((response) => {
+              console.log('tes');
               const url = window.URL.createObjectURL(new Blob([response]));
               const link = document.createElement('a');
               link.href = url;

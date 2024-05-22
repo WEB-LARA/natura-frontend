@@ -8,6 +8,7 @@ export async function postLptn(body: API.ReportPerincianForm, options?: { [key: 
     method: 'POST',
     data: body,
     responseType: 'blob',
+    parseResponse: false,
     ...(options || {}),
   });
 }
@@ -18,6 +19,7 @@ export async function postLrpn(body: API.ReportReconForm, options?: { [key: stri
     method: 'POST',
     data: body,
     responseType: 'blob',
+    parseResponse: false,
     ...(options || {}),
   });
 }
@@ -28,6 +30,7 @@ export async function postLpnk(body: API.ReportPenghasilanForm, options?: { [key
     method: 'POST',
     data: body,
     responseType: 'blob',
+    parseResponse: false,
     ...(options || {}),
   });
 }

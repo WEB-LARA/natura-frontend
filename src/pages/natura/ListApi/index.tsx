@@ -603,6 +603,12 @@ const ListApi: React.FC = () => {
             />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Oracle AP" key="item-4">
+            <Alert
+              message="API terima data dari Oracle untuk Natura Reconcilliation"
+              type="info"
+              showIcon
+            />
+            <br />
             <ProTable<API.OracleAp, API.PaginationParam>
               columns={columnAps}
               actionRef={actionRef}
