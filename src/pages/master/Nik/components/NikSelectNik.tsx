@@ -5,12 +5,12 @@ import DebounceSelect from '@/components/SelectDebounce';
 
 type NikSelectNikProps = {
   value?: API.Nik[];
-  onChange?: (value: any) => void;
+  onChange?: (value: string) => void;
 } & SelectProps;
 
 const NikSelectNik: React.FC<NikSelectNikProps> = (props) => {
   //const [options, setOptions] = useState<SelectProps['options']>([]);
-  const [values, setValues] = useState<any>();
+  const [values, setValues] = useState<string>();
   //const [value, setValue] = useState<NikValue>();
 
   const requestNik = async (niksearch: string) => {
@@ -40,11 +40,9 @@ const NikSelectNik: React.FC<NikSelectNikProps> = (props) => {
       fetchOptions={requestNik}
       value={values}
       onChange={(value) => {
-        console.log('NikSelectKey');
-        console.log(value);
         setValues(value.value);
         if (props.onChange) {
-          props.onChange(value.key);
+          props.onChange(value.value);
         }
       }}
     />

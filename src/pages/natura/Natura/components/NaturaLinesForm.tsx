@@ -16,6 +16,7 @@ type NaturaLinesFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaLine> | undefined>;
   typePUM: boolean;
   kelompokId?: string;
+  nikID?: string;
 };
 
 const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormProps) => {
@@ -50,15 +51,10 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
                   onChange={(value) => {
                     console.log('NikSelectKey Selected');
                     console.log(value);
-                    // props.formRef.current?.setFieldsValue({ nik_num: value.value });
-                    props.formRef.current?.setFieldsValue({ nik_id: value.key });
-                    // form.setFieldsValue({ nik_num: value.value });
-                    form.setFieldsValue({ nik_id: value.key });
                   }}
                   placeholder="Select NIK"
                 />
               </ProFormItem>
-              <ProFormText name="nik_id" label="nik_id" hidden={true} />
             </Col>
             <Col span={8}>
               <ProFormItem
