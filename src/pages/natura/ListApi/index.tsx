@@ -9,10 +9,10 @@ import { codeToStatusCase } from '@/utils/util';
 import { CheckCircleOutlined, RedoOutlined } from '@ant-design/icons';
 import StatisticAPI from './components/StatisticAPI';
 
-import { delOracleAp, fetchOracleAp } from '@/services/oracle/oracleap';
-import { fetchOracleGl } from '@/services/oracle/oraclegl';
-import { fetchOracleGlNik } from '@/services/oracle/oracleglnik';
-import { fetchCarsApiHeader } from '@/services/natura/naturaapi';
+import { fetchOracleAp } from '@/services/oracle/oracleap';
+import { delOracleGl, fetchOracleGl } from '@/services/oracle/oraclegl';
+import { delOracleGlNik, fetchOracleGlNik } from '@/services/oracle/oracleglnik';
+import { delCarsApiHeader, fetchCarsApiHeader } from '@/services/natura/naturaapi';
 import APAPIModal from './components/SaveFormAP';
 import GlAPIModal from './components/SaveFormGL';
 import { proccessAll, validateAll } from '@/services/oracle/oracle';
@@ -287,7 +287,7 @@ const ListApi: React.FC = () => {
             code="delete"
             title={delTip}
             onConfirm={async () => {
-              const res = await delOracleAp(record.id!);
+              const res = await delOracleGl(record.id!);
               if (res.success) {
                 message.success('Delete successfully');
                 actionRef.current?.reload();
@@ -365,7 +365,7 @@ const ListApi: React.FC = () => {
             code="delete"
             title={delTip}
             onConfirm={async () => {
-              const res = await delOracleAp(record.id!);
+              const res = await delOracleGlNik(record.id!);
               if (res.success) {
                 message.success('Delete successfully');
                 actionRef.current?.reload();
@@ -443,7 +443,7 @@ const ListApi: React.FC = () => {
             code="delete"
             title={delTip}
             onConfirm={async () => {
-              const res = await delOracleAp(record.id!);
+              const res = await delCarsApiHeader(record.id!);
               if (res.success) {
                 message.success('Delete successfully');
                 actionRef.current?.reload();
