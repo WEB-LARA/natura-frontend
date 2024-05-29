@@ -32,11 +32,19 @@ const NaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesProps
       editable: false,
     },
     {
-      title: 'amount',
+      title: 'Amount',
       dataIndex: 'amount',
       ellipsis: true,
       width: 130,
       key: 'amount',
+      valueType: 'digit',
+    },
+    {
+      title: 'Amount Final',
+      dataIndex: 'amount_final',
+      ellipsis: true,
+      width: 130,
+      key: 'amount_final',
       valueType: 'digit',
     },
   ];
