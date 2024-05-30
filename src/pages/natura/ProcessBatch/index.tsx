@@ -83,11 +83,18 @@ const ProcessBatch: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
     },
     {
-      title: 'Period',
-      dataIndex: 'period',
+      title: 'Month Period',
+      dataIndex: 'month_period',
       ellipsis: true,
       width: 100,
-      key: 'period',
+      key: 'month_period',
+    },
+    {
+      title: 'Year Period',
+      dataIndex: 'year_period',
+      ellipsis: true,
+      width: 100,
+      key: 'year_period',
     },
     {
       title: 'Actions',

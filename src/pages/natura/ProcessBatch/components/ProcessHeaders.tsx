@@ -40,7 +40,7 @@ const ProcessHeaders: React.FC<ProcessHeadersProps> = (props: ProcessHeadersProp
     <ProTable<API.NaturaProcessHeader, API.PaginationParam>
       columns={columns}
       actionRef={actionRef}
-      params={{ natura_process_header_id: props.idheader }}
+      params={{ natura_process_batch_id: props.idheader }}
       request={fetchNaturaProcessHeader}
       expandable={{
         expandedRowRender: (record) => <ProcessLines idheader={record.id!} />,
