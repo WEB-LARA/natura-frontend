@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { fetchNaturaProcessLine } from '@/services/natura/processedline';
+import { Space } from 'antd';
 
 type ProcessLinesProps = {
   idheader: string;
@@ -23,7 +24,9 @@ const ProcessLines: React.FC<ProcessLinesProps> = (props: ProcessLinesProps) => 
       dataIndex: 'akun.description',
       ellipsis: true,
       width: 160,
-      key: 'account_name',
+      render: (_, record) => {
+        return record.akun ? <Space>{record.akun?.description}</Space> : '-';
+      },
     },
     {
       title: 'Amount',

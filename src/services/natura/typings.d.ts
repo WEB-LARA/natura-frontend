@@ -335,6 +335,7 @@ declare namespace API {
     created_at?: string;
     /** Update time */
     updated_at?: string;
+    akun?: Akun;
   };
 
   // Create processed Natura
