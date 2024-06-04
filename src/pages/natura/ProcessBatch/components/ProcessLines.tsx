@@ -29,7 +29,7 @@ const ProcessLines: React.FC<ProcessLinesProps> = (props: ProcessLinesProps) => 
       },
     },
     {
-      title: 'Amount',
+      title: 'Amount Final',
       dataIndex: 'amount_final',
       ellipsis: true,
       width: 130,

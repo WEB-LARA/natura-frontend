@@ -60,20 +60,20 @@ const Unit: React.FC = () => {
   const columns: ProColumns<API.Unit>[] = [
     {
       title: 'Kode Unit',
-      dataIndex: 'code',
-      width: 130,
-      key: 'code', // Query field name
-      sorter: (a, b) => {
-        return a.code!.localeCompare(b.code!);
-      },
-    },
-    {
-      title: 'Kode Inisial',
       dataIndex: 'reference_id',
       width: 130,
       key: 'reference_id', // Query field name
       sorter: (a, b) => {
         return a.reference_id!.localeCompare(b.reference_id!);
+      },
+    },
+    {
+      title: 'Kode Inisial',
+      dataIndex: 'code',
+      width: 130,
+      key: 'code', // Query field name
+      sorter: (a, b) => {
+        return a.code!.localeCompare(b.code!);
       },
     },
     {
