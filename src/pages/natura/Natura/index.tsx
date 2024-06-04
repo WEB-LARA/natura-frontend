@@ -163,8 +163,12 @@ const NaturaHeader: React.FC = () => {
           title="Natura List"
           subTitle="This is a subtitle"
           extra={[
-            <Button key="3">List API</Button>,
-            <Button key="2">List Upload</Button>,
+            <Button key="3" onClick={() => history.push(`/natura/naturaapi`)}>
+              List API
+            </Button>,
+            <Button key="2" onClick={() => history.push(`/natura/naturafile`)}>
+              List Upload
+            </Button>,
             <Button
               key="1"
               type="primary"
