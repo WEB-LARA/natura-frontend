@@ -36,8 +36,8 @@ const NaturaAdd: React.FC = () => {
 
           naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
-          setFormData(data);
           setKelompokID(data.kelompok_id);
+          setFormData(data);
         }
       });
     }
