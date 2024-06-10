@@ -23,17 +23,20 @@ const NaturaAdd: React.FC = () => {
   const [modalSave, setModalSave] = useState<boolean>(false);
   const [noNaturaSave, setNoNaturaSave] = useState<string>('');
   const [kelompokID, setKelompokID] = useState<string | undefined>();
+  const [activeKey, setActiveKey] = useState<string>('pum');
 
   useEffect(() => {
     naturaFormRef.current?.resetFields();
     detailsFormRef.current?.resetFields();
 
     if (id) {
+      // TODO: check if natura pum or other
+      // setActiveKey('other');
+      setActiveKey('pum');
       setTitle('Edit Natura');
       getNaturaHeader(id).then(async (res) => {
         if (res.data) {
           const data = res.data;
-
           naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
           setKelompokID(data.kelompok_id);
@@ -107,6 +110,7 @@ const NaturaAdd: React.FC = () => {
       <PageContainer ghost>
         <ProCard>
           <Tabs
+            activeKey={activeKey}
             tabPosition="top"
             defaultActiveKey="pum"
             style={{ background: '#fff', paddingBottom: 50 }}
