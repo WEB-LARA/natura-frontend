@@ -30,15 +30,19 @@ const NaturaAdd: React.FC = () => {
     detailsFormRef.current?.resetFields();
 
     if (id) {
-      // TODO: check if natura pum or other
-      // setActiveKey('other');
-      setActiveKey('pum');
       setTitle('Edit Natura');
       getNaturaHeader(id).then(async (res) => {
         if (res.data) {
           const data = res.data;
+          if (data.flag_pum) {
+            setActiveKey('pum');
+          } else {
+            setActiveKey('other');
+          }
+
           naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
+
           setKelompokID(data.kelompok_id);
           setFormData(data);
         }
@@ -49,6 +53,8 @@ const NaturaAdd: React.FC = () => {
   const handleFinish = async () => {
     const natura = await naturaFormRef.current?.validateFields();
     if (natura) {
+      natura.flag_pum = activeKey === 'pum' ? true : false;
+      natura.wilayah_id = activeKey === 'pum' ? natura.wilayah_id : '1';
       delete natura.statusChecked;
 
       const naturadetails = await detailsFormRef.current?.validateFields();
@@ -98,6 +104,10 @@ const NaturaAdd: React.FC = () => {
     }
   };
 
+  const onChange = (newActiveKey: string) => {
+    setActiveKey(newActiveKey);
+  };
+
   return (
     <>
       <PageHeader
@@ -111,6 +121,7 @@ const NaturaAdd: React.FC = () => {
         <ProCard>
           <Tabs
             activeKey={activeKey}
+            onChange={onChange}
             tabPosition="top"
             defaultActiveKey="pum"
             style={{ background: '#fff', paddingBottom: 50 }}

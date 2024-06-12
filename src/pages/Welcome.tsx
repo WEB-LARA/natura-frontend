@@ -1,7 +1,7 @@
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { Alert, Card, Descriptions, Statistic, Timeline, Typography } from 'antd';
+import { Alert, Card, Descriptions, Statistic, Timeline } from 'antd';
 import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'umi';
+import { FormattedMessage, useIntl, useModel } from 'umi';
 import RcResizeObserver from 'rc-resize-observer';
 import { SmileOutlined } from '@ant-design/icons';
 
@@ -9,6 +9,7 @@ const { Divider } = ProCard;
 
 const Stat: React.FC = () => {
   const [responsive, setResponsive] = useState(false);
+
   return (
     <RcResizeObserver
       key="resize-observer"
@@ -43,6 +44,8 @@ const Stat: React.FC = () => {
 
 const Welcome: React.FC = () => {
   const intl = useIntl();
+  const { initialState, setInitialState } = useModel('@@initialState');
+
   return (
     <PageContainer>
       <Stat />
@@ -61,11 +64,43 @@ const Welcome: React.FC = () => {
             marginBottom: 24,
           }}
         />
-        <Descriptions title="Welcome, Agus" style={{ marginBottom: 32 }}>
-          <Descriptions.Item label="NIK">201309289</Descriptions.Item>
-          <Descriptions.Item label="Unit">PT. Indomarco Prismatama</Descriptions.Item>
-          <Descriptions.Item label="Cabang">JAKARTA</Descriptions.Item>
-          <Descriptions.Item label="Roles">Admin</Descriptions.Item>
+        <Descriptions
+          title={
+            initialState?.currentUser ? 'Welcome, ' + initialState?.currentUser?.name : 'Welcome'
+          }
+          style={{ marginBottom: 32 }}
+        >
+          <Descriptions.Item label="NIK">
+            {initialState?.currentUser?.id == 'root' ? 'root' : initialState?.currentUser?.nik?.nik}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Roles">
+            {initialState?.currentUser?.id == 'root' ? (
+              'Administrator'
+            ) : (
+              <ul>
+                {initialState?.currentUser?.roles?.map((roles) => (
+                  <li key={roles.id}>{roles.role_name}</li>
+                ))}
+              </ul>
+            )}
+          </Descriptions.Item>
+          <Descriptions.Item label="Unit">
+            {initialState?.currentUser?.id == 'root'
+              ? 'root'
+              : initialState?.currentUser?.unit?.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="Cabang">
+            {initialState?.currentUser?.id == 'root' ? (
+              'root'
+            ) : (
+              <ul>
+                {initialState?.currentUser?.cabangs?.map((cabang) => (
+                  <li key={cabang.id}>{cabang.cabang_name}</li>
+                ))}
+              </ul>
+            )}
+          </Descriptions.Item>
         </Descriptions>
       </Card>
       <br />

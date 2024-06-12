@@ -11,6 +11,7 @@ declare namespace API {
     unit_id?: string;
     /** From Cabang.ID */
     cabang_id?: string;
+    wilayah_id?: string;
     /** Period Natura */
     period?: string;
     /** ID Natura */
@@ -36,6 +37,7 @@ declare namespace API {
     updated_at?: string;
     statusChecked?: boolean;
     description?: string;
+    flag_pum?: boolean;
 
     /** Natura Lines */
     details?: NaturaLine[];

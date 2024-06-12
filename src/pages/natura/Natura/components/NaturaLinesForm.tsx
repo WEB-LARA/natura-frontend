@@ -66,7 +66,11 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
                   },
                 ]}
               >
-                <AkunSelect kelompokId={props.kelompokId} placeholder="Select Akun" />
+                <AkunSelect
+                  kelompokId={props.kelompokId}
+                  flagPUM={props.typePUM}
+                  placeholder="Select Akun"
+                />
               </ProFormItem>
             </Col>
             <ProFormDigit
