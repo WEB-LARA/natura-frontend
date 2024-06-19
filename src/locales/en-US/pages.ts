@@ -17,7 +17,7 @@ export default {
   // welcome
   'pages.welcome.link': 'Welcome',
   'pages.welcome.alertMessage':
-    'A more concise, efficient, and modular golang admin service has been released.',
+    'Welcome to Natura Dashboard, Web Natura is web for calculate natura tax.',
   'pages.welcome.quickStart': 'Quick Start',
   'pages.welcome.generate': 'Generate Struct',
   'pages.welcome.remove': 'Remove Struct',

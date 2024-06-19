@@ -1,9 +1,11 @@
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { Alert, Card, Descriptions, Statistic, Timeline } from 'antd';
-import React, { useState } from 'react';
-import { FormattedMessage, useIntl, useModel } from 'umi';
+import { Alert, Button, Card, Descriptions, Statistic, Timeline } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useIntl, useModel } from 'umi';
 import RcResizeObserver from 'rc-resize-observer';
 import { SmileOutlined } from '@ant-design/icons';
+import { fetchLogger } from '@/services/system/logger';
+import moment from 'moment';
 
 const { Divider } = ProCard;
 
@@ -45,6 +47,32 @@ const Stat: React.FC = () => {
 const Welcome: React.FC = () => {
   const intl = useIntl();
   const { initialState, setInitialState } = useModel('@@initialState');
+  const [logs, setLogs] = useState<API.Logger[]>([]);
+  const [refreshMe, setRefreshMe] = useState<boolean>(false);
+
+  useEffect(() => {
+    const request = async (params: API.PaginationParam) => {
+      const res = await fetchLogger(params);
+      if (res.data) {
+        return res.data.map((item) => {
+          return {
+            username: item.user_id,
+            message: item.message,
+            created_at: moment(item.created_at).format('DD-MM-YYYY HH:mm:ss'),
+            level: item.level,
+          };
+        });
+      } else {
+        return [];
+      }
+    };
+
+    request({ user_id: initialState?.currentUser?.id, resultType: 'select', pageSize: 50 }).then(
+      (data) => {
+        setLogs(data);
+      },
+    );
+  }, [initialState?.currentUser?.id, refreshMe]);
 
   return (
     <PageContainer>
@@ -54,7 +82,8 @@ const Welcome: React.FC = () => {
         <Alert
           message={intl.formatMessage({
             id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
+            defaultMessage:
+              'Welcome to Natura Dashboard, Web Natura is web for calculate natura tax',
           })}
           type="success"
           showIcon
@@ -104,24 +133,33 @@ const Welcome: React.FC = () => {
         </Descriptions>
       </Card>
       <br />
-      <Card title="My Activity">
+      <Card
+        title="My Activity"
+        extra={
+          <Button
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              setRefreshMe(!refreshMe);
+            }}
+          >
+            Refresh
+          </Button>
+        }
+      >
         <Timeline>
+          {logs.map((log, index) => (
+            <Timeline.Item key={index} color={log.level == 'error' ? 'red' : 'blue'}>
+              <p>{log.message}</p>
+              <p>{log.created_at}</p>
+            </Timeline.Item>
+          ))}
           <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
           <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
           <Timeline.Item color="red">
             <p>Solve initial network problems 1</p>
             <p>Solve initial network problems 2</p>
             <p>Solve initial network problems 3 2015-09-01</p>
-          </Timeline.Item>
-          <Timeline.Item>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </Timeline.Item>
-          <Timeline.Item color="gray">
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
           </Timeline.Item>
           <Timeline.Item color="gray">
             <p>Technical testing 1</p>

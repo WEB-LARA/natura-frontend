@@ -102,7 +102,7 @@ const User: React.FC = () => {
       },
     },
     {
-      title: 'Cabangs',
+      title: 'Cabang',
       dataIndex: 'cabangs',
       width: 200,
       ellipsis: true,
