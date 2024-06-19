@@ -6,11 +6,34 @@ import RcResizeObserver from 'rc-resize-observer';
 import { SmileOutlined } from '@ant-design/icons';
 import { fetchLogger } from '@/services/system/logger';
 import moment from 'moment';
+import { getNaturaHeaderCount } from '@/services/natura/naturaheader';
 
 const { Divider } = ProCard;
 
 const Stat: React.FC = () => {
   const [responsive, setResponsive] = useState(false);
+  const [countData, setCountData] = useState<API.NaturaHeaderCount>({
+    status_new: 0,
+    status_process: 0,
+    status_ready: 0,
+    status_recon: 0,
+    status_send: 0,
+  });
+
+  useEffect(() => {
+    const request = async () => {
+      const res = await getNaturaHeaderCount();
+      if (res.data) {
+        return res.data;
+      } else {
+        return {};
+      }
+    };
+
+    request().then((data) => {
+      setCountData(data);
+    });
+  }, []);
 
   return (
     <RcResizeObserver
@@ -21,23 +44,23 @@ const Stat: React.FC = () => {
     >
       <ProCard.Group title="Status Natura" direction={responsive ? 'column' : 'row'}>
         <ProCard>
-          <Statistic title="New" value={79.0} precision={2} />
+          <Statistic title="New" value={countData.status_new} />
         </ProCard>
         <Divider type={responsive ? 'horizontal' : 'vertical'} />
         <ProCard>
-          <Statistic title="Recon" value={112893.0} precision={2} />
+          <Statistic title="Recon" value={countData.status_recon} />
         </ProCard>
         <Divider type={responsive ? 'horizontal' : 'vertical'} />
         <ProCard>
-          <Statistic title="Process" value={93} />
+          <Statistic title="Process" value={countData.status_process} />
         </ProCard>
         <Divider type={responsive ? 'horizontal' : 'vertical'} />
         <ProCard>
-          <Statistic title="Ready" value={112893.0} />
+          <Statistic title="Ready" value={countData.status_ready} />
         </ProCard>
         <Divider type={responsive ? 'horizontal' : 'vertical'} />
         <ProCard>
-          <Statistic title="Send" value={264638} />
+          <Statistic title="Send" value={countData.status_send} />
         </ProCard>
       </ProCard.Group>
     </RcResizeObserver>

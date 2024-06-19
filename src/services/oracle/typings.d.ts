@@ -183,4 +183,12 @@ declare namespace API {
     oracle_gl_nik_jml?: number;
     cars_jml?: number;
   };
+
+  type OracleAPICount = {
+    oracle_ap?: number;
+    oracle_gl_nik?: number;
+    oracle_gl?: number;
+    cars?: number;
+    total?: number;
+  };
 }

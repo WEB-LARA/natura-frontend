@@ -71,3 +71,11 @@ export async function fetchCarsErrLine(
     ...(options || {}),
   });
 }
+
+/** Get record GET /api/v1/oracle-headers/count */
+export async function getAPICount(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.OracleAPICount>>(`/api/v1/oracle-headers/count`, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

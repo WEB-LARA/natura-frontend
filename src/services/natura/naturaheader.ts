@@ -44,6 +44,14 @@ export async function getNaturaHeader(id: string, options?: { [key: string]: any
   });
 }
 
+/** Get record GET /api/v1/natura-headers/count */
+export async function getNaturaHeaderCount(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.NaturaHeaderCount>>(`/api/v1/natura-headers/count`, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** Update record by ID PUT /api/v1/natura-headers/${id} */
 export async function updateNaturaHeader(
   id: string,

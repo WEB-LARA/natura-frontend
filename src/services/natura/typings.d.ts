@@ -45,6 +45,14 @@ declare namespace API {
     cabang?: Cabang;
   };
 
+  type NaturaHeaderCount = {
+    status_new?: number;
+    status_recon?: number;
+    status_process?: number;
+    status_ready?: number;
+    status_send?: number;
+  };
+
   // Natura Line Table
   type NaturaLine = {
     /** Unique ID */
