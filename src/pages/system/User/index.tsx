@@ -76,25 +76,6 @@ const User: React.FC = () => {
       key: 'username', // Query field name
     },
     {
-      title: 'Cabangs',
-      dataIndex: 'cabangs',
-      width: 200,
-      search: false,
-      render: (_, record) => {
-        return record.cabangs ? (
-          <Space>
-            {record.cabangs?.map((cabang) => (
-              <Tag color="blue" key={cabang.cabang_id}>
-                {cabang.cabang_name}
-              </Tag>
-            ))}
-          </Space>
-        ) : (
-          '-'
-        );
-      },
-    },
-    {
       title: intl.formatMessage({ id: 'pages.system.user.form.name' }),
       dataIndex: 'name',
       ellipsis: true,
@@ -104,7 +85,7 @@ const User: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.roles' }),
       dataIndex: 'roles',
-      width: 200,
+      width: 160,
       search: false,
       render: (_, record) => {
         return record.roles ? (
@@ -112,6 +93,26 @@ const User: React.FC = () => {
             {record.roles?.map((role) => (
               <Tag color="blue" key={role.role_id}>
                 {role.role_name}
+              </Tag>
+            ))}
+          </Space>
+        ) : (
+          '-'
+        );
+      },
+    },
+    {
+      title: 'Cabangs',
+      dataIndex: 'cabangs',
+      width: 200,
+      ellipsis: true,
+      search: false,
+      render: (_, record) => {
+        return record.cabangs ? (
+          <Space>
+            {record.cabangs?.map((cabang) => (
+              <Tag color="blue" key={cabang.cabang_id}>
+                {cabang.cabang_name}
               </Tag>
             ))}
           </Space>

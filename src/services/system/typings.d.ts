@@ -146,6 +146,7 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+    all_cabang?: boolean;
     unit?: Unit;
     nik?: Nik;
   };
