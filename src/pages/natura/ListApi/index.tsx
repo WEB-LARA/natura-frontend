@@ -1,5 +1,5 @@
 import { PageContainer } from '@ant-design/pro-components';
-import React, { useRef, useReducer } from 'react';
+import React, { useRef, useReducer, useState, useEffect } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Alert, Button, PageHeader, Space, Tabs, Tag, message } from 'antd';
@@ -18,6 +18,9 @@ import GlAPIModal from './components/SaveFormGL';
 import { proccessAll, validateAll } from '@/services/oracle/oracle';
 import GlNiDetailsDrawer from './components/GlNikDetailDrawer';
 import CarsDetailsDrawer from './components/CarsDetailDrawer';
+import moment from 'moment';
+import { fetchUnitFilter } from '@/services/master/unit';
+import { fetchCabangFilter } from '@/services/master/cabang';
 
 enum ActionTypeEnum {
   EDITCARS,
@@ -45,9 +48,40 @@ interface State {
 }
 
 const ListApi: React.FC = () => {
+  const [unitFilter, setUnitFilter] = useState<API.FilterType>({});
+  const [cabangFilter, setCabangFilter] = useState<API.FilterType>({});
+
   const actionRef = useRef<ActionType>();
   const editTitle = 'Edit API';
   const delTip = 'Delete API';
+
+  useEffect(() => {
+    const requestUnit = async () => {
+      const res = await fetchUnitFilter();
+      if (res) {
+        return res;
+      } else {
+        return {};
+      }
+    };
+
+    const requestCabang = async () => {
+      const res = await fetchCabangFilter();
+      if (res) {
+        return res;
+      } else {
+        return {};
+      }
+    };
+
+    requestUnit().then((data) => {
+      setUnitFilter(data);
+    });
+
+    requestCabang().then((data) => {
+      setCabangFilter(data);
+    });
+  }, []);
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -170,11 +204,16 @@ const ListApi: React.FC = () => {
       key: 'account',
     },
     {
-      title: 'Trx Date',
+      title: 'Date',
       dataIndex: 'trx_date',
       ellipsis: true,
       width: 160,
       key: 'trx_date',
+      render: (text, record) => {
+        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
+        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
+        return <Tag color="default">{localTime}</Tag>;
+      },
     },
     {
       title: 'Unit',
@@ -182,6 +221,9 @@ const ListApi: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'unit_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: unitFilter,
     },
     {
       title: 'Branch',
@@ -189,6 +231,9 @@ const ListApi: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'branch_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: cabangFilter,
     },
     // {
     //   title: 'Actions',
@@ -248,11 +293,16 @@ const ListApi: React.FC = () => {
       key: 'id_natura',
     },
     {
-      title: 'Trx Date',
+      title: 'Date',
       dataIndex: 'trx_date',
       ellipsis: true,
       width: 160,
       key: 'trx_date',
+      render: (text, record) => {
+        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
+        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
+        return <Tag color="default">{localTime}</Tag>;
+      },
     },
     {
       title: 'Unit',
@@ -260,6 +310,9 @@ const ListApi: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'unit_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: unitFilter,
     },
     {
       title: 'Branch',
@@ -267,35 +320,44 @@ const ListApi: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'branch_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: cabangFilter,
     },
     {
       title: 'Actions',
       valueType: 'option',
       key: 'option',
       width: 130,
-      render: (_, record) => (
-        <Space size={2}>
-          <EditIconButton
-            key="edit"
-            code="edit"
-            onClick={() => {
-              dispatch({ type: ActionTypeEnum.EDITGL, payload: record });
-            }}
-          />
-          <DelIconButton
-            key="delete"
-            code="delete"
-            title={delTip}
-            onConfirm={async () => {
-              const res = await delOracleGl(record.id!);
-              if (res.success) {
-                message.success('Delete successfully');
-                actionRef.current?.reload();
-              }
-            }}
-          />
-        </Space>
-      ),
+      render: (_, record) => {
+        if (record.status == 0) {
+          return (
+            <Space size={2}>
+              <EditIconButton
+                key="edit"
+                code="edit"
+                onClick={() => {
+                  dispatch({ type: ActionTypeEnum.EDITGL, payload: record });
+                }}
+              />
+              <DelIconButton
+                key="delete"
+                code="delete"
+                title={delTip}
+                onConfirm={async () => {
+                  const res = await delOracleGl(record.id!);
+                  if (res.success) {
+                    message.success('Delete successfully');
+                    actionRef.current?.reload();
+                  }
+                }}
+              />
+            </Space>
+          );
+        } else {
+          return <Space size={2}></Space>;
+        }
+      },
     },
   ];
 
@@ -326,11 +388,16 @@ const ListApi: React.FC = () => {
       key: 'id_natura',
     },
     {
-      title: 'Trx Date',
+      title: 'Date',
       dataIndex: 'trx_date',
       ellipsis: true,
       width: 160,
       key: 'trx_date',
+      render: (text, record) => {
+        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
+        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
+        return <Tag color="default">{localTime}</Tag>;
+      },
     },
     {
       title: 'Unit',
@@ -351,29 +418,45 @@ const ListApi: React.FC = () => {
       valueType: 'option',
       key: 'option',
       width: 130,
-      render: (_, record) => (
-        <Space size={2}>
-          <DetailIconButton
-            key="Detail"
-            code="detail"
-            onClick={async () => {
-              dispatch({ type: ActionTypeEnum.DETAIL, payload: record });
-            }}
-          />
-          <DelIconButton
-            key="delete"
-            code="delete"
-            title={delTip}
-            onConfirm={async () => {
-              const res = await delOracleGlNik(record.id!);
-              if (res.success) {
-                message.success('Delete successfully');
-                actionRef.current?.reload();
-              }
-            }}
-          />
-        </Space>
-      ),
+      render: (_, record) => {
+        if (record.status == 0) {
+          return (
+            <Space size={2}>
+              <DetailIconButton
+                key="Detail"
+                code="detail"
+                onClick={async () => {
+                  dispatch({ type: ActionTypeEnum.DETAIL, payload: record });
+                }}
+              />
+              <DelIconButton
+                key="delete"
+                code="delete"
+                title={delTip}
+                onConfirm={async () => {
+                  const res = await delOracleGlNik(record.id!);
+                  if (res.success) {
+                    message.success('Delete successfully');
+                    actionRef.current?.reload();
+                  }
+                }}
+              />
+            </Space>
+          );
+        } else {
+          return (
+            <Space size={2}>
+              <DetailIconButton
+                key="Detail"
+                code="detail"
+                onClick={async () => {
+                  dispatch({ type: ActionTypeEnum.DETAIL, payload: record });
+                }}
+              />
+            </Space>
+          );
+        }
+      },
     },
   ];
 
@@ -404,11 +487,16 @@ const ListApi: React.FC = () => {
       key: 'id_natura',
     },
     {
-      title: 'Trx Date',
+      title: 'Date',
       dataIndex: 'trx_date',
       ellipsis: true,
       width: 160,
       key: 'trx_date',
+      render: (text, record) => {
+        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
+        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
+        return <Tag color="default">{localTime}</Tag>;
+      },
     },
     {
       title: 'Unit',
@@ -416,6 +504,9 @@ const ListApi: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'unit_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: unitFilter,
     },
     {
       title: 'Branch',
@@ -423,35 +514,54 @@ const ListApi: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'branch_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: cabangFilter,
     },
     {
       title: 'Actions',
       valueType: 'option',
       key: 'option',
       width: 130,
-      render: (_, record) => (
-        <Space size={2}>
-          <DetailIconButton
-            key="Detail"
-            code="detail"
-            onClick={async () => {
-              dispatch({ type: ActionTypeEnum.DETAILCARS, payload: record });
-            }}
-          />
-          <DelIconButton
-            key="delete"
-            code="delete"
-            title={delTip}
-            onConfirm={async () => {
-              const res = await delCarsApiHeader(record.id!);
-              if (res.success) {
-                message.success('Delete successfully');
-                actionRef.current?.reload();
-              }
-            }}
-          />
-        </Space>
-      ),
+      render: (_, record) => {
+        if (record.status == 0) {
+          return (
+            <Space size={2}>
+              <DetailIconButton
+                key="Detail"
+                code="detail"
+                onClick={async () => {
+                  dispatch({ type: ActionTypeEnum.DETAILCARS, payload: record });
+                }}
+              />
+              <DelIconButton
+                key="delete"
+                code="delete"
+                title={delTip}
+                onConfirm={async () => {
+                  const res = await delCarsApiHeader(record.id!);
+                  if (res.success) {
+                    message.success('Delete successfully');
+                    actionRef.current?.reload();
+                  }
+                }}
+              />
+            </Space>
+          );
+        } else {
+          return (
+            <Space size={2}>
+              <DetailIconButton
+                key="Detail"
+                code="detail"
+                onClick={async () => {
+                  dispatch({ type: ActionTypeEnum.DETAILCARS, payload: record });
+                }}
+              />
+            </Space>
+          );
+        }
+      },
     },
   ];
 
@@ -528,11 +638,12 @@ const ListApi: React.FC = () => {
               request={fetchOracleGl}
               rowKey="id"
               cardBordered
+              tableLayout="auto"
               search={{
                 labelWidth: 'auto',
               }}
               pagination={{ pageSize: 10, showSizeChanger: true }}
-              scroll={{ x: 1000 }}
+              scroll={{ x: 'max-content' }}
               options={{
                 density: true,
                 fullScreen: true,
@@ -560,11 +671,12 @@ const ListApi: React.FC = () => {
               request={fetchOracleGlNik}
               rowKey="id"
               cardBordered
+              tableLayout="auto"
               search={{
                 labelWidth: 'auto',
               }}
               pagination={{ pageSize: 10, showSizeChanger: true }}
-              scroll={{ x: 1000 }}
+              scroll={{ x: 'max-content' }}
               options={{
                 density: true,
                 fullScreen: true,
@@ -580,11 +692,12 @@ const ListApi: React.FC = () => {
               request={fetchCarsApiHeader}
               rowKey="id"
               cardBordered
+              tableLayout="auto"
               search={{
                 labelWidth: 'auto',
               }}
               pagination={{ pageSize: 10, showSizeChanger: true }}
-              scroll={{ x: 1000 }}
+              scroll={{ x: 'max-content' }}
               options={{
                 density: true,
                 fullScreen: true,
@@ -615,11 +728,12 @@ const ListApi: React.FC = () => {
               request={fetchOracleAp}
               rowKey="id"
               cardBordered
+              tableLayout="auto"
               search={{
                 labelWidth: 'auto',
               }}
               pagination={{ pageSize: 10, showSizeChanger: true }}
-              scroll={{ x: 1000 }}
+              scroll={{ x: 'max-content' }}
               options={{
                 density: true,
                 fullScreen: true,

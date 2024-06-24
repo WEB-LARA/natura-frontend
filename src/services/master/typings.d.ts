@@ -152,4 +152,10 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
   };
+
+  export type FilterType = {
+    [key: string]: {
+      text: string;
+    };
+  };
 }

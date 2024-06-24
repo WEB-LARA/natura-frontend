@@ -1,5 +1,5 @@
 import { PageContainer } from '@ant-design/pro-components';
-import React, { useRef, useReducer } from 'react';
+import React, { useRef, useReducer, useState, useEffect } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, PageHeader, Space, message } from 'antd';
@@ -10,6 +10,7 @@ import { StatusFilter } from '@/utils/util';
 import { PlusOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import NaturaDetailsDrawer from './components/DetailDrawer';
+import { fetchCabangFilterByCode } from '@/services/master/cabang';
 
 enum ActionTypeEnum {
   ADD,
@@ -31,11 +32,27 @@ interface State {
 }
 
 const NaturaHeader: React.FC = () => {
+  const [cabangFilter, setCabangFilter] = useState<API.FilterType>({});
   const actionRef = useRef<ActionType>();
   const addTitle = 'Add Natura';
   const editTitle = 'Edit Natura';
   const delTip = 'Delete Natura';
   const detailTitle = 'Detail Natura';
+
+  useEffect(() => {
+    const requestCabang = async () => {
+      const res = await fetchCabangFilterByCode();
+      if (res) {
+        return res;
+      } else {
+        return {};
+      }
+    };
+
+    requestCabang().then((data) => {
+      setCabangFilter(data);
+    });
+  }, []);
 
   const [state, dispatch] = useReducer(
     (pre: State, action: Action) => {
@@ -85,20 +102,20 @@ const NaturaHeader: React.FC = () => {
       valueEnum: StatusFilter,
     },
     {
-      title: 'Cabang',
-      dataIndex: 'cabang.code',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        return record.cabang ? <Space>{record.cabang?.code}</Space> : '-';
-      },
-    },
-    {
       title: 'ID Natura',
       dataIndex: 'id_natura',
       ellipsis: true,
       width: 160,
       key: 'id_natura',
+    },
+    {
+      title: 'Cabang',
+      dataIndex: 'cabang_id',
+      width: 130,
+      valueEnum: cabangFilter,
+      render: (_, record) => {
+        return record.cabang ? <Space>{record.cabang?.code}</Space> : '-';
+      },
     },
     {
       title: 'Period',
@@ -120,37 +137,53 @@ const NaturaHeader: React.FC = () => {
       valueType: 'option',
       key: 'option',
       width: 130,
-      render: (_, record) => (
-        <Space size={2}>
-          <EditIconButton
-            key="edit"
-            code="edit"
-            onClick={() => {
-              history.push(`/natura/naturaadd/${record.id}`);
-              // dispatch({ type: ActionTypeEnum.EDIT, payload: record });
-            }}
-          />
-          <DelIconButton
-            key="delete"
-            code="delete"
-            title={delTip}
-            onConfirm={async () => {
-              const res = await delNaturaHeader(record.id!);
-              if (res.success) {
-                message.success('Delete successfully');
-                actionRef.current?.reload();
-              }
-            }}
-          />
-          <DetailIconButton
-            key="Detail"
-            code="detail"
-            onClick={async () => {
-              dispatch({ type: ActionTypeEnum.DETTAIL, payload: record });
-            }}
-          />
-        </Space>
-      ),
+      render: (_, record) => {
+        if (record.status == 0 || record.status == 31) {
+          return (
+            <Space size={2}>
+              <EditIconButton
+                key="edit"
+                code="edit"
+                onClick={() => {
+                  history.push(`/natura/naturaadd/${record.id}`);
+                  // dispatch({ type: ActionTypeEnum.EDIT, payload: record });
+                }}
+              />
+              <DelIconButton
+                key="delete"
+                code="delete"
+                title={delTip}
+                onConfirm={async () => {
+                  const res = await delNaturaHeader(record.id!);
+                  if (res.success) {
+                    message.success('Delete successfully');
+                    actionRef.current?.reload();
+                  }
+                }}
+              />
+              <DetailIconButton
+                key="Detail"
+                code="detail"
+                onClick={async () => {
+                  dispatch({ type: ActionTypeEnum.DETTAIL, payload: record });
+                }}
+              />
+            </Space>
+          );
+        } else {
+          return (
+            <Space size={2}>
+              <DetailIconButton
+                key="Detail"
+                code="detail"
+                onClick={async () => {
+                  dispatch({ type: ActionTypeEnum.DETTAIL, payload: record });
+                }}
+              />
+            </Space>
+          );
+        }
+      },
     },
   ];
 
@@ -186,6 +219,7 @@ const NaturaHeader: React.FC = () => {
         actionRef={actionRef}
         request={fetchNaturaHeader}
         rowKey="id"
+        tableLayout="auto"
         cardBordered
         search={{
           labelWidth: 'auto',
@@ -197,7 +231,7 @@ const NaturaHeader: React.FC = () => {
           reload: true,
         }}
         dateFormatter="string"
-        scroll={{ x: 1000 }}
+        scroll={{ x: 'max-content' }}
       />
       <NaturaHeaderModal
         visible={state.visible}
