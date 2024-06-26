@@ -209,10 +209,8 @@ const ListApi: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'trx_date',
-      render: (text, record) => {
-        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
-        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
-        return <Tag color="default">{localTime}</Tag>;
+      render: (_, record) => {
+        return <Tag color="default">{record.trx_date}</Tag>;
       },
     },
     {
@@ -299,8 +297,8 @@ const ListApi: React.FC = () => {
       width: 160,
       key: 'trx_date',
       render: (text, record) => {
-        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
-        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
+        const formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
+        const localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
         return <Tag color="default">{localTime}</Tag>;
       },
     },
@@ -355,7 +353,7 @@ const ListApi: React.FC = () => {
             </Space>
           );
         } else {
-          return <Space size={2}></Space>;
+          return <Space size={2} />;
         }
       },
     },
@@ -394,8 +392,8 @@ const ListApi: React.FC = () => {
       width: 160,
       key: 'trx_date',
       render: (text, record) => {
-        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
-        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
+        const formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
+        const localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
         return <Tag color="default">{localTime}</Tag>;
       },
     },
@@ -493,8 +491,8 @@ const ListApi: React.FC = () => {
       width: 160,
       key: 'trx_date',
       render: (text, record) => {
-        var formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
-        var localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
+        const formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
+        const localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
         return <Tag color="default">{localTime}</Tag>;
       },
     },
