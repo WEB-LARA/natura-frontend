@@ -499,9 +499,7 @@ const ListApi: React.FC = () => {
       width: 160,
       key: 'trx_date',
       render: (text, record) => {
-        const formatStr = 'YYYY-MM-DD HH:mm:ss.SSSSSSSSS Z';
-        const localTime = moment(record.trx_date, formatStr).format('YYYY-MM-DD HH:mm');
-        return <Tag color="default">{localTime}</Tag>;
+        return <Tag color="default">{record.trx_date}</Tag>;
       },
     },
     {
