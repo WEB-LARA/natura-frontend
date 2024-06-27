@@ -83,6 +83,15 @@ const Nik: React.FC = () => {
       },
     },
     {
+      title: 'NIK Lama',
+      dataIndex: 'nik_old',
+      width: 130,
+      key: 'nik_old', // Query field nik_old
+      sorter: (a, b) => {
+        return a.nik_old!.localeCompare(b.nik_old!);
+      },
+    },
+    {
       title: 'Name',
       dataIndex: 'name',
       ellipsis: true,

@@ -21,6 +21,7 @@ import CarsDetailsDrawer from './components/CarsDetailDrawer';
 import moment from 'moment';
 import { fetchUnitFilter } from '@/services/master/unit';
 import { fetchCabangFilter } from '@/services/master/cabang';
+import { set } from 'lodash';
 
 enum ActionTypeEnum {
   EDITCARS,
@@ -50,6 +51,7 @@ interface State {
 const ListApi: React.FC = () => {
   const [unitFilter, setUnitFilter] = useState<API.FilterType>({});
   const [cabangFilter, setCabangFilter] = useState<API.FilterType>({});
+  const [loading, setLoading] = useState(false);
 
   const actionRef = useRef<ActionType>();
   const editTitle = 'Edit API';
@@ -566,6 +568,7 @@ const ListApi: React.FC = () => {
   ];
 
   const handleValidate = async () => {
+    setLoading(true);
     await validateAll().then((response) => {
       message.success(
         'Success Validate = Oracle GL: ' +
@@ -575,10 +578,12 @@ const ListApi: React.FC = () => {
           ' Cars: ' +
           response.data?.cars_jml,
       );
+      setLoading(false);
     });
   };
 
   const handleProccess = async () => {
+    setLoading(true);
     await proccessAll().then((response) => {
       message.success(
         'Success Proccess = Oracle GL: ' +
@@ -588,6 +593,7 @@ const ListApi: React.FC = () => {
           ' Cars: ' +
           response.data?.cars_jml,
       );
+      setLoading(false);
     });
     // message.success('Success Proccess');
   };
@@ -605,6 +611,7 @@ const ListApi: React.FC = () => {
               <Button
                 key="1"
                 type="primary"
+                loading={loading}
                 icon={<CheckCircleOutlined />}
                 onClick={() => handleValidate()}
               >
@@ -613,6 +620,7 @@ const ListApi: React.FC = () => {
               <Button
                 key="2"
                 type="primary"
+                loading={loading}
                 icon={<RedoOutlined />}
                 onClick={() => handleProccess()}
               >
@@ -717,7 +725,7 @@ const ListApi: React.FC = () => {
           </Tabs.TabPane>
           <Tabs.TabPane tab="Oracle AP" key="item-4">
             <Alert
-              message="API terima data dari Oracle untuk Natura Reconcilliation"
+              message="API terima data dari Oracle untuk Natura Reconcilliation (TIDAK di Validate dan Proccess)"
               type="info"
               showIcon
             />

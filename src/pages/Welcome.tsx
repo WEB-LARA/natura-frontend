@@ -177,7 +177,7 @@ const Welcome: React.FC = () => {
               <p>{log.created_at}</p>
             </Timeline.Item>
           ))}
-          <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+          {/* <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
           <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
           <Timeline.Item color="red">
             <p>Solve initial network problems 1</p>
@@ -191,7 +191,7 @@ const Welcome: React.FC = () => {
           </Timeline.Item>
           <Timeline.Item color="#00CCFF" dot={<SmileOutlined />}>
             <p>Custom color testing</p>
-          </Timeline.Item>
+          </Timeline.Item> */}
         </Timeline>
       </Card>
     </PageContainer>

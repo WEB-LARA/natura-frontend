@@ -85,7 +85,7 @@ const User: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.roles' }),
       dataIndex: 'roles',
-      width: 160,
+      width: 120,
       search: false,
       render: (_, record) => {
         return record.roles ? (
@@ -101,26 +101,26 @@ const User: React.FC = () => {
         );
       },
     },
-    {
-      title: 'Cabang',
-      dataIndex: 'cabangs',
-      width: 200,
-      ellipsis: true,
-      search: false,
-      render: (_, record) => {
-        return record.cabangs ? (
-          <Space>
-            {record.cabangs?.map((cabang) => (
-              <Tag color="blue" key={cabang.cabang_id}>
-                {cabang.cabang_name}
-              </Tag>
-            ))}
-          </Space>
-        ) : (
-          '-'
-        );
-      },
-    },
+    // {
+    //   title: 'Cabang',
+    //   dataIndex: 'cabangs',
+    //   width: 400,
+    //   ellipsis: true,
+    //   search: false,
+    //   render: (_, record) => {
+    //     return record.cabangs ? (
+    //       <Space wrap>
+    //         {record.cabangs?.map((cabang) => (
+    //           <Tag color="blue" key={cabang.cabang_id}>
+    //             {cabang.cabang_name}
+    //           </Tag>
+    //         ))}
+    //       </Space>
+    //     ) : (
+    //       '-'
+    //     );
+    //   },
+    // },
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.status' }),
       dataIndex: 'status',
@@ -202,9 +202,23 @@ const User: React.FC = () => {
         request={fetchUser}
         rowKey="id"
         cardBordered
-        scroll={{ x: 1300 }}
+        scroll={{ x: 1500 }}
         search={{
           labelWidth: 'auto',
+        }}
+        expandable={{
+          expandedRowRender: (record) => (
+            <div>
+              <Space wrap>
+                Cabang:
+                {record.cabangs?.map((cabang) => (
+                  <Tag color="blue" key={cabang.cabang_id}>
+                    {cabang.cabang_name}
+                  </Tag>
+                ))}
+              </Space>
+            </div>
+          ),
         }}
         pagination={{ pageSize: 10, showSizeChanger: true }}
         options={{

@@ -31,7 +31,7 @@ const StatisticAPI: React.FC = () => {
         oracle_gl_nik: data.oracle_gl_nik,
         oracle_gl: data.oracle_gl,
         cars: data.cars,
-        total: data.oracle_ap! + data.oracle_gl_nik! + data.oracle_gl! + data.cars!,
+        total: data.oracle_gl_nik! + data.oracle_gl! + data.cars!,
       });
     });
   }, []);
