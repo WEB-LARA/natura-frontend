@@ -88,7 +88,7 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
         values.nik_id = nikID;
         values.username = username;
         delete values.statusChecked;
-        values.password = values.password ? Util.md5(values.password) : undefined;
+        //values.password = values.password ? Util.md5(values.password) : undefined;
 
         // if edit data
         if (props.id) {

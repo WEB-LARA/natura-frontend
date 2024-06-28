@@ -45,6 +45,11 @@ declare namespace API {
     cabang?: Cabang;
   };
 
+  type NaturaSave = {
+    natura_headers?: NaturaHeader[];
+    message?: string[];
+  };
+
   type NaturaHeaderCount = {
     status_new?: number;
     status_recon?: number;
@@ -346,6 +351,7 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     akun?: Akun;
+    flag_tax_object?: boolean;
   };
 
   // Create processed Natura

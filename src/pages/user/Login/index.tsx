@@ -46,7 +46,7 @@ const Login: React.FC = () => {
 
     try {
       values.captcha_id = captchaID;
-      values.password = Util.md5(values.password);
+      //values.password = Util.md5(values.password);
       const result = await login({ ...values });
       if (result.success) {
         message.success(

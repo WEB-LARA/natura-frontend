@@ -85,10 +85,19 @@ const NaturaAdd: React.FC = () => {
 
           if (datainsert.success) {
             const result: string[] = [];
-            datainsert.data!.forEach((data) => {
+            const resultMsg: string[] = [];
+            var subMsg: string = '';
+            datainsert.data!.natura_headers!.forEach((data) => {
               result.push(data.id_natura!);
             });
-            const subtitle: string = 'ID NATURA :' + result.toString();
+            if (datainsert.data!.message!.length > 0) {
+              datainsert.data!.message!.forEach((data) => {
+                resultMsg.push(data!);
+              });
+              subMsg = '. Warning: ' + resultMsg.join(', ');
+            }
+
+            const subtitle: string = 'ID NATURA :' + result.join(', ') + ' ' + subMsg;
             message.success('Save successfully');
             setNoNaturaSave(subtitle);
             setModalSave(true);

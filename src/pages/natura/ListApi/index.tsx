@@ -18,10 +18,8 @@ import GlAPIModal from './components/SaveFormGL';
 import { proccessAll, validateAll } from '@/services/oracle/oracle';
 import GlNiDetailsDrawer from './components/GlNikDetailDrawer';
 import CarsDetailsDrawer from './components/CarsDetailDrawer';
-import moment from 'moment';
 import { fetchUnitFilter } from '@/services/master/unit';
 import { fetchCabangFilter } from '@/services/master/cabang';
-import { set } from 'lodash';
 
 enum ActionTypeEnum {
   EDITCARS,
@@ -54,6 +52,9 @@ const ListApi: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const actionRef = useRef<ActionType>();
+  const actionRefGL = useRef<ActionType>();
+  const actionRefGLNik = useRef<ActionType>();
+  const actionRefCars = useRef<ActionType>();
   const editTitle = 'Edit API';
   const delTip = 'Delete API';
 
@@ -346,7 +347,7 @@ const ListApi: React.FC = () => {
                   const res = await delOracleGl(record.id!);
                   if (res.success) {
                     message.success('Delete successfully');
-                    actionRef.current?.reload();
+                    actionRefGL.current?.reload();
                   }
                 }}
               />
@@ -445,7 +446,7 @@ const ListApi: React.FC = () => {
                   const res = await delOracleGlNik(record.id!);
                   if (res.success) {
                     message.success('Delete successfully');
-                    actionRef.current?.reload();
+                    actionRefGLNik.current?.reload();
                   }
                 }}
               />
@@ -548,7 +549,7 @@ const ListApi: React.FC = () => {
                   const res = await delCarsApiHeader(record.id!);
                   if (res.success) {
                     message.success('Delete successfully');
-                    actionRef.current?.reload();
+                    actionRefCars.current?.reload();
                   }
                 }}
               />
@@ -646,7 +647,7 @@ const ListApi: React.FC = () => {
             <br />
             <ProTable<API.OracleGl, API.PaginationParam>
               columns={columnGls}
-              actionRef={actionRef}
+              actionRef={actionRefGL}
               request={fetchOracleGl}
               rowKey="id"
               cardBordered
@@ -671,15 +672,15 @@ const ListApi: React.FC = () => {
                 dispatch({ type: ActionTypeEnum.CANCEL });
               }}
               onSuccess={() => {
+                actionRefGL.current?.reload();
                 dispatch({ type: ActionTypeEnum.CANCEL });
-                actionRef.current?.reload();
               }}
             />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Oracle GL Nik" key="item-2">
             <ProTable<API.OracleGlNik, API.PaginationParam>
               columns={columnGlniks}
-              actionRef={actionRef}
+              actionRef={actionRefGLNik}
               request={fetchOracleGlNik}
               rowKey="id"
               cardBordered
@@ -700,7 +701,7 @@ const ListApi: React.FC = () => {
           <Tabs.TabPane tab="Cars" key="item-3">
             <ProTable<API.CarsHeader, API.PaginationParam>
               columns={columnCars}
-              actionRef={actionRef}
+              actionRef={actionRefCars}
               request={fetchCarsApiHeader}
               rowKey="id"
               cardBordered
