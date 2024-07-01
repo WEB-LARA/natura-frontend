@@ -94,6 +94,16 @@ const NaturaAdd: React.FC = () => {
               subMsg = '. Warning: ' + resultMsg.join(', ');
             }
 
+            if (
+              datainsert.data &&
+              datainsert.data.natura_headers &&
+              datainsert.data.natura_headers.length > 0
+            ) {
+              datainsert.data!.natura_headers!.forEach((data) => {
+                result.push(data!.id_natura!);
+              });
+            }
+
             const subtitle: string = 'ID NATURA :' + result.join(', ') + ' ' + subMsg;
             message.success('Save successfully');
             setNoNaturaSave(subtitle);
