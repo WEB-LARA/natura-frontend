@@ -27,7 +27,14 @@ const ProcessHeaders: React.FC<ProcessHeadersProps> = (props: ProcessHeadersProp
       key: 'name',
     },
     {
-      title: 'Amount',
+      title: 'Bagian',
+      dataIndex: 'bagian',
+      ellipsis: true,
+      width: 160,
+      key: 'bagian',
+    },
+    {
+      title: 'Total Amount Final',
       dataIndex: 'amount',
       ellipsis: true,
       width: 130,

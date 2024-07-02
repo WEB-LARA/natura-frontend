@@ -65,6 +65,7 @@ declare namespace API {
     /** From Cabang.ID */
     cabang_id?: string;
     cabang_code?: string;
+    bagian_name?: string;
     /** Code of NIK (unique for same parent) */
     nik?: string;
     /** Display name of Name */
@@ -153,9 +154,10 @@ declare namespace API {
     updated_at?: string;
   };
 
-  export type FilterType = {
-    [key: string]: {
+  export type FilterType = Record<
+    string,
+    {
       text: string;
-    };
-  };
+    }
+  >;
 }
