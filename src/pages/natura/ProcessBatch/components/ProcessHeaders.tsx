@@ -58,6 +58,8 @@ const ProcessHeaders: React.FC<ProcessHeadersProps> = (props: ProcessHeadersProp
       search={{
         labelWidth: 'auto',
       }}
+      tableLayout="auto"
+      scroll={{ x: 'max-content' }}
       pagination={{ pageSize: 20, showSizeChanger: true }}
       options={{
         density: true,

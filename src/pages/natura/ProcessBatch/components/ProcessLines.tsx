@@ -37,7 +37,7 @@ const ProcessLines: React.FC<ProcessLinesProps> = (props: ProcessLinesProps) => 
       valueType: 'digit',
     },
     {
-      title: 'Amount Final (PPh 21)',
+      title: 'Amount Final',
       dataIndex: 'amount_final',
       ellipsis: true,
       width: 130,
@@ -66,6 +66,8 @@ const ProcessLines: React.FC<ProcessLinesProps> = (props: ProcessLinesProps) => 
       cardBordered
       search={false}
       pagination={{ pageSize: 100, showSizeChanger: true }}
+      tableLayout="auto"
+      scroll={{ x: 'max-content' }}
       options={{
         density: true,
         fullScreen: true,
