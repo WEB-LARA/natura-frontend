@@ -74,7 +74,7 @@ declare namespace API {
     /** Total Amount Budget Saku */
     budget_saku?: number;
     /** Code of NikOld (unique for same parent) */
-    nik_old?: string;
+    old_nik?: string;
     /** Status of nik (disabled = 0, enabled = 1) */
     flag_aktif?: boolean;
     /** Update time */
