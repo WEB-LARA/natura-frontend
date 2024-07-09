@@ -86,15 +86,22 @@ const NaturaAdd: React.FC = () => {
           if (datainsert.success) {
             const result: string[] = [];
             const resultMsg: string[] = [];
-            var subMsg: string = '';
-            datainsert.data!.natura_headers!.forEach((data) => {
-              result.push(data.id_natura!);
-            });
-            if (datainsert.data!.message!.length > 0) {
+            let subMsg: string = '';
+            if (datainsert.data && datainsert.data.message && datainsert.data.message.length > 0) {
               datainsert.data!.message!.forEach((data) => {
                 resultMsg.push(data!);
               });
               subMsg = '. Warning: ' + resultMsg.join(', ');
+            }
+
+            if (
+              datainsert.data &&
+              datainsert.data.natura_headers &&
+              datainsert.data.natura_headers.length > 0
+            ) {
+              datainsert.data!.natura_headers!.forEach((data) => {
+                result.push(data!.id_natura!);
+              });
             }
 
             const subtitle: string = 'ID NATURA :' + result.join(', ') + ' ' + subMsg;
