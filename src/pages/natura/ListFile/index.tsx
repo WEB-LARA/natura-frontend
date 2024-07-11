@@ -113,7 +113,7 @@ const ListFile: React.FC = () => {
       key: 'option',
       width: 130,
       render: (_, record) => {
-        if (record.status == 0 || record.status == 100) {
+        if (record.status == 0 || record.status! > 100) {
           return (
             <Space size={2}>
               <ProcessButton
