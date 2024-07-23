@@ -92,6 +92,9 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
 
         // if edit data
         if (props.id) {
+          const splitted = values.nik_id!.split('-', 2);
+          values.nik_id = splitted[0].trim();
+
           if (userData?.roles) {
             const roles = values.roles!;
             for (let i = 0; i < roles.length; i++) {
