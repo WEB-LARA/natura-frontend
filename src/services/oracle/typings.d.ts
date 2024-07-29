@@ -177,6 +177,82 @@ declare namespace API {
     updated_at?: string;
   };
 
+  // Table Header GL for Data from Oracle
+  type OracleGlRev = {
+    /** Unique ID */
+    id?: string;
+    /** Document Number */
+    document_num?: string;
+    /** ID Natura Oracles */
+    id_natura?: string;
+    /** ID Natura Refrence Oracles */
+    id_natura_ref?: string;
+    /** Program Source (Oracles) */
+    program?: string;
+    /** Transaction Date */
+    trx_date?: string;
+    /** Unit Code (IPT/ICC/IPP etc.) */
+    unit_code?: string;
+    /** Unit Name */
+    unit_name?: string;
+    /** Branch Code (G001/G010 etc.) */
+    branch_code?: string;
+    /** Branch Name (JAKARTA 1/SEMARANG etc.) */
+    branch_name?: string;
+    /** Account Natura */
+    account?: string;
+    /** Amount Oracles */
+    amount?: number;
+    /** Status of api (New = 0, Proccess = 1, Error = -1) */
+    status?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+    statusChecked?: boolean;
+
+    /** Oracle GL Lines */
+    details?: OracleGlLine[];
+  };
+
+  // Table Header AP Rev for Data from Oracle
+  type OracleApRev = {
+    /** Unique ID */
+    id?: string;
+    /** Document Number */
+    document_num?: string;
+    /** ID Natura Oracles */
+    id_natura?: string;
+    /** ID Natura Refrence Oracles */
+    id_natura_ref?: string;
+    /** Program Source (Oracles) */
+    program?: string;
+    /** Transaction Date */
+    trx_date?: string;
+    /** Unit Code (IPT/ICC/IPP etc.) */
+    unit_code?: string;
+    /** Unit Name */
+    unit_name?: string;
+    /** Branch Code (G001/G010 etc.) */
+    branch_code?: string;
+    /** Branch Name (JAKARTA 1/SEMARANG etc.) */
+    branch_name?: string;
+    /** Account Natura */
+    account?: string;
+    /** Amount Oracles */
+    amount?: number;
+    /** Status of api (New = 0, Proccess = 1, Error = -1) */
+    status?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+    statusChecked?: boolean;
+
+    /** Oracle AP Lines */
+    details?: OracleApLine[];
+  };
+
   type OracleReturnProccess = {
     oracle_ap_jml?: number;
     oracle_gl_jml?: number;
