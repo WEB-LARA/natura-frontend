@@ -83,3 +83,33 @@ export async function processTampFileHeader(
     ...(options || {}),
   });
 }
+
+/** Create record POST /api/v1/tamp-file-headers/contoh */
+export async function downloadContoh(options?: { [key: string]: any }) {
+  return request('/api/v1/download-template', {
+    method: 'POST',
+    responseType: 'blob',
+    parseResponse: false,
+    ...(options || {}),
+  });
+}
+
+/** Create record POST /api/v1/tamp-file-headers/contohGL */
+export async function downloadContohGL(options?: { [key: string]: any }) {
+  return request('/api/v1/template-gl', {
+    method: 'POST',
+    responseType: 'blob',
+    parseResponse: false,
+    ...(options || {}),
+  });
+}
+
+/** Create record POST /api/v1/tamp-file-headers/contoh */
+export async function downloadContohGLNik(options?: { [key: string]: any }) {
+  return request('/api/v1/tamp-file-headers/contoh', {
+    method: 'POST',
+    responseType: 'blob',
+    parseResponse: false,
+    ...(options || {}),
+  });
+}
