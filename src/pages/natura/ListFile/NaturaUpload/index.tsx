@@ -69,7 +69,7 @@ const NaturaUpload: React.FC = () => {
 
       <PageContainer ghost>
         <Alert
-          message="contoh format CSV: ORACLEGL_20240717.csv. Upload data yang ingin direvisi saja. Tidak perlu semua data di upload ulang."
+          message="Contoh format CSV: ORACLEGL_20240717.csv. Download Templete: untuk upload data baru dari templete, Download Data GL: untuk melengkapi data."
           type="info"
           showIcon
         />
