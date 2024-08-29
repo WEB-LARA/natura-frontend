@@ -135,7 +135,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
           },
         ]}
       />
-      <ProFormSwitch
+      {/* <ProFormSwitch
         name="flag_aktif"
         label="Active"
         fieldProps={{
@@ -143,7 +143,7 @@ const NikModal: React.FC<NikModalProps> = (props: NikModalProps) => {
           unCheckedChildren: 'Disabled',
         }}
         colProps={{ span: 12 }}
-      />
+      /> */}
     </ModalForm>
   );
 };
