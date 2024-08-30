@@ -5,6 +5,7 @@ import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
+import { FastBackwardOutlined } from '@ant-design/icons';
 
 const { REACT_APP_ENV } = process.env;
 
@@ -16,7 +17,7 @@ export default defineConfig({
   },
   layout: {
     // https://umijs.org/zh-CN/plugins/plugin-layout
-    locale: true,
+    locale: FastBackwardOutlined,
     siderWidth: 218,
     ...defaultSettings,
   },
@@ -24,9 +25,9 @@ export default defineConfig({
   locale: {
     // default zh-CN
     default: 'en-US',
-    antd: true,
+    antd: false,
     // default true, when it is true, will use `navigator.language` overwrite default
-    baseNavigator: true,
+    baseNavigator: false,
   },
   dynamicImport: {
     loading: '@ant-design/pro-layout/es/PageLoading',

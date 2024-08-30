@@ -86,16 +86,16 @@ const Unit: React.FC = () => {
         return a.name!.localeCompare(b.name!);
       },
     },
-    {
-      title: 'Active',
-      dataIndex: 'flag_active',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        const status = record.flag_active;
-        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
-      },
-    },
+    // {
+    //   title: 'Active',
+    //   dataIndex: 'flag_active',
+    //   width: 130,
+    //   search: false,
+    //   render: (_, record) => {
+    //     const status = record.flag_active;
+    //     return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
+    //   },
+    // },
     {
       title: 'Action',
       valueType: 'option',

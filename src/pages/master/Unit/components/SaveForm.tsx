@@ -105,7 +105,7 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
         ]}
       />
 
-      <ProFormSwitch
+      {/* <ProFormSwitch
         name="flag_active"
         label="Active"
         fieldProps={{
@@ -113,7 +113,7 @@ const UnitModal: React.FC<UnitModalProps> = (props: UnitModalProps) => {
           unCheckedChildren: false,
         }}
         colProps={{ span: 12 }}
-      />
+      /> */}
     </ModalForm>
   );
 };

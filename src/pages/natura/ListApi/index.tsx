@@ -20,6 +20,8 @@ import GlNiDetailsDrawer from './components/GlNikDetailDrawer';
 import CarsDetailsDrawer from './components/CarsDetailDrawer';
 import { fetchUnitFilter } from '@/services/master/unit';
 import { fetchCabangFilter } from '@/services/master/cabang';
+import { fetchOracleGlRev } from '@/services/oracle/oracleglrev';
+import { fetchOracleApRev } from '@/services/oracle/oracleaprev';
 
 enum ActionTypeEnum {
   EDITCARS,
@@ -55,6 +57,8 @@ const ListApi: React.FC = () => {
   const actionRefGL = useRef<ActionType>();
   const actionRefGLNik = useRef<ActionType>();
   const actionRefCars = useRef<ActionType>();
+  const actionRefGLRev = useRef<ActionType>();
+  const actionRefAPRev = useRef<ActionType>();
   const editTitle = 'Edit API';
   const delTip = 'Delete API';
 
@@ -572,6 +576,143 @@ const ListApi: React.FC = () => {
     },
   ];
 
+  const columnGlRevs: ProColumns<API.OracleGlRev>[] = [
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      width: 130,
+      search: false,
+      render: (_, record) => {
+        const status = record.status;
+        const stt: StatusCase = codeToStatusCase(status);
+        return <Tag color={stt.color}>{stt.tulis}</Tag>;
+      },
+    },
+    {
+      title: 'Document Number',
+      dataIndex: 'document_num',
+      ellipsis: true,
+      width: 160,
+      key: 'document_num',
+    },
+    {
+      title: 'Id Natura',
+      dataIndex: 'id_natura',
+      ellipsis: true,
+      width: 160,
+      key: 'id_natura',
+    },
+    {
+      title: 'Id Natura Ref',
+      dataIndex: 'id_natura_ref',
+      ellipsis: true,
+      width: 160,
+      key: 'id_natura_ref',
+    },
+    {
+      title: 'Date',
+      dataIndex: 'trx_date',
+      ellipsis: true,
+      width: 160,
+      key: 'trx_date',
+      render: (_, record) => {
+        return <Tag color="default">{record.trx_date}</Tag>;
+      },
+    },
+    {
+      title: 'Unit',
+      dataIndex: 'unit_name',
+      ellipsis: true,
+      width: 160,
+      key: 'unit_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: unitFilter,
+    },
+    {
+      title: 'Branch',
+      dataIndex: 'branch_name',
+      ellipsis: true,
+      width: 160,
+      key: 'branch_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: cabangFilter,
+    },
+  ];
+
+  const columnApRevs: ProColumns<API.OracleApRev>[] = [
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      width: 130,
+      search: false,
+      render: (_, record) => {
+        const status = record.status;
+        const stt: StatusCase = codeToStatusCase(status);
+        return <Tag color={stt.color}>{stt.tulis}</Tag>;
+      },
+    },
+    {
+      title: 'Document Number',
+      dataIndex: 'document_num',
+      ellipsis: true,
+      width: 160,
+      key: 'document_num',
+    },
+    {
+      title: 'Id Natura',
+      dataIndex: 'id_natura',
+      ellipsis: true,
+      width: 160,
+      key: 'id_natura',
+    },
+    {
+      title: 'Id Natura Ref',
+      dataIndex: 'id_natura_ref',
+      ellipsis: true,
+      width: 160,
+      key: 'id_natura_ref',
+    },
+    {
+      title: 'Account',
+      dataIndex: 'account',
+      ellipsis: true,
+      width: 100,
+      key: 'account',
+    },
+    {
+      title: 'Date',
+      dataIndex: 'trx_date',
+      ellipsis: true,
+      width: 160,
+      key: 'trx_date',
+      render: (_, record) => {
+        return <Tag color="default">{record.trx_date}</Tag>;
+      },
+    },
+    {
+      title: 'Unit',
+      dataIndex: 'unit_name',
+      ellipsis: true,
+      width: 160,
+      key: 'unit_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: unitFilter,
+    },
+    {
+      title: 'Branch',
+      dataIndex: 'branch_name',
+      ellipsis: true,
+      width: 160,
+      key: 'branch_name',
+      filters: true,
+      onFilter: true,
+      valueEnum: cabangFilter,
+    },
+  ];
+
   const handleValidate = async () => {
     setLoading(true);
     await validateAll().then((response) => {
@@ -765,6 +906,48 @@ const ListApi: React.FC = () => {
                 dispatch({ type: ActionTypeEnum.CANCEL });
                 actionRef.current?.reload();
               }}
+            />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Oracle GL Reverse" key="item-5">
+            <ProTable<API.OracleGlRev, API.PaginationParam>
+              columns={columnGlRevs}
+              actionRef={actionRefGLRev}
+              request={fetchOracleGlRev}
+              rowKey="id"
+              cardBordered
+              tableLayout="auto"
+              search={{
+                labelWidth: 'auto',
+              }}
+              pagination={{ pageSize: 10, showSizeChanger: true }}
+              scroll={{ x: 'max-content' }}
+              options={{
+                density: true,
+                fullScreen: true,
+                reload: true,
+              }}
+              dateFormatter="string"
+            />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Oracle AP Reverse" key="item-6">
+            <ProTable<API.OracleApRev, API.PaginationParam>
+              columns={columnApRevs}
+              actionRef={actionRefAPRev}
+              request={fetchOracleApRev}
+              rowKey="id"
+              cardBordered
+              tableLayout="auto"
+              search={{
+                labelWidth: 'auto',
+              }}
+              pagination={{ pageSize: 10, showSizeChanger: true }}
+              scroll={{ x: 'max-content' }}
+              options={{
+                density: true,
+                fullScreen: true,
+                reload: true,
+              }}
+              dateFormatter="string"
             />
           </Tabs.TabPane>
         </Tabs>

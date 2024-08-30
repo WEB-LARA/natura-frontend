@@ -147,7 +147,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
               },
             ]}
           />
-          <ProFormSwitch
+          {/* <ProFormSwitch
             name="flag_active"
             label="Active"
             fieldProps={{
@@ -155,7 +155,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
               unCheckedChildren: false,
             }}
             colProps={{ span: 12 }}
-          />
+          /> */}
         </>
       )}
     </ModalForm>
