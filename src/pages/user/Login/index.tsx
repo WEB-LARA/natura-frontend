@@ -3,7 +3,7 @@ import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message, Col, Row, Button } from 'antd';
 import React, { useState, useEffect, useRef } from 'react';
 import Settings from '../../../../config/defaultSettings';
-import { history, useModel, useIntl, SelectLang, Helmet } from 'umi';
+import { history, useModel, useIntl, Helmet, setLocale } from 'umi';
 import { getCaptchaId, getCaptchaImageURL, login } from '@/services/system/login';
 import styles from './index.less';
 import { Util, Auth } from '@/utils';
@@ -28,6 +28,7 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
+    setLocale('en-US');
     fetchCaptchaID();
   }, []);
 
