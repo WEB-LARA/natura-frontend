@@ -1,20 +1,20 @@
-version: '3.7'
+version: "3.7"
 services:
-  natura-frontend:
-    container_name: natura-frontend
-    build:
-      context: ./
-      dockerfile: Podmanfile
-    ports:
-      - '80:80' # Map the exposed port 80 on the container to port 9090 on the host machine
-    expose:
-      # Opens port 3306 on the container
-      - '80'
-    restart: always
-    networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      - natura
+    natura-frontend:
+        container_name: natura-frontend
+        build:
+            context: ./
+            dockerfile: Podmanfile
+        ports:
+            - "80:80" # Map the exposed port 80 on the container to port 9090 on the host machine
+        expose:
+            # Opens port 3306 on the container
+            - "80"
+        restart: always
+        networks: # Networks to join (Services on the same network can communicate with each other using their name)
+            - natura-backend-network
 
 # Networks to be created to facilitate communication between containers
 networks:
-  natura:
-    external: true
+    natura-backend-network:
+        external: true

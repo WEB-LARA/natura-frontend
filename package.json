@@ -50,6 +50,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-components": "^2.6.46",
+    "@ant-design/pro-layout": "^6.34.2",
     "@umijs/route-utils": "^2.0.0",
     "antd": "^4.20.0",
     "classnames": "^2.5.1",
