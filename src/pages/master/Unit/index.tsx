@@ -63,18 +63,14 @@ const Unit: React.FC = () => {
       dataIndex: 'reference_id',
       width: 130,
       key: 'reference_id', // Query field name
-      sorter: (a, b) => {
-        return a.reference_id!.localeCompare(b.reference_id!);
-      },
+      sorter: true,
     },
     {
       title: 'Kode Inisial',
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
-      sorter: (a, b) => {
-        return a.code!.localeCompare(b.code!);
-      },
+      sorter: true,
     },
     {
       title: 'Name',
@@ -82,9 +78,7 @@ const Unit: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
-      sorter: (a, b) => {
-        return a.name!.localeCompare(b.name!);
-      },
+      sorter: true,
     },
     // {
     //   title: 'Active',
@@ -133,7 +127,10 @@ const Unit: React.FC = () => {
         headerTitle="Master Unit"
         columns={columns}
         actionRef={actionRef}
-        request={fetchUnit}
+        //request={fetchUnit}
+        request={(params, sort, filter) => {
+          return fetchUnit({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{

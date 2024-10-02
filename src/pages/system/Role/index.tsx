@@ -153,7 +153,7 @@ const Role: React.FC = () => {
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

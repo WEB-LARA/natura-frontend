@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Alert, Button, message, PageHeader, Space } from 'antd';
 import NaturaFormUpload from '../components/NaturaFormUpload';
 import { DownloadOutlined } from '@ant-design/icons';
-import { downloadContoh, downloadContohGL } from '@/services/natura/naturafile';
+import { downloadContoh, downloadContohGL, downloadContohAP } from '@/services/natura/naturafile';
 
 const NaturaUpload: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -58,6 +58,31 @@ const NaturaUpload: React.FC = () => {
     downloadContohGLMe();
   };
 
+  const downloadTemplPUM = async () => {
+    setLoading(true);
+    async function downloadContohPUMMe() {
+      try {
+        await downloadContohAP()
+          .then((res) => res.blob())
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'contohFileAP.csv'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+          });
+
+        setLoading(false);
+        message.success('Downloaded AP!');
+      } catch (error) {
+        setLoading(false);
+        message.error('Create Failed.');
+      }
+    }
+    downloadContohPUMMe();
+  };
+
   return (
     <>
       <PageHeader
@@ -90,7 +115,15 @@ const NaturaUpload: React.FC = () => {
               onClick={downloadTemplGL}
               icon={<DownloadOutlined />}
             >
-              Download Data GL
+              Download Data GL tanpa NIK
+            </Button>
+
+            <Button
+              className="margin-left: 8px;"
+              onClick={downloadTemplPUM}
+              icon={<DownloadOutlined />}
+            >
+              Download Templete ID Natura (AP)
             </Button>
           </Space>
           <br />

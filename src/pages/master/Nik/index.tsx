@@ -78,18 +78,14 @@ const Nik: React.FC = () => {
       dataIndex: 'nik',
       width: 130,
       key: 'nik', // Query field nik
-      sorter: (a, b) => {
-        return a.nik!.localeCompare(b.nik!);
-      },
+      sorter: true,
     },
     {
       title: 'NIK Lama',
       dataIndex: 'old_nik',
       width: 130,
       key: 'old_nik', // Query field old_nik
-      sorter: (a, b) => {
-        return a.old_nik!.localeCompare(b.old_nik!);
-      },
+      sorter: true,
     },
     {
       title: 'Name',
@@ -97,9 +93,10 @@ const Nik: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
-      sorter: (a, b) => {
-        return a.name!.localeCompare(b.name!);
-      },
+      sorter: true,
+      // sorter: (a, b) => {
+      //   return a.name!.localeCompare(b.name!);
+      // },
     },
     // {
     //   title: 'Active',
@@ -148,7 +145,11 @@ const Nik: React.FC = () => {
         headerTitle="Master NIK"
         columns={columns}
         actionRef={actionRef}
-        request={fetchNik}
+        //  request={fetchNik}
+        request={(params, sort, filter) => {
+          // console.log(sorter == null ? '' : Object.keys(sorter));
+          return fetchNik({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
