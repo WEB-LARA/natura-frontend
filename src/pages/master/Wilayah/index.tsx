@@ -63,9 +63,7 @@ const Wilayah: React.FC = () => {
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
-      sorter: (a, b) => {
-        return a.code!.localeCompare(b.code!);
-      },
+      sorter: true,
     },
     {
       title: 'Name',
@@ -73,9 +71,7 @@ const Wilayah: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
-      sorter: (a, b) => {
-        return a.name!.localeCompare(b.name!);
-      },
+      sorter: true,
     },
     {
       title: 'Action',
@@ -114,7 +110,10 @@ const Wilayah: React.FC = () => {
         headerTitle="Master Wilayah"
         columns={columns}
         actionRef={actionRef}
-        request={fetchWilayah}
+        //request={fetchWilayah}
+        request={(params, sort, filter) => {
+          return fetchWilayah({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{

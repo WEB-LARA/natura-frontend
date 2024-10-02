@@ -64,9 +64,7 @@ const Msource: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
-      sorter: (a, b) => {
-        return a.name!.localeCompare(b.name!);
-      },
+      sorter: true,
     },
     {
       title: 'Generate ID Natura',
@@ -125,7 +123,10 @@ const Msource: React.FC = () => {
         headerTitle="Master Source"
         columns={columns}
         actionRef={actionRef}
-        request={fetchSource}
+        //request={fetchSource}
+        request={(params, sort, filter) => {
+          return fetchSource({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{

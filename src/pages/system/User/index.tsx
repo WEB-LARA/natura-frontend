@@ -74,6 +74,7 @@ const User: React.FC = () => {
       dataIndex: 'username',
       width: 160,
       key: 'username', // Query field name
+      sorter: true,
     },
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.name' }),
@@ -81,6 +82,7 @@ const User: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: true,
     },
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.roles' }),
@@ -199,7 +201,10 @@ const User: React.FC = () => {
       <ProTable<API.User, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        request={fetchUser}
+        //request={fetchUser}
+        request={(params, sort, filter) => {
+          return fetchUser({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         scroll={{ x: 1500 }}

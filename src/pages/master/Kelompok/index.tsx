@@ -63,9 +63,7 @@ const Kelompok: React.FC = () => {
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
-      sorter: (a, b) => {
-        return a.code!.localeCompare(b.code!);
-      },
+      sorter: true,
     },
     {
       title: 'Name',
@@ -73,9 +71,7 @@ const Kelompok: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
-      sorter: (a, b) => {
-        return a.name!.localeCompare(b.name!);
-      },
+      sorter: true,
     },
     {
       title: 'Active',
@@ -124,7 +120,10 @@ const Kelompok: React.FC = () => {
         headerTitle="Master Kelompok"
         columns={columns}
         actionRef={actionRef}
-        request={fetchKelompok}
+        //request={fetchKelompok}
+        request={(params, sort, filter) => {
+          return fetchKelompok({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
