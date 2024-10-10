@@ -49,11 +49,7 @@
   ],
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-<<<<<<< HEAD
-    "@ant-design/pro-components": "^2.6.46",
-=======
     "@ant-design/pro-components": "^2.7.0",
->>>>>>> origin/dev
     "@ant-design/pro-layout": "^6.34.2",
     "@umijs/route-utils": "^2.0.0",
     "antd": "^4.24.15",
