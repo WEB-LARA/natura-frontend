@@ -129,6 +129,13 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         loading: true,
         status: 'success',
       };
+    case 10:
+      ret = {
+        color: 'yellow',
+        tulis: 'Reversed',
+        loading: false,
+        status: 'default',
+      };
       return ret;
     case 100:
       ret = {
@@ -161,7 +168,6 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         status: 'error',
       };
       return ret;
-      return ret;
     default:
       return ret;
   }
@@ -173,6 +179,7 @@ export const StatusFilter = {
   2: { text: 'Process', status: 'Processing' },
   3: { text: 'Ready', status: 'Warning' },
   4: { text: 'Send', status: 'Success' },
+  10: { text: 'Reversed', status: 'Warning' },
   100: { text: 'Error', status: 'Error' },
   101: { text: 'Error Recon', status: 'Error' },
   102: { text: 'Error Procs', status: 'Error' },
