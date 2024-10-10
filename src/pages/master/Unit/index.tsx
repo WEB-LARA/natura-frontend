@@ -60,15 +60,17 @@ const Unit: React.FC = () => {
   const columns: ProColumns<API.Unit>[] = [
     {
       title: 'Kode Unit',
-      dataIndex: 'code',
-      width: 130,
-      key: 'code', // Query field name
-    },
-    {
-      title: 'Kode Inisial',
       dataIndex: 'reference_id',
       width: 130,
       key: 'reference_id', // Query field name
+      sorter: true,
+    },
+    {
+      title: 'Kode Inisial',
+      dataIndex: 'code',
+      width: 130,
+      key: 'code', // Query field name
+      sorter: true,
     },
     {
       title: 'Name',
@@ -76,17 +78,18 @@ const Unit: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: true,
     },
-    {
-      title: 'Active',
-      dataIndex: 'flag_active',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        const status = record.flag_active;
-        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
-      },
-    },
+    // {
+    //   title: 'Active',
+    //   dataIndex: 'flag_active',
+    //   width: 130,
+    //   search: false,
+    //   render: (_, record) => {
+    //     const status = record.flag_active;
+    //     return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
+    //   },
+    // },
     {
       title: 'Action',
       valueType: 'option',
@@ -124,13 +127,16 @@ const Unit: React.FC = () => {
         headerTitle="Master Unit"
         columns={columns}
         actionRef={actionRef}
-        request={fetchUnit}
+        //request={fetchUnit}
+        request={(params, sort, filter) => {
+          return fetchUnit({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

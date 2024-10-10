@@ -74,25 +74,7 @@ const User: React.FC = () => {
       dataIndex: 'username',
       width: 160,
       key: 'username', // Query field name
-    },
-    {
-      title: 'Cabangs',
-      dataIndex: 'cabangs',
-      width: 200,
-      search: false,
-      render: (_, record) => {
-        return record.cabangs ? (
-          <Space>
-            {record.cabangs?.map((cabang) => (
-              <Tag color="blue" key={cabang.cabang_id}>
-                {cabang.cabang_name}
-              </Tag>
-            ))}
-          </Space>
-        ) : (
-          '-'
-        );
-      },
+      sorter: true,
     },
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.name' }),
@@ -100,11 +82,12 @@ const User: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: true,
     },
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.roles' }),
       dataIndex: 'roles',
-      width: 200,
+      width: 120,
       search: false,
       render: (_, record) => {
         return record.roles ? (
@@ -120,6 +103,26 @@ const User: React.FC = () => {
         );
       },
     },
+    // {
+    //   title: 'Cabang',
+    //   dataIndex: 'cabangs',
+    //   width: 400,
+    //   ellipsis: true,
+    //   search: false,
+    //   render: (_, record) => {
+    //     return record.cabangs ? (
+    //       <Space wrap>
+    //         {record.cabangs?.map((cabang) => (
+    //           <Tag color="blue" key={cabang.cabang_id}>
+    //             {cabang.cabang_name}
+    //           </Tag>
+    //         ))}
+    //       </Space>
+    //     ) : (
+    //       '-'
+    //     );
+    //   },
+    // },
     {
       title: intl.formatMessage({ id: 'pages.system.user.form.status' }),
       dataIndex: 'status',
@@ -198,14 +201,31 @@ const User: React.FC = () => {
       <ProTable<API.User, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        request={fetchUser}
+        //request={fetchUser}
+        request={(params, sort, filter) => {
+          return fetchUser({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
-        scroll={{ x: 1300 }}
+        scroll={{ x: 1500 }}
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        expandable={{
+          expandedRowRender: (record) => (
+            <div>
+              <Space wrap>
+                Cabang:
+                {record.cabangs?.map((cabang) => (
+                  <Tag color="blue" key={cabang.cabang_id}>
+                    {cabang.cabang_name}
+                  </Tag>
+                ))}
+              </Space>
+            </div>
+          ),
+        }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

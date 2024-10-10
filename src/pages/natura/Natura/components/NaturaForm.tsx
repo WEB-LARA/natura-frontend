@@ -10,6 +10,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { Col } from 'antd';
 import UnitSelect from '@/pages/master/Unit/components/UnitSelect';
 import CabangSelect from '@/pages/master/Cabang/components/CabangSelect';
+import WilayahSelect from '@/pages/master/Wilayah/components/WilayahSelect';
 
 type NaturaFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaHeader> | undefined>;
@@ -38,7 +39,7 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
         />
         <ProFormDatePicker
           width="sm"
-          name="transaction_date"
+          name="trx_date"
           label="Transaction Date"
           colProps={{ span: 12 }}
           rules={[
@@ -63,6 +64,7 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
               onChange={(value: string) => {
                 setUnitId(value);
               }}
+              disabled={props.typeDisabled}
               placeholder="Select Unit"
             />
           </ProFormItem>
@@ -78,7 +80,11 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
               },
             ]}
           >
-            <CabangSelect unitid={unitId} placeholder="Select Cabang" />
+            <CabangSelect
+              unitid={unitId}
+              disabled={props.typeDisabled}
+              placeholder="Select Cabang"
+            />
           </ProFormItem>
         </Col>
         <Col span={12}>
@@ -93,7 +99,7 @@ const NaturaForm: React.FC<NaturaFormProps> = (props: NaturaFormProps) => {
               },
             ]}
           >
-            <CabangSelect unitid={unitId} placeholder="Select Wilayah" />
+            <WilayahSelect disabled={props.typeDisabled} placeholder="Select Wilayah" />
           </ProFormItem>
         </Col>
         <ProFormTextArea

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useIntl } from 'umi';
 import {
   ProFormList,
   ProForm,
@@ -8,26 +7,28 @@ import {
   ProFormDigit,
 } from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { Col } from 'antd';
+import { Col, Form } from 'antd';
 import AkunSelect from '@/pages/master/Akun/components/AkunSelect';
-import NikSelectKey from '@/pages/master/Nik/components/NikSelectKey';
+import NikSelectNik from '@/pages/master/Nik/components/NikSelectNik';
 
 type NaturaLinesFormProps = {
   formRef: React.MutableRefObject<ProFormInstance<API.NaturaLine> | undefined>;
   typePUM: boolean;
+  kelompokId?: string;
+  nikID?: string;
 };
 
 const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormProps) => {
-  const intl = useIntl();
+  const [form] = Form.useForm();
 
   return (
-    <ProForm<API.NaturaLine> formRef={props.formRef} grid={true} submitter={false}>
+    <ProForm<API.NaturaLine> form={form} formRef={props.formRef} grid={true} submitter={false}>
       <ProForm.Group title="Details">
         <ProFormList
           name="details"
           copyIconProps={false}
           creatorButtonProps={{
-            creatorButtonText: intl.formatMessage({ id: 'button.add' }),
+            creatorButtonText: 'Add Detail',
           }}
           alwaysShowItemLabel={false}
           initialValue={[{ method: 'GET' }]}
@@ -36,7 +37,7 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
           <ProForm.Group key="id">
             <Col span={6}>
               <ProFormItem
-                name="nik_id"
+                name="nik_num"
                 label="NIK"
                 rules={[
                   {
@@ -45,7 +46,13 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
                   },
                 ]}
               >
-                <NikSelectKey placeholder="Select NIK" />
+                <NikSelectNik
+                  onChange={(value) => {
+                    console.log('NikSelectKey Selected');
+                    console.log(value);
+                  }}
+                  placeholder="Select NIK"
+                />
               </ProFormItem>
             </Col>
             <Col span={8}>
@@ -59,7 +66,11 @@ const NaturaLinesForm: React.FC<NaturaLinesFormProps> = (props: NaturaLinesFormP
                   },
                 ]}
               >
-                <AkunSelect flagPUM={props.typePUM} placeholder="Select Akun" />
+                <AkunSelect
+                  kelompokId={props.kelompokId}
+                  flagPUM={props.typePUM}
+                  placeholder="Select Akun"
+                />
               </ProFormItem>
             </Col>
             <ProFormDigit

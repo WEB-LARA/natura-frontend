@@ -115,7 +115,7 @@ const ListNaturasError: React.FC<ListNaturasErrorProps> = (props: ListNaturasErr
       <ProTable<API.NaturaHeader, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        params={{ period: props.period, status: 102 }}
+        params={{ period: props.period, status: 101 }}
         request={fetchNaturaHeader}
         rowKey="id"
         cardBordered

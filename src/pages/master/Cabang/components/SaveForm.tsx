@@ -1,6 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Col, message } from 'antd';
-import { ModalForm, ProFormText, ProFormSwitch, ProFormItem } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProFormText,
+  ProFormSwitch,
+  ProFormItem,
+  ProSkeleton,
+} from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { addCabang, getCabang, updateCabang } from '@/services/master/cabang';
 import UnitSelect from '../../Unit/components/UnitSelect';
@@ -15,6 +21,7 @@ type CabangModalProps = {
 
 const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
   const formRef = useRef<ProFormInstance<API.Cabang>>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!props.visible) {
@@ -23,6 +30,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
 
     formRef.current?.resetFields();
     if (props.id) {
+      setLoading(true);
       getCabang(props.id).then(async (res) => {
         if (res.data) {
           const data = res.data;
@@ -30,6 +38,7 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
           formRef.current?.setFieldsValue(data);
         }
       });
+      setLoading(false);
     }
   }, [props]);
 
@@ -74,75 +83,81 @@ const CabangModal: React.FC<CabangModalProps> = (props: CabangModalProps) => {
       }}
       initialValues={{}}
     >
-      <ProFormText
-        name="code"
-        label="Kode Cabang"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Kode required',
-          },
-        ]}
-      />
-      <ProFormText
-        name="dc_code"
-        label="Kode DC"
-        tooltip="Kode untuk keperluan dengan SD2"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Kode DC required',
-          },
-        ]}
-      />
-      <ProFormText
-        name="reference_id"
-        label="Reference Id"
-        tooltip="Reference Id Example: 16,70,44"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Reference Id required',
-          },
-        ]}
-      />
-      <Col span={12}>
-        <ProFormItem
-          name="unit_id"
-          label="Unit"
-          rules={[
-            {
-              required: true,
-              message: 'Unit required',
-            },
-          ]}
-        >
-          <UnitSelect placeholder="Select Unit" />
-        </ProFormItem>
-      </Col>
-      <ProFormText
-        name="name"
-        label="Name"
-        colProps={{ span: 12 }}
-        rules={[
-          {
-            required: true,
-            message: 'Name required',
-          },
-        ]}
-      />
-      <ProFormSwitch
-        name="flag_active"
-        label="Active"
-        fieldProps={{
-          checkedChildren: true,
-          unCheckedChildren: false,
-        }}
-        colProps={{ span: 12 }}
-      />
+      {loading ? (
+        <ProSkeleton type="descriptions" list={false} />
+      ) : (
+        <>
+          <ProFormText
+            name="code"
+            label="Kode Cabang"
+            colProps={{ span: 12 }}
+            rules={[
+              {
+                required: true,
+                message: 'Kode required',
+              },
+            ]}
+          />
+          <ProFormText
+            name="dc_code"
+            label="Kode DC"
+            tooltip="Kode untuk keperluan dengan SD2"
+            colProps={{ span: 12 }}
+            rules={[
+              {
+                required: true,
+                message: 'Kode DC required',
+              },
+            ]}
+          />
+          <ProFormText
+            name="reference_id"
+            label="Reference Id"
+            tooltip="Reference Id Example: 16,70,44"
+            colProps={{ span: 12 }}
+            rules={[
+              {
+                required: true,
+                message: 'Reference Id required',
+              },
+            ]}
+          />
+          <Col span={12}>
+            <ProFormItem
+              name="unit_id"
+              label="Unit"
+              rules={[
+                {
+                  required: true,
+                  message: 'Unit required',
+                },
+              ]}
+            >
+              <UnitSelect placeholder="Select Unit" />
+            </ProFormItem>
+          </Col>
+          <ProFormText
+            name="name"
+            label="Name"
+            colProps={{ span: 12 }}
+            rules={[
+              {
+                required: true,
+                message: 'Name required',
+              },
+            ]}
+          />
+          {/* <ProFormSwitch
+            name="flag_active"
+            label="Active"
+            fieldProps={{
+              checkedChildren: true,
+              unCheckedChildren: false,
+            }}
+            colProps={{ span: 12 }}
+          /> */}
+        </>
+      )}
     </ModalForm>
   );
 };

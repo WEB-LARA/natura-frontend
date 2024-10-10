@@ -11,6 +11,7 @@ declare namespace API {
     unit_id?: string;
     /** From Cabang.ID */
     cabang_id?: string;
+    wilayah_id?: string;
     /** Period Natura */
     period?: string;
     /** ID Natura */
@@ -31,15 +32,30 @@ declare namespace API {
     soft_delete?: boolean;
     /** Create time */
     created_at?: string;
+    trx_date?: string;
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
     description?: string;
+    flag_pum?: boolean;
 
     /** Natura Lines */
     details?: NaturaLine[];
     unit?: Unit;
     cabang?: Cabang;
+  };
+
+  type NaturaSave = {
+    natura_headers?: NaturaHeader[];
+    message?: string[];
+  };
+
+  type NaturaHeaderCount = {
+    status_new?: number;
+    status_recon?: number;
+    status_process?: number;
+    status_ready?: number;
+    status_send?: number;
   };
 
   // Natura Line Table
@@ -149,6 +165,7 @@ declare namespace API {
     cabang_id?: string;
     /** Period Natura */
     period?: string;
+    print_period?: string;
     /** ID Natura */
     id_natura?: string;
     /** Status of nik (New = 0, Proccess = 1, Error = -1, Finish = 2, Reject = -2) */
@@ -170,6 +187,7 @@ declare namespace API {
     unit_id?: string;
     /** From Cabang.ID */
     cabang_id?: string;
+    tahun?: string;
   };
 
   // Tabel Header Tampungan Data Cars
@@ -194,11 +212,34 @@ declare namespace API {
     branch_name?: string;
     /** Status of api (New = 0, Proccess = 1, Error = -1) */
     status?: number;
+    /** Tamp Account Natura */
+    account?: string;
+    amount?: number;
     /** Create time */
     created_at?: string;
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+  };
+
+  // Table GL Lines for Data from Oracle
+  type CarsLine = {
+    /** Unique ID */
+    id?: string;
+    /** From CarsHeader.ID */
+    cars_header_id?: string;
+    /** Nik Employee */
+    nik?: string;
+    /** Account Natura */
+    account?: string;
+    /** Description Lines */
+    description?: string;
+    /** Amount Oracle */
+    amount?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
   };
 
   // Tabel Header Tampungan Data File Upload
@@ -305,6 +346,58 @@ declare namespace API {
     natura_line_id?: string;
     /** Transaction Date Natura */
     trx_date?: string;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+    akun?: Akun;
+    flag_tax_object?: boolean;
+  };
+
+  // Create processed Natura
+  type NaturaProcessCreate = {
+    period?: string;
+  };
+
+  // Create NaturaRecon Natura
+  type NaturaRecon = {
+    period?: string;
+  };
+
+  // Temporary Table Lines for File Upload
+  type TampFileLine = {
+    /** Unique ID */
+    id?: string;
+    /** Document Number */
+    tamp_file_header_id?: string;
+    /** Document Number */
+    document_num?: string;
+    /** ID Natura Template */
+    id_natura?: string;
+    /** Transaction Date */
+    trx_date?: string;
+    /** Nik Employee */
+    nik?: string;
+    /** Account Natura */
+    account?: string;
+    /** Description Lines */
+    description?: string;
+    /** Amount File */
+    amount?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
+
+  // Tabel Error Tampungan Data File Upload
+  type TampFileErr = {
+    /** Unique ID */
+    id?: string;
+    /** From TampFileHeader.ID */
+    tamp_file_header_id?: string;
+    /** Description Error */
+    description?: string;
     /** Create time */
     created_at?: string;
     /** Update time */

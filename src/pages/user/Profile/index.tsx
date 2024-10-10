@@ -155,9 +155,13 @@ const Profile: React.FC = () => {
                 );
                 return false;
               }
+              // await updateCurrentPassword({
+              //   old_password: Util.md5(values.old_password),
+              //   new_password: Util.md5(values.new_password),
+              // });
               await updateCurrentPassword({
-                old_password: Util.md5(values.old_password),
-                new_password: Util.md5(values.new_password),
+                old_password: values.old_password,
+                new_password: values.new_password,
               });
               message.success(intl.formatMessage({ id: 'component.message.success.save' }));
               securityFormRef.current?.resetFields();

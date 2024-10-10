@@ -27,11 +27,18 @@ const ProcessHeaders: React.FC<ProcessHeadersProps> = (props: ProcessHeadersProp
       key: 'name',
     },
     {
-      title: 'amount',
-      dataIndex: 'total_amount',
+      title: 'Bagian',
+      dataIndex: 'bagian',
+      ellipsis: true,
+      width: 160,
+      key: 'bagian',
+    },
+    {
+      title: 'Total Amount Final',
+      dataIndex: 'amount',
       ellipsis: true,
       width: 130,
-      key: 'total_amount',
+      key: 'amount',
       valueType: 'digit',
     },
   ];
@@ -40,7 +47,7 @@ const ProcessHeaders: React.FC<ProcessHeadersProps> = (props: ProcessHeadersProp
     <ProTable<API.NaturaProcessHeader, API.PaginationParam>
       columns={columns}
       actionRef={actionRef}
-      params={{ natura_process_header_id: props.idheader }}
+      params={{ natura_process_batch_id: props.idheader }}
       request={fetchNaturaProcessHeader}
       expandable={{
         expandedRowRender: (record) => <ProcessLines idheader={record.id!} />,
@@ -51,6 +58,8 @@ const ProcessHeaders: React.FC<ProcessHeadersProps> = (props: ProcessHeadersProp
       search={{
         labelWidth: 'auto',
       }}
+      tableLayout="auto"
+      scroll={{ x: 'max-content' }}
       pagination={{ pageSize: 20, showSizeChanger: true }}
       options={{
         density: true,

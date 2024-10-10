@@ -3,7 +3,7 @@ import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message, Col, Row, Button } from 'antd';
 import React, { useState, useEffect, useRef } from 'react';
 import Settings from '../../../../config/defaultSettings';
-import { history, useModel, useIntl, SelectLang, Helmet } from 'umi';
+import { history, useModel, useIntl, Helmet, setLocale } from 'umi';
 import { getCaptchaId, getCaptchaImageURL, login } from '@/services/system/login';
 import styles from './index.less';
 import { Util, Auth } from '@/utils';
@@ -28,6 +28,7 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
+    setLocale('en-US');
     fetchCaptchaID();
   }, []);
 
@@ -46,7 +47,7 @@ const Login: React.FC = () => {
 
     try {
       values.captcha_id = captchaID;
-      values.password = Util.md5(values.password);
+      //values.password = Util.md5(values.password);
       const result = await login({ ...values });
       if (result.success) {
         message.success(
@@ -96,9 +97,9 @@ const Login: React.FC = () => {
           - {Settings.title}
         </title>
       </Helmet>
-      <div className={styles.lang} data-lang>
+      {/* <div className={styles.lang} data-lang>
         {SelectLang && <SelectLang />}
-      </div>
+      </div> */}
       <div className={styles.content}>
         <LoginForm<API.LoginForm>
           formRef={formRef}

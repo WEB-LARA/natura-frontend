@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Space } from 'antd';
-import { fetchNaturaLine } from '@/services/natura/naturaline';
+import { fetchNaturaLine, updateNaturaLine } from '@/services/natura/naturaline';
 import type { ProColumns, ActionType, EditableFormInstance } from '@ant-design/pro-components';
 import { EditableProTable } from '@ant-design/pro-components';
 
@@ -16,13 +16,13 @@ const ListNaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesP
   const columns: ProColumns<API.NaturaLine>[] = [
     {
       title: 'Akun',
-      dataIndex: 'akun.name',
+      dataIndex: 'akun.description',
       ellipsis: true,
       width: 200,
       key: 'akun_id',
       editable: false,
       render: (_, record) => {
-        return record.akun ? <Space>{record.akun?.name}</Space> : '-';
+        return record.akun ? <Space>{record.akun?.description}</Space> : '-';
       },
     },
     {
@@ -51,9 +51,8 @@ const ListNaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesP
       render: (_, row) => [
         <a
           key="edit"
-          onClick={() => {
+          onClick={async () => {
             actionRef.current?.startEditable(row.id!);
-            // TODO: post API update amount
           }}
         >
           Edit
@@ -93,6 +92,7 @@ const ListNaturaLines: React.FC<ListNaturaLinesProps> = (props: ListNaturaLinesP
           onChange: setEditableRowKeys,
           onSave: async (record, recordList) => {
             console.log(recordList);
+            await updateNaturaLine(recordList.id!, { amount: recordList.amount });
           },
           // onValuesChange: (record, recordList) => {
           //   console.log(recordList);

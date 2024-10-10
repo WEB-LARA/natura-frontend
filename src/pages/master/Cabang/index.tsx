@@ -58,31 +58,43 @@ const Cabang: React.FC = () => {
   );
 
   const columns: ProColumns<API.Cabang>[] = [
+    // {
+    //   title: 'Unit',
+    //   dataIndex: 'unit_name',
+    //   ellipsis: true,
+    //   width: 160,
+    //   key: 'unit_name', // Query field unit_name
+    //   search: false,
+    // },
     {
       title: 'Unit',
-      dataIndex: 'unit_name',
-      ellipsis: true,
-      width: 160,
-      key: 'unit_name', // Query field unit_name
+      dataIndex: 'unit.code',
+      width: 100,
       search: false,
+      render: (_, record) => {
+        return record.unit ? <Space>{record.unit?.code}</Space> : '-';
+      },
     },
     {
       title: 'Kode Cabang',
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
+      sorter: true,
     },
     {
       title: 'Kode DC',
       dataIndex: 'dc_code',
       width: 130,
       key: 'dc_code', // Query field name
+      sorter: true,
     },
     {
       title: 'Reference ID',
       dataIndex: 'reference_id',
       width: 130,
       key: 'reference_id', // Query field name
+      sorter: true,
     },
     {
       title: 'Name',
@@ -90,17 +102,18 @@ const Cabang: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: true,
     },
-    {
-      title: 'Active',
-      dataIndex: 'flag_active',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        const status = record.flag_active;
-        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
-      },
-    },
+    // {
+    //   title: 'Active',
+    //   dataIndex: 'flag_active',
+    //   width: 130,
+    //   search: false,
+    //   render: (_, record) => {
+    //     const status = record.flag_active;
+    //     return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
+    //   },
+    // },
     {
       title: 'Actions',
       valueType: 'option',
@@ -138,13 +151,16 @@ const Cabang: React.FC = () => {
         headerTitle="Master Cabang"
         columns={columns}
         actionRef={actionRef}
-        request={fetchCabang}
+        //request={fetchCabang}
+        request={(params, sort, filter) => {
+          return fetchCabang({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

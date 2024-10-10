@@ -8,8 +8,9 @@ import {
   getNaturaHeader,
   updateNaturaHeader,
 } from '@/services/natura/naturaheader';
-import { PageHeader, Tabs, message } from 'antd';
-import { useParams } from 'umi';
+import { Modal, PageHeader, Tabs, message } from 'antd';
+import { useParams, history } from 'umi';
+import ModalSave from './components/ModalSave';
 
 const { TabPane } = Tabs;
 
@@ -19,6 +20,10 @@ const NaturaAdd: React.FC = () => {
   const naturaFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const detailsFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
   const [formData, setFormData] = useState<API.NaturaHeader>({});
+  const [modalSave, setModalSave] = useState<boolean>(false);
+  const [noNaturaSave, setNoNaturaSave] = useState<string>('');
+  const [kelompokID, setKelompokID] = useState<string | undefined>();
+  const [activeKey, setActiveKey] = useState<string>('pum');
 
   useEffect(() => {
     naturaFormRef.current?.resetFields();
@@ -29,9 +34,16 @@ const NaturaAdd: React.FC = () => {
       getNaturaHeader(id).then(async (res) => {
         if (res.data) {
           const data = res.data;
+          if (data.flag_pum) {
+            setActiveKey('pum');
+          } else {
+            setActiveKey('other');
+          }
 
           naturaFormRef.current?.setFieldsValue(data);
           detailsFormRef.current?.setFieldsValue(data);
+
+          setKelompokID(data.kelompok_id);
           setFormData(data);
         }
       });
@@ -41,6 +53,8 @@ const NaturaAdd: React.FC = () => {
   const handleFinish = async () => {
     const natura = await naturaFormRef.current?.validateFields();
     if (natura) {
+      natura.flag_pum = activeKey === 'pum' ? true : false;
+      natura.wilayah_id = activeKey === 'pum' ? natura.wilayah_id : '1';
       delete natura.statusChecked;
 
       const naturadetails = await detailsFormRef.current?.validateFields();
@@ -49,13 +63,65 @@ const NaturaAdd: React.FC = () => {
       }
 
       if (id) {
-        delete formData.details;
-        await updateNaturaHeader(id, { ...formData, ...natura });
+        try {
+          delete formData.details;
+          const dataupdate = await updateNaturaHeader(id, { ...formData, ...natura });
+          if (dataupdate.success) {
+            const subtitle: string = 'EDIT ID NATURA :' + formData.id_natura;
+            message.success('Edit successfully');
+            setNoNaturaSave(subtitle);
+            setModalSave(true);
+          }
+        } catch (e) {
+          const subtitleErr: string = ' Error: ' + e;
+          Modal.error({
+            title: 'Error Save Natura',
+            content: subtitleErr,
+          });
+        }
       } else {
-        await addNaturaHeader(natura);
+        try {
+          const datainsert = await addNaturaHeader(natura);
+
+          if (datainsert.success) {
+            const result: string[] = [];
+            const resultMsg: string[] = [];
+            let subMsg: string = '';
+            if (datainsert.data && datainsert.data.message && datainsert.data.message.length > 0) {
+              datainsert.data!.message!.forEach((data) => {
+                resultMsg.push(data!);
+              });
+              subMsg = '. Warning: ' + resultMsg.join(', ');
+            }
+
+            if (
+              datainsert.data &&
+              datainsert.data.natura_headers &&
+              datainsert.data.natura_headers.length > 0
+            ) {
+              datainsert.data!.natura_headers!.forEach((data) => {
+                result.push(data!.id_natura!);
+              });
+            }
+
+            const subtitle: string = 'ID NATURA :' + result.join(', ') + ' ' + subMsg;
+            message.success('Save successfully');
+            setNoNaturaSave(subtitle);
+            setModalSave(true);
+          }
+        } catch (e) {
+          const subtitleErr: string = ' Error: ' + e;
+          Modal.error({
+            title: 'Error Save Natura',
+            content: subtitleErr,
+          });
+        }
       }
-      message.success('Save successfully');
     }
+  };
+
+  const onChange = (newActiveKey: string) => {
+    setActiveKey(newActiveKey);
   };
 
   return (
@@ -70,6 +136,8 @@ const NaturaAdd: React.FC = () => {
       <PageContainer ghost>
         <ProCard>
           <Tabs
+            activeKey={activeKey}
+            onChange={onChange}
             tabPosition="top"
             defaultActiveKey="pum"
             style={{ background: '#fff', paddingBottom: 50 }}
@@ -89,7 +157,7 @@ const NaturaAdd: React.FC = () => {
                   typeDisabled={id ? true : false}
                   typePUM={true}
                 />
-                <NaturaLinesForm formRef={detailsFormRef} typePUM={true} />
+                <NaturaLinesForm kelompokId={kelompokID} formRef={detailsFormRef} typePUM={true} />
               </ProForm>
             </TabPane>
             <TabPane key="other" style={{ justifyContent: 'center' }} tab="Other">
@@ -107,12 +175,25 @@ const NaturaAdd: React.FC = () => {
                   typeDisabled={id ? true : false}
                   typePUM={false}
                 />
-                <NaturaLinesForm formRef={detailsFormRef} typePUM={false} />
+                <NaturaLinesForm kelompokId={kelompokID} formRef={detailsFormRef} typePUM={false} />
               </ProForm>
             </TabPane>
           </Tabs>
         </ProCard>
       </PageContainer>
+
+      <ModalSave
+        visible={modalSave}
+        subTitle={noNaturaSave}
+        onCancel={() => {
+          naturaFormRef.current?.resetFields();
+          detailsFormRef.current?.resetFields();
+          setModalSave(false);
+        }}
+        onSuccess={() => {
+          history.push(`/natura`);
+        }}
+      />
     </>
   );
 };

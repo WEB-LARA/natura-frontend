@@ -103,7 +103,7 @@ const ListNaturas: React.FC<ListNaturasProps> = (props: ListNaturasProps) => {
       <ProTable<API.NaturaHeader, API.PaginationParam>
         columns={columns}
         actionRef={actionRef}
-        params={{ period: props.period, status: 2 }}
+        params={{ period: props.period, status: 1 }}
         request={fetchNaturaHeader}
         rowKey="id"
         cardBordered

@@ -40,7 +40,6 @@ const NikSelect: React.FC<NikSelectProps> = (props) => {
       fetchOptions={requestNik}
       value={values}
       onChange={(value) => {
-        console.log(value);
         setValues(value);
         if (props.onChange) {
           props.onChange(value);

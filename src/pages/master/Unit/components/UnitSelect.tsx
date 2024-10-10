@@ -6,6 +6,7 @@ import { fetchUnit } from '@/services/master/unit';
 type UnitSelectProps = {
   value?: API.Unit[];
   onChange?: (value: string) => void;
+  disabled?: boolean;
 } & SelectProps;
 
 const UnitSelect: React.FC<UnitSelectProps> = (props) => {
@@ -42,6 +43,7 @@ const UnitSelect: React.FC<UnitSelectProps> = (props) => {
       showSearch
       {...props}
       options={options}
+      disabled={props.disabled}
       value={values}
       filterOption={(input, option) =>
         String(option?.label ?? '')

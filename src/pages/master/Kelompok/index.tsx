@@ -63,6 +63,7 @@ const Kelompok: React.FC = () => {
       dataIndex: 'code',
       width: 130,
       key: 'code', // Query field name
+      sorter: true,
     },
     {
       title: 'Name',
@@ -70,6 +71,7 @@ const Kelompok: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: true,
     },
     {
       title: 'Active',
@@ -118,13 +120,16 @@ const Kelompok: React.FC = () => {
         headerTitle="Master Kelompok"
         columns={columns}
         actionRef={actionRef}
-        request={fetchKelompok}
+        //request={fetchKelompok}
+        request={(params, sort, filter) => {
+          return fetchKelompok({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

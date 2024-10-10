@@ -71,3 +71,54 @@ export async function delTampFileHeader(id: string, options?: { [key: string]: a
     ...(options || {}),
   });
 }
+
+/** Create record POST /api/v1/tamp-file-headers/process */
+export async function processTampFileHeader(
+  body: API.TampFileHeader,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResponseResult<API.TampFileHeader>>('/api/v1/tamp-file-headers/process', {
+    method: 'POST',
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** Create record POST /api/v1/tamp-file-headers/contoh */
+export async function downloadContoh(options?: { [key: string]: any }) {
+  return request('/api/v1/download-template', {
+    method: 'POST',
+    responseType: 'blob',
+    parseResponse: false,
+    ...(options || {}),
+  });
+}
+
+export async function downloadContohAP(options?: { [key: string]: any }) {
+  return request('/api/v1/download-template-pum', {
+    method: 'POST',
+    responseType: 'blob',
+    parseResponse: false,
+    ...(options || {}),
+  });
+}
+
+/** Create record POST /api/v1/tamp-file-headers/contohGL */
+export async function downloadContohGL(options?: { [key: string]: any }) {
+  return request('/api/v1/template-gl', {
+    method: 'POST',
+    responseType: 'blob',
+    parseResponse: false,
+    ...(options || {}),
+  });
+}
+
+/** Create record POST /api/v1/tamp-file-headers/contoh */
+export async function downloadContohGLNik(options?: { [key: string]: any }) {
+  return request('/api/v1/tamp-file-headers/contoh', {
+    method: 'POST',
+    responseType: 'blob',
+    parseResponse: false,
+    ...(options || {}),
+  });
+}

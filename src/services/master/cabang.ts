@@ -48,3 +48,69 @@ export async function delCabang(id: string, options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+export const fetchCabangFilter = async (): Promise<API.FilterType> => {
+  try {
+    const res = await fetchCabang({ status: 'enabled', resultType: 'select', pageSize: 100 });
+    const data = res.data;
+
+    const cabangFilter: API.FilterType = {};
+
+    if (!data) {
+      return cabangFilter;
+    }
+    data.forEach((item: API.Cabang) => {
+      if (item.name) {
+        cabangFilter[item.name] = { text: item.name };
+      }
+    });
+    return cabangFilter;
+  } catch (error) {
+    console.error('Error fetching status filter data:', error);
+    throw error;
+  }
+};
+
+export const fetchCabangFilterByID = async (): Promise<API.FilterType> => {
+  try {
+    const res = await fetchCabang({ status: 'enabled', resultType: 'select', pageSize: 100 });
+    const data = res.data;
+
+    const cabangFilter: API.FilterType = {};
+
+    if (!data) {
+      return cabangFilter;
+    }
+    data.forEach((item: API.Cabang) => {
+      if (item.name && item.id) {
+        cabangFilter[item.id] = { text: item.name };
+      }
+    });
+    return cabangFilter;
+  } catch (error) {
+    console.error('Error fetching status filter data:', error);
+    throw error;
+  }
+};
+
+export const fetchCabangFilterByCode = async (): Promise<API.FilterType> => {
+  try {
+    const res = await fetchCabang({ status: 'enabled', resultType: 'select', pageSize: 100 });
+    const data = res.data;
+
+    const cabangFilter: API.FilterType = {};
+
+    if (!data) {
+      return cabangFilter;
+    }
+    data.forEach((item: API.Cabang) => {
+      if (item.id && item.code) {
+        cabangFilter[item.id] = { text: item.code };
+      }
+    });
+    return cabangFilter;
+  } catch (error) {
+    console.error('Error fetching status filter data:', error);
+    throw error;
+  }
+};

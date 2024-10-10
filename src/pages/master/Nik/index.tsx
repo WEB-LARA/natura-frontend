@@ -3,9 +3,9 @@ import React, { useRef, useReducer } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, Tag, message } from 'antd';
-import { fetchNik, delNik } from '@/services/master/nik';
+import { fetchNik, delNik, syncKaryawan } from '@/services/master/nik';
 import NikModal from './components/SaveForm';
-import { AddButton, EditIconButton, DelIconButton } from '@/components/Button';
+import { AddButton, EditIconButton, DelIconButton, SyncButton } from '@/components/Button';
 
 enum ActionTypeEnum {
   ADD,
@@ -78,6 +78,14 @@ const Nik: React.FC = () => {
       dataIndex: 'nik',
       width: 130,
       key: 'nik', // Query field nik
+      sorter: true,
+    },
+    {
+      title: 'NIK Lama',
+      dataIndex: 'old_nik',
+      width: 130,
+      key: 'old_nik', // Query field old_nik
+      sorter: true,
     },
     {
       title: 'Name',
@@ -85,17 +93,21 @@ const Nik: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'name', // Query field name
+      sorter: true,
+      // sorter: (a, b) => {
+      //   return a.name!.localeCompare(b.name!);
+      // },
     },
-    {
-      title: 'Active',
-      dataIndex: 'flag_aktif',
-      width: 130,
-      search: false,
-      render: (_, record) => {
-        const status = record.flag_aktif;
-        return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
-      },
-    },
+    // {
+    //   title: 'Active',
+    //   dataIndex: 'flag_aktif',
+    //   width: 130,
+    //   search: false,
+    //   render: (_, record) => {
+    //     const status = record.flag_aktif;
+    //     return <Tag color={status ? 'success' : 'error'}>{status ? 'enabled' : 'disabled'}</Tag>;
+    //   },
+    // },
     {
       title: 'Actions',
       valueType: 'option',
@@ -133,13 +145,17 @@ const Nik: React.FC = () => {
         headerTitle="Master NIK"
         columns={columns}
         actionRef={actionRef}
-        request={fetchNik}
+        //  request={fetchNik}
+        request={(params, sort, filter) => {
+          // console.log(sorter == null ? '' : Object.keys(sorter));
+          return fetchNik({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,
@@ -153,6 +169,15 @@ const Nik: React.FC = () => {
             code="add"
             onClick={() => {
               dispatch({ type: ActionTypeEnum.ADD });
+            }}
+          />,
+          <SyncButton
+            key="SyncKaryawan"
+            code="SyncKaryawan"
+            onClick={async () => {
+              await syncKaryawan();
+
+              message.success('Sync will be Process in background, Please wait in 10 minute');
             }}
           />,
         ]}

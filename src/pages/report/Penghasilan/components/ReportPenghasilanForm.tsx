@@ -55,7 +55,7 @@ const ReportPenghasilanForm: React.FC<ReportPenghasilanFormProps> = (
             </ProFormItem>
           </Col>
           <ProFormRadio.Group
-            name="tampilan"
+            name="print_period"
             colProps={{ span: 12 }}
             label="Tampilan"
             rules={[
@@ -68,7 +68,16 @@ const ReportPenghasilanForm: React.FC<ReportPenghasilanFormProps> = (
             options={['Bulan', 'Tahun']}
           />
         </ProForm.Group>
-        <ProFormDatePicker.Month name="period" label="Periode" />
+        <ProFormDatePicker.Month
+          name="period"
+          rules={[
+            {
+              required: true,
+              message: 'Periode required',
+            },
+          ]}
+          label="Periode"
+        />
       </ProForm>
 
       <Modal

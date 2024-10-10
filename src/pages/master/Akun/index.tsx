@@ -72,6 +72,7 @@ const Akun: React.FC = () => {
       dataIndex: 'account',
       width: 130,
       key: 'account', // Query field name
+      sorter: true,
     },
     {
       title: 'Description',
@@ -79,6 +80,7 @@ const Akun: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'description', // Query field name
+      sorter: true,
     },
     {
       title: 'Active',
@@ -131,13 +133,16 @@ const Akun: React.FC = () => {
         headerTitle="Master Akun"
         columns={columns}
         actionRef={actionRef}
-        request={fetchAkun}
+        //request={fetchAkun}
+        request={(params, sort, filter) => {
+          return fetchAkun({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
           labelWidth: 'auto',
         }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={{ showSizeChanger: true }}
         options={{
           density: true,
           fullScreen: true,

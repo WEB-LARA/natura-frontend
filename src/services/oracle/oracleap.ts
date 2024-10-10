@@ -24,6 +24,22 @@ export async function addOracleAp(body: API.OracleAp, options?: { [key: string]:
   });
 }
 
+/** Validate record POST /api/v1/oracle-aps */
+export async function validateOracleAp(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.OracleAp>>('/api/v1/oracle-aps/validate', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+/** Validate record POST /api/v1/oracle-aps */
+export async function proccessOracleAp(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.OracleAp>>('/api/v1/oracle-aps/proccess', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
 /** Get record by ID GET /api/v1/oracle-aps/${id} */
 export async function getOracleAp(id: string, options?: { [key: string]: any }) {
   return request<API.ResponseResult<API.OracleAp>>(`/api/v1/oracle-aps/${id}`, {

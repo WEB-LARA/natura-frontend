@@ -20,7 +20,16 @@ export async function fetchNaturaHeader(
 
 /** Create record POST /api/v1/natura-headers */
 export async function addNaturaHeader(body: API.NaturaHeader, options?: { [key: string]: any }) {
-  return request<API.ResponseResult<API.NaturaHeader>>('/api/v1/natura-headers', {
+  return request<API.ResponseResult<API.NaturaSave>>('/api/v1/natura-headers', {
+    method: 'POST',
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** Create record POST /api/v1/natura-recon */
+export async function reconNatura(body: API.NaturaRecon, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.NaturaRecon>>('/api/v1/natura-recon', {
     method: 'POST',
     data: body,
     ...(options || {}),
@@ -30,6 +39,14 @@ export async function addNaturaHeader(body: API.NaturaHeader, options?: { [key: 
 /** Get record by ID GET /api/v1/natura-headers/${id} */
 export async function getNaturaHeader(id: string, options?: { [key: string]: any }) {
   return request<API.ResponseResult<API.NaturaHeader>>(`/api/v1/natura-headers/${id}`, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** Get record GET /api/v1/natura-headers/count */
+export async function getNaturaHeaderCount(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.NaturaHeaderCount>>(`/api/v1/natura-headers/count`, {
     method: 'GET',
     ...(options || {}),
   });

@@ -27,6 +27,7 @@ type UserModalProps = {
 const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
   const intl = useIntl();
   const formRef = useRef<ProFormInstance<API.User>>();
+  const [disableCabang, setDisableCabang] = useState(false);
   const [nikID, setNikID] = useState<string>();
   const [username, setUsername] = useState<string>();
   const [userData, setUserData] = useState<API.User>();
@@ -45,6 +46,10 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
           const data = res.data;
           data.nik_id = res.data?.username + ' - ' + res.data?.name;
           setUserData(data);
+          setUsername(data.username);
+          setNikID(data.nik_id);
+          setDisableCabang(false);
+          data.all_cabang = false;
           data.statusChecked = data.status === 'activated';
           formRef.current?.setFieldsValue(data);
         }
@@ -77,13 +82,19 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
       }}
       onFinish={async (values: API.User) => {
         values.status = values.statusChecked ? 'activated' : 'freezed';
+        if (values.all_cabang) {
+          values.cabangs = [];
+        }
         values.nik_id = nikID;
         values.username = username;
         delete values.statusChecked;
-        values.password = values.password ? Util.md5(values.password) : undefined;
+        //values.password = values.password ? Util.md5(values.password) : undefined;
 
         // if edit data
         if (props.id) {
+          const splitted = values.nik_id!.split('-', 2);
+          values.nik_id = splitted[0].trim();
+
           if (userData?.roles) {
             const roles = values.roles!;
             for (let i = 0; i < roles.length; i++) {
@@ -213,20 +224,34 @@ const UserModal: React.FC<UserModalProps> = (props: UserModalProps) => {
           />
         </ProFormItem>
       </Col>
-      <Col span={12}>
+      <Col span={8}>
         <ProFormItem
           name="cabangs"
           label="Cabang"
           rules={[
             {
-              required: true,
+              required: !disableCabang,
               message: 'Cabang required',
             },
           ]}
         >
-          <CabangTagSelect unitid={unitId} placeholder="Select Cabang" />
+          <CabangTagSelect disabled={disableCabang} unitid={unitId} placeholder="Select Cabang" />
         </ProFormItem>
       </Col>
+      <Col span={4}>
+        <ProFormSwitch
+          name="all_cabang"
+          label="All Cabang"
+          fieldProps={{
+            checkedChildren: 'Yes',
+            unCheckedChildren: 'No',
+            onChange: (checked) => {
+              setDisableCabang(checked);
+            },
+          }}
+        />
+      </Col>
+
       <ProFormText
         name="email"
         label={intl.formatMessage({ id: 'pages.system.user.form.email' })}

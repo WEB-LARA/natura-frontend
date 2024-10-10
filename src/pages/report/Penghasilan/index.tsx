@@ -1,21 +1,41 @@
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProForm } from '@ant-design/pro-components';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { PageHeader, message } from 'antd';
 import { useParams } from 'umi';
 import ReportPenghasilanForm from './components/ReportPenghasilanForm';
+import { postLpnk } from '@/services/natura/naturareport';
 
 const ReportPenghasilan: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const naturaFormRef = useRef<ProFormInstance<API.NaturaHeader>>();
+  const reportFormRef = useRef<ProFormInstance<API.ReportPenghasilanForm>>();
+  const [loading, setLoading] = useState(false);
 
   const handleFinish = async () => {
-    const natura = await naturaFormRef.current?.validateFields();
-    if (natura) {
-      delete natura.statusChecked;
-      // await addNaturaHeader(natura);
+    const report = await reportFormRef.current?.validateFields();
+    if (report) {
+      setLoading(true);
+      async function downloadPdfMe() {
+        try {
+          await postLpnk(report!)
+            .then((res) => res.blob())
+            .then((response) => {
+              const url = window.URL.createObjectURL(new Blob([response]));
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', 'ReportLpnk.xlsx'); //or any other extension
+              document.body.appendChild(link);
+              link.click();
+            });
 
-      message.success('Generate successfully');
+          setLoading(false);
+          message.success('downloaded!');
+        } catch (error) {
+          setLoading(false);
+          message.error('create failed.');
+        }
+      }
+      downloadPdfMe();
     }
   };
 
@@ -29,7 +49,7 @@ const ReportPenghasilan: React.FC = () => {
       />
 
       <PageContainer ghost>
-        <ProCard>
+        <ProCard loading={loading}>
           <ProForm<API.NaturaHeader>
             onFinish={async () => {
               try {
@@ -39,7 +59,7 @@ const ReportPenghasilan: React.FC = () => {
               }
             }}
           >
-            <ReportPenghasilanForm formRef={naturaFormRef} typeDisabled={id ? true : false} />
+            <ReportPenghasilanForm formRef={reportFormRef} typeDisabled={id ? true : false} />
           </ProForm>
         </ProCard>
       </PageContainer>

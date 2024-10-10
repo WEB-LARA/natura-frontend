@@ -30,6 +30,9 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+
+    /** Oracle AP Lines */
+    details?: OracleApLine[];
   };
 
   // Tabel Lines Tampungan Data Oracle ga ada NIK
@@ -39,6 +42,7 @@ declare namespace API {
     /** From OracleAp.ID */
     oracle_ap_id?: string;
     /** Nik Employee */
+    nik_num?: string;
     nik?: string;
     /** Description Oracles Line */
     description?: string;
@@ -77,6 +81,11 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+    /** tamp */
+    account?: string;
+    amount?: number;
+    unit_name?: string;
+    branch_name?: string;
   };
 
   // Table GL Lines for Data from Oracle
@@ -97,6 +106,8 @@ declare namespace API {
     created_at?: string;
     /** Update time */
     updated_at?: string;
+
+    akun?: Akun;
   };
 
   // Table Header GL for Data from Oracle
@@ -130,6 +141,9 @@ declare namespace API {
     /** Update time */
     updated_at?: string;
     statusChecked?: boolean;
+
+    /** Oracle GL Lines */
+    details?: OracleGlLine[];
   };
 
   // Tabel Lines Tampungan Data Oracle ga ada NIK
@@ -148,5 +162,109 @@ declare namespace API {
     created_at?: string;
     /** Update time */
     updated_at?: string;
+  };
+
+  type ErrLine = {
+    /** Unique ID */
+    id?: string;
+    /** From OracleAp.ID */
+    header_id?: string;
+    /** Description Oracles Line */
+    description?: string;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+  };
+
+  // Table Header GL for Data from Oracle
+  type OracleGlRev = {
+    /** Unique ID */
+    id?: string;
+    /** Document Number */
+    document_num?: string;
+    /** ID Natura Oracles */
+    id_natura?: string;
+    /** ID Natura Refrence Oracles */
+    id_natura_ref?: string;
+    /** Program Source (Oracles) */
+    program?: string;
+    /** Transaction Date */
+    trx_date?: string;
+    /** Unit Code (IPT/ICC/IPP etc.) */
+    unit_code?: string;
+    /** Unit Name */
+    unit_name?: string;
+    /** Branch Code (G001/G010 etc.) */
+    branch_code?: string;
+    /** Branch Name (JAKARTA 1/SEMARANG etc.) */
+    branch_name?: string;
+    /** Account Natura */
+    account?: string;
+    /** Amount Oracles */
+    amount?: number;
+    /** Status of api (New = 0, Proccess = 1, Error = -1) */
+    status?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+    statusChecked?: boolean;
+
+    /** Oracle GL Lines */
+    details?: OracleGlLine[];
+  };
+
+  // Table Header AP Rev for Data from Oracle
+  type OracleApRev = {
+    /** Unique ID */
+    id?: string;
+    /** Document Number */
+    document_num?: string;
+    /** ID Natura Oracles */
+    id_natura?: string;
+    /** ID Natura Refrence Oracles */
+    id_natura_ref?: string;
+    /** Program Source (Oracles) */
+    program?: string;
+    /** Transaction Date */
+    trx_date?: string;
+    /** Unit Code (IPT/ICC/IPP etc.) */
+    unit_code?: string;
+    /** Unit Name */
+    unit_name?: string;
+    /** Branch Code (G001/G010 etc.) */
+    branch_code?: string;
+    /** Branch Name (JAKARTA 1/SEMARANG etc.) */
+    branch_name?: string;
+    /** Account Natura */
+    account?: string;
+    /** Amount Oracles */
+    amount?: number;
+    /** Status of api (New = 0, Proccess = 1, Error = -1) */
+    status?: number;
+    /** Create time */
+    created_at?: string;
+    /** Update time */
+    updated_at?: string;
+    statusChecked?: boolean;
+
+    /** Oracle AP Lines */
+    details?: OracleApLine[];
+  };
+
+  type OracleReturnProccess = {
+    oracle_ap_jml?: number;
+    oracle_gl_jml?: number;
+    oracle_gl_nik_jml?: number;
+    cars_jml?: number;
+  };
+
+  type OracleAPICount = {
+    oracle_ap?: number;
+    oracle_gl_nik?: number;
+    oracle_gl?: number;
+    cars?: number;
+    total?: number;
   };
 }

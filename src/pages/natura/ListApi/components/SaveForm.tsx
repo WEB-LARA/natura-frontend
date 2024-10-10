@@ -4,7 +4,7 @@ import { message, Modal } from 'antd';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import NaturaLinesForm from '../../Natura/components/NaturaLinesForm';
 import { getCarsApiHeader } from '@/services/natura/naturaapi';
-import NaturaHeaderAPIDesc from './NaturaHeaderDesc';
+import NaturaHeaderAPIDesc from './APIHeaderDesc';
 
 type TampFileHeaderModalProps = {
   onSuccess: () => void;
@@ -82,7 +82,7 @@ const TampFileHeaderModal: React.FC<TampFileHeaderModalProps> = (
     >
       <NaturaHeaderAPIDesc data={formData} visible={true} />
       <br />
-      <NaturaLinesForm formRef={detailsFormRef} />
+      <NaturaLinesForm formRef={detailsFormRef} typePUM={false} />
     </Modal>
   );
 };
