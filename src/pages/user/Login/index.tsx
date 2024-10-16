@@ -29,6 +29,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     setLocale('en-US');
+    localStorage.setItem('umi_locale', 'en-US');
     fetchCaptchaID();
   }, []);
 

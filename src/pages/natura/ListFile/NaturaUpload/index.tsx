@@ -92,6 +92,13 @@ const NaturaUpload: React.FC = () => {
             >
               Download Data GL
             </Button>
+            <Button
+              className="margin-left: 8px;"
+              onClick={downloadTemplGL}
+              icon={<DownloadOutlined />}
+            >
+              Download Templete PUM
+            </Button>
           </Space>
           <br />
           <br />
