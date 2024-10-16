@@ -152,7 +152,7 @@ const NaturaUpload: React.FC = () => {
               onClick={downloadTempl}
               icon={<DownloadOutlined />}
             >
-              Download Templete
+              Download Template
             </Button>
 
             <Button
@@ -168,7 +168,7 @@ const NaturaUpload: React.FC = () => {
               onClick={downloadTemplPUM}
               icon={<DownloadOutlined />}
             >
-              Download Templete ID Natura (AP)
+              Download Template ID Natura (AP)
             </Button>
           </Space>
           <br />
