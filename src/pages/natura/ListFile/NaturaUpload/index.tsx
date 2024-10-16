@@ -13,18 +13,33 @@ const NaturaUpload: React.FC = () => {
     async function downloadContohMe() {
       try {
         await downloadContoh()
-          .then((res) => res.blob())
-          .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response]));
+          .then((res) => {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            let fileName = 'contohFile.csv'; // Default file name
+
+            if (contentDisposition) {
+              const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+              if (fileNameMatch.length > 1) {
+                fileName = fileNameMatch[1];
+              }
+            }
+
+            return res.blob().then((response) => ({
+              blob: response,
+              fileName: fileName,
+            }));
+          })
+          .then(({ blob, fileName }) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'contohFile.csv'); //or any other extension
+            link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
           });
 
         setLoading(false);
-        message.success('Downloaded Templete!');
+        message.success('Downloaded Template!');
       } catch (error) {
         setLoading(false);
         message.error('Create Failed.');
@@ -38,12 +53,27 @@ const NaturaUpload: React.FC = () => {
     async function downloadContohGLMe() {
       try {
         await downloadContohGL()
-          .then((res) => res.blob())
-          .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response]));
+          .then((res) => {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            let fileName = 'contohFileGL.csv'; // Default file name
+
+            if (contentDisposition) {
+              const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+              if (fileNameMatch.length > 1) {
+                fileName = fileNameMatch[1];
+              }
+            }
+
+            return res.blob().then((response) => ({
+              blob: response,
+              fileName: fileName,
+            }));
+          })
+          .then(({ blob, fileName }) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'contohFileGL.csv'); //or any other extension
+            link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
           });
@@ -63,12 +93,27 @@ const NaturaUpload: React.FC = () => {
     async function downloadContohPUMMe() {
       try {
         await downloadContohAP()
-          .then((res) => res.blob())
-          .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response]));
+          .then((res) => {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            let fileName = 'contohFileAP.csv'; // Default file name
+
+            if (contentDisposition) {
+              const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+              if (fileNameMatch.length > 1) {
+                fileName = fileNameMatch[1];
+              }
+            }
+
+            return res.blob().then((response) => ({
+              blob: response,
+              fileName: fileName,
+            }));
+          })
+          .then(({ blob, fileName }) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'contohFileAP.csv'); //or any other extension
+            link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
           });
