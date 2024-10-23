@@ -129,6 +129,7 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         loading: true,
         status: 'success',
       };
+      return ret;
     case 5:
       ret = {
         color: 'yellow',
@@ -136,6 +137,7 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         loading: false,
         status: 'default',
       };
+      return ret;
     case 10:
       ret = {
         color: 'yellow',
@@ -143,6 +145,7 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         loading: false,
         status: 'default',
       };
+      return ret;
     case 100:
       ret = {
         color: 'orange',
@@ -166,6 +169,7 @@ export function codeToStatusCase(value: number | undefined): StatusCase {
         loading: false,
         status: 'error',
       };
+      return ret;
     case 104:
       ret = {
         color: 'red',
