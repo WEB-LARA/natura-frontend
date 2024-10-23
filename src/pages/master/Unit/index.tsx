@@ -133,7 +133,11 @@ const Unit: React.FC = () => {
         headerTitle="Master Unit"
         columns={columns}
         actionRef={actionRef}
-        request={fetchUnit}
+        //request={fetchUnit}
+        request={(params, sort, filter) => {
+          // console.log(sorter == null ? '' : Object.keys(sorter));
+          return fetchUnit({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{
