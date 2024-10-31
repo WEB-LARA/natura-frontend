@@ -72,9 +72,7 @@ const Akun: React.FC = () => {
       dataIndex: 'account',
       width: 130,
       key: 'account', // Query field name
-      sorter: (a, b) => {
-        return a.account!.localeCompare(b.account!);
-      },
+      sorter: true,
     },
     {
       title: 'Description',
@@ -82,9 +80,7 @@ const Akun: React.FC = () => {
       ellipsis: true,
       width: 160,
       key: 'description', // Query field name
-      sorter: (a, b) => {
-        return a.description!.localeCompare(b.description!);
-      },
+      sorter: true,
     },
     {
       title: 'Active',
@@ -137,7 +133,10 @@ const Akun: React.FC = () => {
         headerTitle="Master Akun"
         columns={columns}
         actionRef={actionRef}
-        request={fetchAkun}
+        //request={fetchAkun}
+        request={(params, sort, filter) => {
+          return fetchAkun({ ...params, sort, filter });
+        }}
         rowKey="id"
         cardBordered
         search={{

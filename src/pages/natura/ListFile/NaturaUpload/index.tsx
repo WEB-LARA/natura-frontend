@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Alert, Button, message, PageHeader, Space } from 'antd';
 import NaturaFormUpload from '../components/NaturaFormUpload';
 import { DownloadOutlined } from '@ant-design/icons';
-import { downloadContoh, downloadContohGL } from '@/services/natura/naturafile';
+import { downloadContoh, downloadContohGL, downloadContohAP } from '@/services/natura/naturafile';
 
 const NaturaUpload: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -13,18 +13,33 @@ const NaturaUpload: React.FC = () => {
     async function downloadContohMe() {
       try {
         await downloadContoh()
-          .then((res) => res.blob())
-          .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response]));
+          .then((res) => {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            let fileName = 'contohFile.csv'; // Default file name
+
+            if (contentDisposition) {
+              const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+              if (fileNameMatch.length > 1) {
+                fileName = fileNameMatch[1];
+              }
+            }
+
+            return res.blob().then((response) => ({
+              blob: response,
+              fileName: fileName,
+            }));
+          })
+          .then(({ blob, fileName }) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'contohFile.csv'); //or any other extension
+            link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
           });
 
         setLoading(false);
-        message.success('Downloaded Templete!');
+        message.success('Downloaded Template!');
       } catch (error) {
         setLoading(false);
         message.error('Create Failed.');
@@ -38,12 +53,27 @@ const NaturaUpload: React.FC = () => {
     async function downloadContohGLMe() {
       try {
         await downloadContohGL()
-          .then((res) => res.blob())
-          .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response]));
+          .then((res) => {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            let fileName = 'contohFileGL.csv'; // Default file name
+
+            if (contentDisposition) {
+              const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+              if (fileNameMatch.length > 1) {
+                fileName = fileNameMatch[1];
+              }
+            }
+
+            return res.blob().then((response) => ({
+              blob: response,
+              fileName: fileName,
+            }));
+          })
+          .then(({ blob, fileName }) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'contohFileGL.csv'); //or any other extension
+            link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
           });
@@ -56,6 +86,46 @@ const NaturaUpload: React.FC = () => {
       }
     }
     downloadContohGLMe();
+  };
+
+  const downloadTemplPUM = async () => {
+    setLoading(true);
+    async function downloadContohPUMMe() {
+      try {
+        await downloadContohAP()
+          .then((res) => {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            let fileName = 'contohFileAP.csv'; // Default file name
+
+            if (contentDisposition) {
+              const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+              if (fileNameMatch.length > 1) {
+                fileName = fileNameMatch[1];
+              }
+            }
+
+            return res.blob().then((response) => ({
+              blob: response,
+              fileName: fileName,
+            }));
+          })
+          .then(({ blob, fileName }) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+          });
+
+        setLoading(false);
+        message.success('Downloaded AP!');
+      } catch (error) {
+        setLoading(false);
+        message.error('Create Failed.');
+      }
+    }
+    downloadContohPUMMe();
   };
 
   return (
@@ -82,7 +152,7 @@ const NaturaUpload: React.FC = () => {
               onClick={downloadTempl}
               icon={<DownloadOutlined />}
             >
-              Download Templete
+              Download Template
             </Button>
 
             <Button
@@ -90,7 +160,15 @@ const NaturaUpload: React.FC = () => {
               onClick={downloadTemplGL}
               icon={<DownloadOutlined />}
             >
-              Download Data GL
+              Download Data GL tanpa NIK
+            </Button>
+
+            <Button
+              className="margin-left: 8px;"
+              onClick={downloadTemplPUM}
+              icon={<DownloadOutlined />}
+            >
+              Download Template ID Natura (AP)
             </Button>
             <Button
               className="margin-left: 8px;"
