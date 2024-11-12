@@ -42,22 +42,6 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
     }
   }, [props]);
 
-  const onChangePUM = (checked: boolean) => {
-    if (checked) {
-      formRef.current?.setFieldsValue({
-        flag_template: false,
-      });
-    }
-  };
-
-  const onChangeTemplete = (checked: boolean) => {
-    if (checked) {
-      formRef.current?.setFieldsValue({
-        flag_pum: false,
-      });
-    }
-  };
-
   return (
     <ModalForm<API.Akun>
       open={props.visible}
@@ -195,7 +179,6 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
         name="flag_pum"
         label="Flag PUM"
         fieldProps={{
-          onChange: onChangePUM,
           checkedChildren: 'Enabled',
           unCheckedChildren: 'Disabled',
         }}
@@ -205,7 +188,6 @@ const AkunModal: React.FC<AkunModalProps> = (props: AkunModalProps) => {
         name="flag_template"
         label="Flag Template"
         fieldProps={{
-          onChange: onChangeTemplete,
           checkedChildren: 'Enabled',
           unCheckedChildren: 'Disabled',
         }}
