@@ -24,7 +24,7 @@ const WilayahSelect: React.FC<WilayahSelectProps> = (props) => {
       }
     };
 
-    request({ status: 'enabled', resultType: 'select', pageSize: 100 }).then((data) => {
+    request({ status: 'enabled', resultType: 'select', pageSize: 1000 }).then((data) => {
       setOptions(data);
     });
   }, []);
