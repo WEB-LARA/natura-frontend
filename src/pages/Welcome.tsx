@@ -123,7 +123,7 @@ const Welcome: React.FC = () => {
           style={{ marginBottom: 32 }}
         >
           <Descriptions.Item label="NIK">
-            {initialState?.currentUser?.id == 'root' ? 'root' : initialState?.currentUser?.nik?.nik}
+            {initialState?.currentUser?.id == 'root' ? 'root' : initialState?.currentUser?.nik_id}
           </Descriptions.Item>
 
           <Descriptions.Item label="Roles">
