@@ -850,8 +850,8 @@ const ListApi: React.FC = () => {
               search={{
                 labelWidth: 'auto',
               }}
-              pagination={{ pageSize: 10, showSizeChanger: true }}
-              scroll={{ x: 'max-content' }}
+              pagination={{ showSizeChanger: true }}
+              scroll={{ x: 1000 }}
               options={{
                 density: true,
                 fullScreen: true,
