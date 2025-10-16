@@ -14,13 +14,15 @@ const ReportLRDR: React.FC = () => {
     const report = await reportFormRef.current?.validateFields();
     if (!report) return;
 
-    const formatDate = (date: any) => {
-      try {
-        return date.format('YYYY-MM-DD');
-      } catch {
-        return date;
-      }
-    };
+  const formatDate = (date: any) => {
+  try {
+    // pastikan moment/dayjs format ISO (RFC3339)
+    return date.toISOString(); // hasil: 2025-10-01T00:00:00.000Z
+  } catch {
+    return date;
+  }
+};
+
 
     const payload = {
       akun_id: report.akun_id || '',
