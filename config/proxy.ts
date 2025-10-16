@@ -4,6 +4,10 @@
  * so there is no configuration of the production environment
  * For details, please see
  * https://pro.ant.design/docs/deploy
+ * -------------------------------
+ * You can configure a proxy to solve cross-domain issues
+ * https://umijs.org/docs/guides/proxy
+ * -------------------------------    
  */
 export default {
   dev: {
