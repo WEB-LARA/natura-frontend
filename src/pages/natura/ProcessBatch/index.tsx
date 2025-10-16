@@ -4,10 +4,12 @@ import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, PageHeader, Space, message } from 'antd';
 import { DelIconButton, DetailIconShowButton } from '@/components/Button';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined,SyncOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import { delNaturaProcessBatch, fetchNaturaProcessBatch } from '@/services/natura/processedbatch';
 import ProcessDetailsDrawer from './components/DetailDrawer';
+import { postProcessReversal } from '@/services/natura/processedbatch';
+
 
 enum ActionTypeEnum {
   ADD,
@@ -137,13 +139,37 @@ const ProcessBatch: React.FC = () => {
           subTitle="List Natura Process berisi semua batch yang telah di-Process"
           extra={[
             <Button
-              key="1"
+            key="1"
+            type="default"
+            icon={<SyncOutlined />}
+            onClick={async () => {
+              const year = new Date().getFullYear(); // bisa diganti sesuai input user
+              try {
+                const res = await postProcessReversal(year);
+                if (res.success) {
+                  message.success(`Sync berhasil untuk tahun ${year}`);
+                  actionRef.current?.reload();
+                } else {
+                  message.error(res.message || 'Sync gagal');
+                }
+              } catch (error) {
+                message.error('Terjadi error saat melakukan sync data');
+                console.error(error);
+              }
+            }}
+          >
+            Sync Data
+          </Button>
+,
+            <Button
+              key="2"
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => history.push(`/natura/naturaprocessadd`)}
             >
               Process Data
             </Button>,
+             
           ]}
         />
       </div>

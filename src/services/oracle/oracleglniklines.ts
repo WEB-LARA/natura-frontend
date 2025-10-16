@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/oracle-gl-nik-lines */
-export async function fetchOracleGlNikLine(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchOracleGlNikLine(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.OracleGlNikLine[]>>('/api/v1/oracle-gl-nik-lines', {
     method: 'GET',
     params: {
@@ -17,7 +19,10 @@ export async function fetchOracleGlNikLine(params: API.PaginationParam, options?
 }
 
 /** Create record POST /api/v1/oracle-gl-nik-lines */
-export async function addOracleGlNikLine(body: API.OracleGlNikLine, options?: { [key: string]: any }) {
+export async function addOracleGlNikLine(
+  body: API.OracleGlNikLine,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.OracleGlNikLine>>('/api/v1/oracle-gl-nik-lines', {
     method: 'POST',
     data: body,
@@ -34,7 +39,11 @@ export async function getOracleGlNikLine(id: string, options?: { [key: string]: 
 }
 
 /** Update record by ID PUT /api/v1/oracle-gl-nik-lines/${id} */
-export async function updateOracleGlNikLine(id: string, body: API.OracleGlNikLine, options?: { [key: string]: any }) {
+export async function updateOracleGlNikLine(
+  id: string,
+  body: API.OracleGlNikLine,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/oracle-gl-nik-lines/${id}`, {
     method: 'PUT',
     data: body,

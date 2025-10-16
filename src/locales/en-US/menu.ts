@@ -45,6 +45,7 @@ export default {
   'menu.Report': 'Report',
   'menu.Report.Report DIPPN': 'Report DIPPN',
   'menu.Report.Report DTPPN': 'Report DTPPN',
+  'menu.Report.Report LRDR': 'Report LRDR',
   'menu.Report.Report DPPN': 'Report DPPN',
   'menu.Report.Report Reconciliation': 'Report Reconciliation',
   'menu.Report.Report Penghasilan': 'Report Penghasilan',

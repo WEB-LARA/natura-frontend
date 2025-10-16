@@ -1,4 +1,3 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
@@ -34,7 +33,11 @@ export async function getOracleGl(id: string, options?: { [key: string]: any }) 
 }
 
 /** Update record by ID PUT /api/v1/oracle-gls/${id} */
-export async function updateOracleGl(id: string, body: API.OracleGl, options?: { [key: string]: any }) {
+export async function updateOracleGl(
+  id: string,
+  body: API.OracleGl,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/oracle-gls/${id}`, {
     method: 'PUT',
     data: body,

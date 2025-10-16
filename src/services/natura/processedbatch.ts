@@ -44,6 +44,13 @@ export async function getNaturaProcessBatch(id: string, options?: { [key: string
   );
 }
 
+export async function postProcessReversal(year: number) {
+  return request('/api/v1/process-reversal', {
+    method: 'POST',
+    data: { year },
+  });
+}
+
 /** Update record by ID PUT /api/v1/natura-process-batches/${id} */
 export async function updateNaturaProcessBatch(
   id: string,

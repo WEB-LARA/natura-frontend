@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/oracle-gl-niks */
-export async function fetchOracleGlNik(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchOracleGlNik(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.OracleGlNik[]>>('/api/v1/oracle-gl-niks', {
     method: 'GET',
     params: {
@@ -34,7 +36,11 @@ export async function getOracleGlNik(id: string, options?: { [key: string]: any 
 }
 
 /** Update record by ID PUT /api/v1/oracle-gl-niks/${id} */
-export async function updateOracleGlNik(id: string, body: API.OracleGlNik, options?: { [key: string]: any }) {
+export async function updateOracleGlNik(
+  id: string,
+  body: API.OracleGlNik,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/oracle-gl-niks/${id}`, {
     method: 'PUT',
     data: body,

@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/tamp-file-lines */
-export async function fetchTampFileLine(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchTampFileLine(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.TampFileLine[]>>('/api/v1/tamp-file-lines', {
     method: 'GET',
     params: {
@@ -34,7 +36,11 @@ export async function getTampFileLine(id: string, options?: { [key: string]: any
 }
 
 /** Update record by ID PUT /api/v1/tamp-file-lines/${id} */
-export async function updateTampFileLine(id: string, body: API.TampFileLine, options?: { [key: string]: any }) {
+export async function updateTampFileLine(
+  id: string,
+  body: API.TampFileLine,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/tamp-file-lines/${id}`, {
     method: 'PUT',
     data: body,

@@ -46,6 +46,20 @@ export async function postDppn(body: API.ReportDPPNForm, options?: { [key: strin
   });
 }
 
+/** Create record POST /api/v1/natura-report/dppn */
+export async function postLrdr(body: API.ReportDPPNForm, options?: { [key: string]: any }) {
+  return request('/api/v1/natura-report/lrdr', {
+    method: 'POST',
+    data: body,
+    responseType: 'blob',  
+    skipErrorHandler: true,  // ✅ Tambahkan ini
+    getResponse: true,   // ambil binary data
+     parseResponse: false,  // jangan parsing JSON
+    ...(options || {}),
+  });
+}
+
+
 /** Create record POST /api/v1/natura-report/dtpn */
 export async function postDtpn(body: API.ReportDPPNForm, options?: { [key: string]: any }) {
   return request('/api/v1/natura-report/dtpn', {

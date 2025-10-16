@@ -8,13 +8,13 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://localhost:8040',
+      target: 'http://108.136.44.148:8040',
       changeOrigin: true,
     },
   },
   test: {
     '/api/': {
-      target: 'http://localhost:8040',
+      target: 'http://108.136.44.148:8040',
       changeOrigin: true,
     },
   },

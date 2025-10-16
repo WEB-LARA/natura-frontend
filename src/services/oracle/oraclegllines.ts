@@ -1,10 +1,12 @@
-
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
 
 /** Query list GET /api/v1/oracle-gl-lines */
-export async function fetchOracleGlLine(params: API.PaginationParam, options?: { [key: string]: any }) {
+export async function fetchOracleGlLine(
+  params: API.PaginationParam,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<API.OracleGlLine[]>>('/api/v1/oracle-gl-lines', {
     method: 'GET',
     params: {
@@ -34,7 +36,11 @@ export async function getOracleGlLine(id: string, options?: { [key: string]: any
 }
 
 /** Update record by ID PUT /api/v1/oracle-gl-lines/${id} */
-export async function updateOracleGlLine(id: string, body: API.OracleGlLine, options?: { [key: string]: any }) {
+export async function updateOracleGlLine(
+  id: string,
+  body: API.OracleGlLine,
+  options?: { [key: string]: any },
+) {
   return request<API.ResponseResult<any>>(`/api/v1/oracle-gl-lines/${id}`, {
     method: 'PUT',
     data: body,

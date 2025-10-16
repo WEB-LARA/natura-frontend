@@ -219,6 +219,12 @@
         name: 'Report DIPPN',
         component: './report/DIPPN',
       },
+       {
+        path: '/report/lrdr',
+        code: 'reportreversal',
+        name: 'Report Reversal',
+        component: './report/LRDR',
+      },
     ],
   },
   {
