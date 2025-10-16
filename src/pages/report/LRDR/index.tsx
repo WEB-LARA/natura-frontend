@@ -28,7 +28,7 @@ const ReportLRDR: React.FC = () => {
       kelompok_id: report.kelompok_id || '',
       objek_pajak: report.objek_pajak || 'ALL',
       unit_id: report.unit_id || '',
-      status: report.status || 'ALL',
+      status:  '',
       period: report.period?.[0] ? formatDate(report.period[0]) : '',
       end_period: report.period?.[1] ? formatDate(report.period[1]) : '',
       transaction_date: report.period 

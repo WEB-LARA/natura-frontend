@@ -103,24 +103,6 @@ const ReportLRDRForm: React.FC<ReportLRDRFormProps> = (props: ReportLRDRFormProp
           </ProFormItem>
         </Col>
 
-        {/* Status */}
-        <Col span={12}>
-          <ProFormItem 
-            name="status" 
-            label="Status"
-            rules={[{ required: true, message: 'Status harus dipilih!' }]}
-          >
-            <Select
-              placeholder="Pilih Status"
-              options={[
-                { label: 'Semua', value: 'ALL' },
-                { label: 'Active', value: 'ACTIVE' },
-                { label: 'Inactive', value: 'INACTIVE' },
-                { label: 'Pending', value: 'PENDING' },
-              ]}
-            />
-          </ProFormItem>
-        </Col>
       </ProForm.Group>
     </ProForm>
   );
