@@ -54,7 +54,6 @@ export async function postLrdr(body: API.ReportDPPNForm, options?: { [key: strin
     responseType: 'blob',  
     skipErrorHandler: true,  // ✅ Tambahkan ini
     getResponse: true,   // ambil binary data
-     parseResponse: false,  // jangan parsing JSON
     ...(options || {}),
   });
 }

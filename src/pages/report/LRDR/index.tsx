@@ -46,29 +46,24 @@ const ReportLRDR: React.FC = () => {
 
     // ✅ Karena getResponse: true, response berbentuk { data, response }
     const result = await postLrdr(payload);
-    
-    // ✅ Extract blob dari response wrapper
-    const blob = result.data instanceof Blob 
-      ? result.data 
-      : new Blob([result.data], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
 
-    // ✅ Cek apakah blob valid (bukan error HTML)
-    if (blob.size === 0) {
-      throw new Error('File kosong, mungkin tidak ada data');
+    // ambil blob dan nama file dari header
+    const blob = result.data;
+    const disposition = result.response.headers.get('content-disposition');
+
+    let filename = 'Laporan_LRDR.xlsx';
+    if (disposition && disposition.includes('filename=')) {
+      filename = disposition.split('filename=')[1].replace(/"/g, '');
     }
 
+    // buat dan trigger download
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    
-    const timestamp = new Date().toISOString().slice(0, 10);
-    link.setAttribute('download', `Laporan_LRDR_${timestamp}.xlsx`);
-    
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
-    link.remove();
+    document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
 
     message.success('Download berhasil!');
